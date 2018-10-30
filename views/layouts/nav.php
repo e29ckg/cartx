@@ -53,7 +53,12 @@ use yii\helpers\Html;
 			],
             [
 				'label' => 'ประเภทวัสดุ',
-				'url' => ['/uploads/upload'],
+				'url' => ['/product_catalog/index'],
+				'template' => '<a href="{url}" title="{label}"> <span class="menu-item-parent">{label}</span></a>',
+			],
+			[
+				'label' => 'หน่วยนับ',
+				'url' => ['/product_unit/index'],
 				'template' => '<a href="{url}" title="{label}"> <span class="menu-item-parent">{label}</span></a>',
 			],
 		],
