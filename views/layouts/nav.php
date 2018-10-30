@@ -66,12 +66,12 @@ use yii\helpers\Html;
             [
 				'label' => 'User List',
 				'url' => 'phpmyadmin',
-				'template' => '<a target="_blank" href="#" title="{label}"> <span class="menu-item-parent">{label}</span></a>',
+				'template' => '<a href="#" title="{label}"> <span class="menu-item-parent">{label}</span></a>',
 			],
 			[
 				'label' => 'Levels',
 				'url' => 'html',
-				'template' => '<a target="_blank" href="#" title="{label}"></i> <span class="menu-item-parent">{label}</span></a>',
+				'template' => '<a href="#" title="{label}"></i> <span class="menu-item-parent">{label}</span></a>',
 			],
         ],
 	],
