@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use app\models\ProductUnit;
+use app\models\ProductCatalog;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "product".
@@ -67,5 +70,25 @@ class Product extends \yii\db\ActiveRecord
             'create_at' => 'Create At',
         ];
     }
-    
+
+    public function getCatalog()
+    {
+        return $this->hasOne(ProductCatalog::className(), ['id' => 'category']);
+    }
+
+    public function getCatalogtName(){
+        $model=$this->catalog;
+        return $model?$model->name_catalog:'';
+    }
+
+    public function getProductUnit()
+    {
+        return $this->hasOne(ProductUnit::className(), ['id' => 'unit']);
+    }
+
+    public function getUnitName(){
+        $model =$this->productUnit;
+        return $model ? $model->name_unit : '';
+    }
+ 
 }
