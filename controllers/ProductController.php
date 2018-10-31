@@ -11,6 +11,11 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
+use app\models\UploadForm;
+use yii\web\UploadedFile;
+use yii\helpers\Url;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -38,12 +43,16 @@ class ProductController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Product::find(),
-        ]);
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
+        $model = Product::find()->orderBy([
+            'create_at'=>SORT_ASC,
+            'id' => SORT_DESC,
+            ])->limit(50)->all();
+        
+            $countAll = Product::getCountAll();
+        
+        return $this->render('index',[
+            'models' => $model,
+            'countAll' => $countAll,
         ]);
     }
 
@@ -67,16 +76,42 @@ class ProductController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Product();
+        $model = new Product();    
         
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+          } 
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            
+            $f = UploadedFile::getInstance($model, 'img');
+            if(!empty($f)){
+                $dir = Url::to('@webroot/uploads/product/img/');
+                if (!is_dir($dir)) {
+                    mkdir($dir, 0777, true);
+                }
+                $fileName = md5($f->baseName . time()) . '.' . $f->extension;
+                if($f->saveAs($dir . $fileName)){
+                    $model->img = $fileName;
+                }               
+            } 
+            
+            $model->create_at = date("Y-m-d H:i:s"); 
+            if($model->save()){
+               return $this->redirect(['index']);
+            }   
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('create',[
+                    'model' => $model,                    
+            ]);
+        }else{
+            return $this->render('create',[
+                'model' => $model,                    
+            ]); 
+        }
     }
 
     /**
@@ -90,13 +125,48 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $filename = $model->img;
+
+        //Add This For Ajax Email Exist Validation 
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+          }
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $f = UploadedFile::getInstance($model, 'img');
+
+            if(!empty($f)){
+                
+                $dir = Url::to('@webroot/uploads/product/img/');
+                if (!is_dir($dir)) {
+                    mkdir($dir, 0777, true);
+                }                
+                if($filename && is_file($dir.$filename)){
+                    unlink($dir.$filename);// ลบ รูปเดิม;                    
+                    
+                }
+                $fileName = md5($f->baseName . time()) . '.' . $f->extension;
+                if($f->saveAs($dir . $fileName)){
+                    $model->img = $fileName;
+                }
+                $model->save();   
+                return $this->redirect(['index', 'id' => $filename]);                            
+            }
+            $model->img = $filename;
+            $model->save();          
+            return $this->redirect(['index', 'id' => $filename]);
         }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('update',[
+                    'model' => $model,                    
+            ]);
+        }
+        
+        return $this->render('update',[
+               'model' => $model,                    
+        ]); 
     }
 
     /**

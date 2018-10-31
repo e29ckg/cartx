@@ -1,10 +1,13 @@
 <?php
-
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
 ?>
-
+<?php //var_dump($models)?>
+<?php// $_SERVER["HTTP_HOST"] ?>
+<?= $_SERVER["HTTP_HOST"].'/data/contact/' ?>
+<?php //= Url::to('@webroot/uploads/contact/');?>
 <div class="site-index">
 
     <div class="jumbotron">

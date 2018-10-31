@@ -6,6 +6,10 @@ use Yii;
 use app\models\ProductUnit;
 use app\models\ProductCatalog;
 use yii\helpers\ArrayHelper;
+use yii\web\UploadedFile;
+
+use yii\helpers\BaseFileHelper;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "product".
@@ -28,6 +32,11 @@ class Product extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+
+    const UPLOAD_FOLDER = '/uploads/contact/';
+    public $urlfiles ='/uploads/contact';
+
+
     public static function tableName()
     {
         return 'product';
@@ -45,7 +54,7 @@ class Product extends \yii\db\ActiveRecord
             [['product_name', 'img', 'Description', 'location'], 'string', 'max' => 255],
             [['code'], 'string', 'max' => 32],
             [['product_name'], 'unique'],
-            [['Description'], 'unique'],
+            [['img'], 'file', 'extensions' => 'png, jpg', 'maxSize'=> 1024 * 1024 * 5],
         ];
     }
 
@@ -89,6 +98,11 @@ class Product extends \yii\db\ActiveRecord
     public function getUnitName(){
         $model =$this->productUnit;
         return $model ? $model->name_unit : '';
+    }
+
+    public function getCountAll()
+    {        
+        return Product::find()->count();           
     }
  
 }

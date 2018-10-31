@@ -52,6 +52,8 @@ class CartController extends Controller
      */
     public function actionIndex()
     {
+        $this->layout = 'cart_shop';
+        // $this->layout = 'cart';
         $model = User::find()->all();
         
             $countAll = User::find()->count();
