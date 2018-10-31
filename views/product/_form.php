@@ -68,7 +68,7 @@ $model_unit = ProductUnit::find()->select('id, name_unit')->all();
     ])->dropDownList($unitList,['prompt'=> $model->getAttributeLabel('unit')])->label(false);?>
 </div>
 
-<div class="row">
+
     <?= $form->field($model, 'Description', [
     'inputOptions' => [
         'placeholder' => $model->getAttributeLabel('Description')
@@ -76,8 +76,8 @@ $model_unit = ProductUnit::find()->select('id, name_unit')->all();
     'template' => '<section><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">กรอกที่อยู่</b></label><em for="email" class="invalid">{error}{hint}</em></section>'
     ])->label(false);
     ?>
-</div>
-    <div class="row">
+
+   
     <?= $form->field($model, 'location', [
     'inputOptions' => [
         'placeholder' => $model->getAttributeLabel('location')
@@ -85,19 +85,35 @@ $model_unit = ProductUnit::find()->select('id, name_unit')->all();
     'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">กรอกชื่อ</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
     ])->label(false);
     ?>
-</div>
 
-    <?= $form->field($model, 'price')->textInput() ?>
+    <?= $form->field($model, 'price', [
+    'inputOptions' => [
+        'placeholder' => $model->getAttributeLabel('price')
+    ],
+    'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">กรอกชื่อ</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
+    ])->label(false);
+    ?>
 
-    <?= $form->field($model, 'status')->dropDownList(
-			['1'=>'1',2=>'2',3=>3,4=>4,5=>5],
-			['prompt'=>'Select']
-			);
-?>
+    <?= $form->field($model, 'status',[
+    'template' => '<section><label class="select">{label}{input}</label><i class="icon-append fa fa-user"></i></label><em for="dep" class="invalid">{error}{hint}</em></section>'
+    ])->dropDownList($catalogList,['prompt'=> $model->getAttributeLabel('status')])->label(false);?>
 
-    <?= $form->field($model, 'lower')->textInput() ?>
 
-    <?= $form->field($model, 'instoke')->textInput() ?>
+    <?= $form->field($model, 'lower', [
+    'inputOptions' => [
+        'placeholder' => $model->getAttributeLabel('lower')
+    ],
+    'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">กรอกชื่อ</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
+    ])->label(false);
+    ?>
+    
+    <?= $form->field($model, 'instoke', [
+    'inputOptions' => [
+        'placeholder' => $model->getAttributeLabel('instoke')
+    ],
+    'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">กรอกชื่อ</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
+    ])->label(false);
+    ?>
 
     <?= $form->field($model, 'create_at')->hiddenInput()->label(false); ?>
     
