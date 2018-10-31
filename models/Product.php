@@ -90,6 +90,11 @@ class Product extends \yii\db\ActiveRecord
         return $model?$model->name_catalog:'';
     }
 
+    public function getCatalogList(){
+        $model = ProductCatalog::find()->select('id, name_catalog')->orderBy('id')->all();
+        return ArrayHelper::map($model,'id','name_catalog');
+    }
+
     public function getProductUnit()
     {
         return $this->hasOne(ProductUnit::className(), ['id' => 'unit']);
@@ -98,6 +103,11 @@ class Product extends \yii\db\ActiveRecord
     public function getUnitName(){
         $model =$this->productUnit;
         return $model ? $model->name_unit : '';
+    }
+
+    public function getUnitList(){
+        $model = ProductUnit::find()->select('id, name_unit')->orderBy('id')->all();
+        return ArrayHelper::map($model,'id','name_unit');
     }
 
     public function getCountAll()

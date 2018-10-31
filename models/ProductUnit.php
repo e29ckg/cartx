@@ -44,4 +44,9 @@ class ProductUnit extends \yii\db\ActiveRecord
             'detail_unit' => 'รายละเอียด',
         ];
     }
+
+    public function getCountAll()
+    {        
+        return ProductUnit::find()->count();           
+    }
 }

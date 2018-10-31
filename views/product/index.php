@@ -1,9 +1,13 @@
 <?php
 
 use yii\helpers\Html;
-// use yii\grid\GridView;
+//  use yii\grid\GridView;
 use app\models\Product;
-
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
+use yii\helpers\BaseFileHelper;
+use yii\helpers\Json;
+use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -71,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					                    <th data-hide="phone">ชื่อวัสดุ</th>
 					                    <th data-hide="phone">ประเภท</th>
 					                    <th data-hide="phone,tablet">InStock</th>
-					                    <th data-hide="phone,tablet">เครื่องมือ</th>
+					                    <th>เครื่องมือ</th>
 						            </tr>
 								</thead>
 								<tbody>
@@ -129,13 +133,8 @@ $('#eg8').click(function() {
         });
 
     });
-     
-$(document).ready(function() {	
-/* BASIC ;*/	
-	
-	function init_click_handlers(){        	
-		
-		var url_update = "index.php?r=product/update";
+
+	var url_update = "index.php?r=product/update";
     	$(".act-update").click(function(e) {            
 			var fID = $(this).data("id");
 			// alert(fID);
@@ -147,7 +146,7 @@ $(document).ready(function() {
         	});
     	});
 
-    	var url_view = "index.php?r=product/view";		
+	var url_view = "index.php?r=product/view";		
     	$(".act-view").click(function(e) {			
                 var fID = $(this).data("id");
                 $.get(url_view,{id: fID},function (data){
@@ -159,9 +158,11 @@ $(document).ready(function() {
                 );
             });   
     
-	}
-
-$('#activity-modal').on('hidden.bs.modal', function () {
+     
+$(document).ready(function() {	
+/* BASIC ;*/	
+	
+	$('#activity-modal').on('hidden.bs.modal', function () {
  		location.reload();
 	})
 

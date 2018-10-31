@@ -29,8 +29,9 @@ class ProductCatalog extends \yii\db\ActiveRecord
     {
         return [
             [['name_catalog', 'order'], 'required'],
-            [['name_catalog', 'order', 'detail_catalog'], 'string', 'max' => 255],
             [['name_catalog'], 'unique'],
+            [['name_catalog', 'detail_catalog'], 'string', 'max' => 255],            
+            [['order'], 'integer'],
         ];
     }
 
@@ -45,5 +46,10 @@ class ProductCatalog extends \yii\db\ActiveRecord
             'order' => 'ลำดับ',
             'detail_catalog' => 'รายละเอียด',
         ];
+    }
+
+    public function getCountAll()
+    {        
+        return ProductCatalog::find()->count();           
     }
 }

@@ -2,19 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use app\models\ProductUnit;
-use app\models\ProductCatalog;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\Product */
 /* @var $form yii\widgets\ActiveForm */
-
-$model_unit = ProductUnit::find()->select('id, name_unit')->all();        
-        $unitList=ArrayHelper::map($model_unit,'id','name_unit');
-
-        $model_Catalog = ProductCatalog::find()->select('id, name_catalog')->orderBy('id')->all();
-        $catalogList=ArrayHelper::map($model_Catalog,'id','name_catalog');
 
 //var_dump($catalogList);
 ?>
@@ -57,7 +49,7 @@ $model_unit = ProductUnit::find()->select('id, name_unit')->all();
 
 <?= $form->field($model, 'category',[
     'template' => '<section><label class="select">{label}{input}</label><i class="icon-append fa fa-user"></i></label><em for="dep" class="invalid">{error}{hint}</em></section>'
-    ])->dropDownList($catalogList,['prompt'=> $model->getAttributeLabel('category')])->label(false);?>
+    ])->dropDownList($model->getCatalogList(),['prompt'=> $model->getAttributeLabel('category')])->label(false);?>
 
 
 
@@ -65,7 +57,7 @@ $model_unit = ProductUnit::find()->select('id, name_unit')->all();
 <div>
 <?= $form->field($model, 'unit',[
     'template' => '<section><label class="select">{label}{input}</label><i class="icon-append fa fa-user"></i></label><em for="dep" class="invalid">{error}{hint}</em></section>'
-    ])->dropDownList($unitList,['prompt'=> $model->getAttributeLabel('unit')])->label(false);?>
+    ])->dropDownList($model->getUnitList(),['prompt'=> $model->getAttributeLabel('unit')])->label(false);?>
 </div>
 
 
@@ -96,7 +88,7 @@ $model_unit = ProductUnit::find()->select('id, name_unit')->all();
 
     <?= $form->field($model, 'status',[
     'template' => '<section><label class="select">{label}{input}</label><i class="icon-append fa fa-user"></i></label><em for="dep" class="invalid">{error}{hint}</em></section>'
-    ])->dropDownList($catalogList,['prompt'=> $model->getAttributeLabel('status')])->label(false);?>
+    ])->dropDownList(['1' => '1'],['prompt'=> $model->getAttributeLabel('status')])->label(false);?>
 
 
     <?= $form->field($model, 'lower', [
@@ -128,10 +120,10 @@ $model_unit = ProductUnit::find()->select('id, name_unit')->all();
 </div>
 <?php 
 if (!empty($model->img)){
-    $filename = Url::to('@webroot/uploads/contact/').$model->img;
+    $filename = Url::to('@webroot/uploads/product/img/').$model->img;
     if (file_exists($filename)) {
         //echo Url::to('@web/uploads/contact/').$model->img;
-        echo Html::img('@web/uploads/contact/'.$model->img, ['alt' => 'My pic','class'=>'img-thumbnail']);
+        echo Html::img('@web/uploads/product/img/'.$model->img, ['alt' => 'My pic','class'=>'img-thumbnail']);
         // unlink($filename);
     }
     
@@ -139,9 +131,9 @@ if (!empty($model->img)){
 ?>
 </fieldset> 
 <?= $form->field($model, 'code')->hiddenInput(['value'=>Yii::$app->security->generateRandomString(10)])->label(false);?>
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-    </div>
+    <footer>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-primary']) ?>
+    </footer>
 
     <?php ActiveForm::end(); ?>
 

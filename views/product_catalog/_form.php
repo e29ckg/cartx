@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\ProductCatalog */
@@ -10,17 +12,48 @@ use yii\widgets\ActiveForm;
 
 <div class="product-catalog-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php 
+    $form = ActiveForm::begin([
+		'id' => 'product-form',
+		'options' => [
+            'class' => 'smart-form',
+            'novalidate'=>'novalidate',
+            'enctype' => 'multipart/form-data'
+        ],
+        //'layout' => 'horizontal',
+        'fieldConfig' => [
+            //'template' => "{label}{input}{error}",
+            'labelOptions' => ['class' => 'label'],
+        ],
+        'enableAjaxValidation' => true,
+	]);  ?>
 
-    <?= $form->field($model, 'name_catalog')->textInput(['maxlength' => true]) ?>
+<fieldset> 
+    
+<div class="row">
+<?= $form->field($model, 'name_catalog', [
+    'inputOptions' => [
+        'placeholder' => $model->getAttributeLabel('name_catalog')
+    ],
+    'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('name_catalog').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
+    ])->label(false);
+    ?>
+</div>
 
-    <?= $form->field($model, 'order')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'detail_catalog')->textInput(['maxlength' => true]) ?>
-
-    <div class="form-group">
+<div class="row">
+    <?= $form->field($model, 'order', [
+    'inputOptions' => [
+        'placeholder' => $model->getAttributeLabel('order')
+    ],
+    'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('order').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
+    ])->label(false);
+    ?>
+</div>
+    
+</fieldset> 
+    <footer>
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-    </div>
+    </footer>
 
     <?php ActiveForm::end(); ?>
 
