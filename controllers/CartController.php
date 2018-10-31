@@ -4,7 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Cart;
-use app\models\User;
+use app\models\Product;
+use app\models\ProductCatalog;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -14,6 +15,7 @@ use yii\web\UploadedFile;
 use yii\helpers\Url;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
+use yii\data\Pagination;
 
 /**
  * ProfileController implements the CRUD actions for Profile model.
@@ -54,13 +56,50 @@ class CartController extends Controller
     {
         $this->layout = 'cart_shop';
         // $this->layout = 'cart';
-        $model = User::find()->all();
+        $model = Product::find()->all();
         
-            $countAll = User::find()->count();
+        $countAll = Product::getCountAll();
+
+        $modelCatalogs = ProductCatalog::find()->all();
         
         return $this->render('index',[
             'models' => $model,
             'countAll' => $countAll,
+            'modelCatalogs' => $modelCatalogs,
+        ]);
+    }
+
+    public function actionCart()
+    {
+        $this->layout = 'cart_shop';
+        // $this->layout = 'cart';
+        $model = Product::find()->all();
+        
+        $countAll = Product::getCountAll();
+
+        $modelCatalogs = ProductCatalog::find()->all();
+        
+        return $this->render('cart',[
+            'models' => $model,
+            'countAll' => $countAll,
+            'modelCatalogs' => $modelCatalogs,
+        ]);
+    }
+
+    public function actionLogin()
+    {
+        $this->layout = 'cart_shop';
+        // $this->layout = 'cart';
+        $model = Product::find()->all();
+        
+        $countAll = Product::getCountAll();
+
+        $modelCatalogs = ProductCatalog::find()->all();
+        
+        return $this->render('login',[
+            'models' => $model,
+            'countAll' => $countAll,
+            'modelCatalogs' => $modelCatalogs,
         ]);
     }
 
