@@ -178,7 +178,15 @@ class ProductController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $filename = $model->img;
+        $dir = Url::to('@webroot/uploads/product/img/');
+        
+        if($filename && is_file($dir.$filename)){
+            unlink($dir.$filename);// ลบ รูปเดิม;                    
+        }
+        
+        $model->delete();
 
         return $this->redirect(['index']);
     }
