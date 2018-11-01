@@ -1,3 +1,10 @@
+<?php
+
+use yii\widgets\LinkPager;
+use yii\data\Pagination;
+
+?>
+
 <h2 class="title text-center">Features Items</h2>
 						
 						<?php foreach ($models as $model): ?>
@@ -29,3 +36,13 @@
                         </div>
 
 						<?php  endforeach; ?>
+                        <div>
+						<ul class="pagination">
+							<!-- <li class="active"><a href="">1</a></li>
+							<li><a href="">2</a></li>
+							<li><a href="">3</a></li>
+							<li><a href="">&raquo;</a></li> -->
+						</ul>
+						
+					</div>
+                    

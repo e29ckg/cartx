@@ -25,6 +25,7 @@ class CartController extends Controller
     /**
      * {@inheritdoc}
      */
+    
     public function behaviors()
     {
         return [
@@ -264,29 +265,44 @@ class CartController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionSearch($q = null) {
-        //        $models = Ppss::find();        
-                if (!empty($q)) {
-                    $query = Product::find()->where(['LIKE', 'product_name', $q]);
+    public function actionSearch($q = null,$m = null) {
+
+        $this->layout = 'cart_shop'; 
+
+        if (!empty($q)) {
+                $query = Product::find()->where(['LIKE', 'product_name', $q]);
+                // $query = Product::find()->where(['LIKE', 'category', $q]);
+            } else if(!empty($m)){
+                    $query = Product::find()->where(['LIKE', 'category', $m]);
                 } else {
-                    $query = Product::find();
-                }
+                        $query = Product::find();
+                    }
         
-                $pagination = new Pagination([
-                    'defaultPageSize' => 100,
-                    'totalCount' => $query->count(),
+        $pagination = new Pagination([
+                'defaultPageSize' => 1,
+                'totalCount' => $query->count(),
+        ]);
+        
+        $models = $query->orderBy(['id' => SORT_DESC])
+                   ->offset($pagination->offset)
+                    ->limit($pagination->limit)
+                    ->all();
+                
+        if(Yii::$app->request->isAjax){
+                return $this->renderAjax('cart_search',[
+                    'models' => $models,  
+                    'pagination' => $pagination, 
                 ]);
-        
-                $models = $query->orderBy(['id' => SORT_DESC])
-                        ->offset($pagination->offset)
-                        ->limit($pagination->limit)
-                        ->all();
-        
-        
-                return $this->renderAjax('cart_search', [
-                            'models' => $models,
-        //                    'pagination' => $pagination,
-        
+        } else {
+                $modelCatalogs = ProductCatalog::find()->all();
+                return $this->render('index',[
+                    'models' => $models,   
+                     'pagination' => $pagination, 
+                    'modelCatalogs' => $modelCatalogs,
                 ]);
-            }
+        }
+    }
 }
+
+
+        

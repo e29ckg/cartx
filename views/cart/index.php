@@ -19,7 +19,7 @@ $this->title = 'Contact';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?php //var_dump($models)?>
+<?php // var_dump($models)?>
 
 <section>
 
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							<?php foreach ($modelCatalogs as $modelCatalog): ?>
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#"><?=$modelCatalog->name_catalog?></a></h4>
+									<h4 class="panel-title"><a href="index.php?r=cart/search&m=<?=$modelCatalog->id?>"><?=$modelCatalog->name_catalog?></a></h4>
 								</div>
 							</div>
 							<?php  endforeach; ?>
@@ -83,14 +83,15 @@ $this->params['breadcrumbs'][] = $this->title;
 						
 					</div><!--features_items-->
 					<div>
-						<ul class="pagination">
+						<!-- <ul class="pagination">
 							<li class="active"><a href="">1</a></li>
 							<li><a href="">2</a></li>
 							<li><a href="">3</a></li>
 							<li><a href="">&raquo;</a></li>
-						</ul>
+						</ul> -->
 						
-						</div>
+					</div>
+					
 				</div>
 			</div>
 		</div>
