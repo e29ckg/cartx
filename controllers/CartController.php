@@ -84,7 +84,7 @@ class CartController extends Controller
 
     public function actionCart()
     {
-        $this->layout = 'cart_shop';
+        $this->layout = 'bg';
         // $this->layout = 'cart';
         
         
@@ -105,7 +105,7 @@ class CartController extends Controller
         $modelCatalogs = ProductCatalog::find()->all();
 
         $pagination = new Pagination([
-            'defaultPageSize' => 1,
+            'defaultPageSize' => 100,
             'totalCount' => $query->count(),
         ]);
     
@@ -318,6 +318,15 @@ class CartController extends Controller
                     'modelCatalogs' => $modelCatalogs,
                 ]);
         }
+    }
+
+    public function actionAdd_to_cart($q = null) {
+        $this->layout = 'cart_shop'; 
+        $query = Product::find()->all();
+        // $models = $query->orderBy(['id' => SORT_ASC])->all();
+        return $this->renderAjax('cart',[
+            'models' => $query, 
+        ]);
     }
 }
 
