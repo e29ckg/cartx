@@ -87,8 +87,9 @@ class Product_catalogController extends Controller
         if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
-          }
-          if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                                     
             if($model->save()){
                return $this->redirect(['index']);
@@ -117,8 +118,16 @@ class Product_catalogController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index', 'id' => $model->id]);
+        //Add This For Ajax Email Exist Validation 
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            
+            $model->save();          
+            return $this->redirect(['index']);
         }
 
         if(Yii::$app->request->isAjax){
