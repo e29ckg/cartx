@@ -44,5 +44,9 @@ use yii\data\Pagination;
 							<li><a href="">&raquo;</a></li> -->
 						</ul>
 						
-					</div>
+					    </div>
+
+                        <div class="box-footer text-center">
+                  			<?= LinkPager::widget(['pagination' => $pagination]); ?>
+                		</div>
                     

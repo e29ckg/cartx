@@ -301,6 +301,18 @@
     <script src="js/main.js"></script>
 	<script >
 		$(document).ready(function() {
+			// add-to-cart
+			
+			$( ".search-m" ).click(function() {    
+    			var url_create = "index.php?r=cart/search";
+				id= $(this).data("id");
+				// alert(data);
+        		$.get(url_create,{q:id},
+					function (data){
+						$("#features_items").html(data);
+        			}
+				);     
+			}); 
 
 			$("#search").keyup(function () {
 		//        var that = this,

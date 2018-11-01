@@ -33,7 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
 							<?php foreach ($modelCatalogs as $modelCatalog): ?>
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<h4 class="panel-title"><a href="index.php?r=cart/search&m=<?=$modelCatalog->id?>"><?=$modelCatalog->name_catalog?></a></h4>
+									<!-- <h4 class="panel-title"><a class="search-m" href="index.php?r=cart/search&m=<?=$modelCatalog->id?>"><?=$modelCatalog->name_catalog?></a></h4> -->
+									<h4 class="panel-title"><a class="search-m" data-id="<?=$modelCatalog->id?>" href="#"><?=$modelCatalog->name_catalog?></a></h4>
 								</div>
 							</div>
 							<?php  endforeach; ?>
@@ -91,7 +92,9 @@ $this->params['breadcrumbs'][] = $this->title;
 						</ul> -->
 						
 					</div>
-					
+					<div class="box-footer text-center">
+                  		<?= LinkPager::widget(['pagination' => $pagination]); ?>
+                	</div>
 				</div>
 			</div>
 		</div>

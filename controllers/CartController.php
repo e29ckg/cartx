@@ -57,16 +57,28 @@ class CartController extends Controller
     {
         $this->layout = 'cart_shop';
         // $this->layout = 'cart';
-        $model = Product::find()->all();
+        // $model = Product::find()->all();
         
         $countAll = Product::getCountAll();
 
         $modelCatalogs = ProductCatalog::find()->all();
+
+        $query = Product::find();
+        $pagination = new Pagination([
+            'defaultPageSize' => 10,
+            'totalCount' => $query->count(),
+        ]);
+    
+        $models = $query->orderBy(['id' => SORT_ASC])
+               ->offset($pagination->offset)
+                ->limit($pagination->limit)
+                ->all();
         
         return $this->render('index',[
-            'models' => $model,
+            'models' => $models,
             'countAll' => $countAll,
             'modelCatalogs' => $modelCatalogs,
+            'pagination' => $pagination,
         ]);
     }
 
@@ -74,16 +86,10 @@ class CartController extends Controller
     {
         $this->layout = 'cart_shop';
         // $this->layout = 'cart';
-        $model = Product::find()->all();
         
-        $countAll = Product::getCountAll();
-
-        $modelCatalogs = ProductCatalog::find()->all();
         
         return $this->render('cart',[
-            'models' => $model,
-            'countAll' => $countAll,
-            'modelCatalogs' => $modelCatalogs,
+            
         ]);
     }
 
@@ -91,16 +97,28 @@ class CartController extends Controller
     {
         $this->layout = 'cart_shop';
         // $this->layout = 'cart';
-        $model = Product::find()->all();
+        $query = Product::find();
+
         
         $countAll = Product::getCountAll();
 
         $modelCatalogs = ProductCatalog::find()->all();
+
+        $pagination = new Pagination([
+            'defaultPageSize' => 1,
+            'totalCount' => $query->count(),
+        ]);
+    
+        $models = $query->orderBy(['id' => SORT_DESC])
+               ->offset($pagination->offset)
+                ->limit($pagination->limit)
+                ->all();
         
         return $this->render('login',[
-            'models' => $model,
+            'models' => $models,
             'countAll' => $countAll,
             'modelCatalogs' => $modelCatalogs,
+            'pagination' => $pagination,
         ]);
     }
 
@@ -271,7 +289,6 @@ class CartController extends Controller
 
         if (!empty($q)) {
                 $query = Product::find()->where(['LIKE', 'product_name', $q]);
-                // $query = Product::find()->where(['LIKE', 'category', $q]);
             } else if(!empty($m)){
                     $query = Product::find()->where(['LIKE', 'category', $m]);
                 } else {
@@ -279,11 +296,11 @@ class CartController extends Controller
                     }
         
         $pagination = new Pagination([
-                'defaultPageSize' => 1,
+                'defaultPageSize' => 20,
                 'totalCount' => $query->count(),
         ]);
         
-        $models = $query->orderBy(['id' => SORT_DESC])
+        $models = $query->orderBy(['id' => SORT_ASC])
                    ->offset($pagination->offset)
                     ->limit($pagination->limit)
                     ->all();
@@ -297,7 +314,7 @@ class CartController extends Controller
                 $modelCatalogs = ProductCatalog::find()->all();
                 return $this->render('index',[
                     'models' => $models,   
-                     'pagination' => $pagination, 
+                    'pagination' => $pagination, 
                     'modelCatalogs' => $modelCatalogs,
                 ]);
         }
