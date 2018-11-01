@@ -46,7 +46,7 @@ class ProductController extends Controller
         $model = Product::find()->orderBy([
             'create_at'=>SORT_ASC,
             'id' => SORT_DESC,
-            ])->limit(50)->all();
+            ])->limit(200)->all();
         
             $countAll = Product::getCountAll();
         
