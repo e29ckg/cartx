@@ -41,14 +41,14 @@ $this->params['breadcrumbs'][] = $this->title;
 						</div><!--/category-productsr-->					
 						
 						<div class="shipping text-center"><!--shipping-->
-							<img src="images/home/shipping.jpg" alt="" />
+							<!-- <img src="images/home/shipping.jpg" alt="" /> -->
 						</div><!--/shipping-->
 						
 					</div>
 				</div>
 				
 				<div class="col-sm-9 padding-right">
-					<div class="features_items"><!--features_items-->
+					<div id="features_items" class="features_items"><!--features_items-->
 						<h2 class="title text-center">Features Items</h2>
 						
 						<?php foreach ($models as $model): ?>

@@ -116,7 +116,8 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="search_box pull-right">
-							<input type="text" placeholder="Search"/>
+							<!-- <input type="text" placeholder="Search"/> -->
+							<input id = "search" type="text" name="table_search" class="form-control pull-right" placeholder="Search" data-cip-id="cIPJQ342845640" autofocus>
 						</div>
 					</div>
 				</div>
@@ -300,5 +301,57 @@
 	<script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.prettyPhoto.js"></script>
     <script src="js/main.js"></script>
+	<script >
+	$(document).ready(function() {
+
+$("#search").keyup(function () {
+//        var that = this,
+	value = $(this).val();
+	if(value == ""){
+	  location.reload();  
+}
+	$.get("?r=cart/search",{q:value},
+				function (data)
+				{
+						$("#features_items").html(data);
+				}
+			);
+
+});
+	
+setInterval(function(){ 
+	$("#ppss").load("?r=ppss/auto-refresh-ppss");
+	$("#ppssm2").load("?r=ppss/auto-refresh-ppss-m2");        
+	value = $("#search").val();
+}, 5000);
+
+	
+});
+</script>
 </body>
 </html>
+<?php
+$script = <<< JS
+     
+$(document).ready(function() {
+
+    $("#search").keyup(function () {
+//        var that = this,
+        value = $(this).val();
+        if(value == ""){
+          location.reload();  
+   }
+        $.get("?r=cart/search",{q:value},
+                    function (data)
+                    {
+                            $("#tb1").html(data);
+                    }
+                );
+
+    });
+        
+            
+});
+JS;
+$this->registerJs($script);
+?>

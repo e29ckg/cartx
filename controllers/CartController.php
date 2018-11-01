@@ -263,4 +263,30 @@ class CartController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionSearch($q = null) {
+        //        $models = Ppss::find();        
+                if (!empty($q)) {
+                    $query = Product::find()->where(['LIKE', 'product_name', $q]);
+                } else {
+                    $query = Product::find();
+                }
+        
+                $pagination = new Pagination([
+                    'defaultPageSize' => 100,
+                    'totalCount' => $query->count(),
+                ]);
+        
+                $models = $query->orderBy(['id' => SORT_DESC])
+                        ->offset($pagination->offset)
+                        ->limit($pagination->limit)
+                        ->all();
+        
+        
+                return $this->renderAjax('cart_search', [
+                            'models' => $models,
+        //                    'pagination' => $pagination,
+        
+                ]);
+            }
 }
