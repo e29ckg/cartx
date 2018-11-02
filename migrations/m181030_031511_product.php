@@ -36,12 +36,27 @@ class m181030_031511_product extends Migration
 
         $this->insert('product', [
             'product_name' => 'name',
-            'code' => '123456789',
-            'img' => '$this->string()',
+            'code' => Yii::$app->security->generateRandomString(10),
+            'img' => '',
             'category' => 1,
             'unit' => 1,
             'Description' => '',
-            'location'=> '$this->string()',
+            'location'=> 'A2',
+            'price' => 500,
+            'status' => 1,
+            'lower' => 10,
+            'instoke' => 100,
+            'create_at' => date("Y-m-d H:i:s"),
+        ]);
+        
+        $this->insert('product', [
+            'product_name' => 'name22',
+            'code' => Yii::$app->security->generateRandomString(10),
+            'img' => '',
+            'category' => 1,
+            'unit' => 1,
+            'Description' => '',
+            'location'=> 'A1',
             'price' => 500,
             'status' => 1,
             'lower' => 10,
