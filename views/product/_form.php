@@ -35,7 +35,7 @@ use yii\helpers\Url;
     'inputOptions' => [
         'placeholder' => $model->getAttributeLabel('product_name')
     ],
-    'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">กรอกชื่อ</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
+    'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('product_name').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
     ])->label(false);
     ?>
 </div>
@@ -65,7 +65,7 @@ use yii\helpers\Url;
     'inputOptions' => [
         'placeholder' => $model->getAttributeLabel('Description')
     ],
-    'template' => '<section><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">กรอกที่อยู่</b></label><em for="email" class="invalid">{error}{hint}</em></section>'
+    'template' => '<section><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('Description').'</b></label><em for="email" class="invalid">{error}{hint}</em></section>'
     ])->label(false);
     ?>
 
@@ -74,7 +74,7 @@ use yii\helpers\Url;
     'inputOptions' => [
         'placeholder' => $model->getAttributeLabel('location')
     ],
-    'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">กรอกชื่อ</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
+    'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('location').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
     ])->label(false);
     ?>
 
@@ -82,7 +82,7 @@ use yii\helpers\Url;
     'inputOptions' => [
         'placeholder' => $model->getAttributeLabel('price')
     ],
-    'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">กรอกชื่อ</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
+    'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('price').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
     ])->label(false);
     ?>
 
@@ -95,7 +95,7 @@ use yii\helpers\Url;
     'inputOptions' => [
         'placeholder' => $model->getAttributeLabel('lower')
     ],
-    'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">กรอกชื่อ</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
+    'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('lower').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
     ])->label(false);
     ?>
     
@@ -103,7 +103,7 @@ use yii\helpers\Url;
     'inputOptions' => [
         'placeholder' => $model->getAttributeLabel('instoke')
     ],
-    'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">กรอกชื่อ</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
+    'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('instoke').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
     ])->label(false);
     ?>
 
