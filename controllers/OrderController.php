@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Order;
+use app\models\OrderList;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -52,8 +53,12 @@ class OrderController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $model_lists = OrderList::find()->where(['id_order'=> $model->id])->all();
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'model_lists' => $model_lists,
         ]);
     }
 
@@ -66,7 +71,9 @@ class OrderController extends Controller
     {
         $model = new Order();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->create_at = date("Y-m-d H:i:s");
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
