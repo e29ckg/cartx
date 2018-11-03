@@ -94,7 +94,8 @@ class SiteController extends Controller
         $this->layout = 'loginl';
 
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            // return $this->goHome();
+            return $this->redirect(['cart/index']);
         }
         
         
@@ -102,7 +103,8 @@ class SiteController extends Controller
         
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            // return $this->goBack();
+            return $this->redirect(['cart/index']);
         }
         $model->password = '';
         return $this->render('login', [

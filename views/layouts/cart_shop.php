@@ -71,7 +71,11 @@
 								<li><a href=""><i class="fa fa-user"></i> Account</a></li>
 								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
 								<li><a href="index.php?r=cart/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-								<li><a href="index.php?r=cart/login"><i class="fa fa-lock"></i> Login</a></li>
+								<?php if(Yii::$app->user->identity){
+									echo '<li><a href="index.php?r=site/logout"><i class="fa fa-lock"></i> Logout</a></li>';
+								}else{
+									echo '<li><a href="index.php?r=cart/login"><i class="fa fa-lock"></i> Login</a></li>';
+								}  ?>
 							</ul>
 						</div>
 					</div>
