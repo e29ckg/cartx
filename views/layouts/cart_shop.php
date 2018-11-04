@@ -309,30 +309,15 @@
 	<script >
 		$(document).ready(function() {
 			// add-to-cart
-			
-			
-			// add-to-cart
-			// $( ".add-to-cart" ).click(function() {    
-    		// 	var url = "index.php?r=cart/add_to_cart";
-			// 	id= $(this).data("id");
-        	// 	$.get(url,{q:id},function (data){
-			// 			$("#content").html(data);
-        	// 		}
-			// 	);     
-			// }); 
-
-			var url = "index.php?r=cart/add_to_cart";
-			$( ".add-to-cart" ).click(function() {
-        	$.get(url,function (data){
-                $("#exampleModal").find(".modal-body").html(data);
-                $(".modal-body").html(data);
-                $(".modal-title").html("เพิ่มข้อมูล");
-            	// $(".modal-footer").html(footer);
-                $("#exampleModal").modal("show");
-                //   $("#myModal").modal('toggle');
-        	});     
-		}); 	
-
+						
+			$( ".add-to-cart" ).click(function() {    
+    			var url = "index.php?r=cart/add_to_cart";
+				id= $(this).data("id");
+        		$.get(url,{q:id},function (data){
+						$("#content").html(data);
+        			}
+				);     
+			});  	
 
 			$( ".search-m" ).click(function() {    
     			var url_create = "index.php?r=cart/search";
@@ -363,7 +348,7 @@
 </body>
 </html>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>

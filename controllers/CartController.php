@@ -84,8 +84,8 @@ class CartController extends Controller
 
     public function actionCart()
     {
-        $this->layout = 'bg';
-        // $this->layout = 'cart';
+        // $this->layout = 'bg';
+        $this->layout = 'cart_shop';
         
         
         return $this->render('cart',[
