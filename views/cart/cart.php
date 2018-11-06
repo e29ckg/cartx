@@ -1,3 +1,4 @@
+<?=var_dump($models)?>
 <section id="cart_items">
 		<div class="container">
 			<div class="breadcrumbs">
@@ -19,13 +20,15 @@
 						</tr>
 					</thead>
 					<tbody>
+
+						<?php foreach ($models as $model): ?>
 						<tr>
 							<td class="cart_product">
 								<a href=""><img src="images/cart/one.png" alt=""></a>
 							</td>
 							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
-								<p>Web ID: 1089772</p>
+								<h4><a href=""><?=$model->product_name?></a></h4>
+								<p>Web ID: <?=$model->product_name?></p>
 							</td>
 							<td class="cart_price">
 								<p>$59</p>
@@ -44,6 +47,7 @@
 								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
 							</td>
 						</tr>
+						<?php  endforeach; ?>
 
 						<tr>
 							<td class="cart_product">

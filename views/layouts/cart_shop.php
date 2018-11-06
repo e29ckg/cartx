@@ -313,7 +313,7 @@
 			$( ".add-to-cart" ).click(function() {    
     			var url = "index.php?r=cart/add_to_cart";
 				id= $(this).data("id");
-        		$.get(url,{q:id},function (data){
+        		$.get(url,{id:id},function (data){
 						$("#content").html(data);
         			}
 				);     

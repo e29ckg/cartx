@@ -67,9 +67,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        //s$this->layout = 'loginl';
-        return $this->render('index');
-        //return $this->render('test');
+        // $this->layout = 'loginl';
+        // return $this->render('index');
+        return $this->redirect(['cart/index']);
     }
 
     /**

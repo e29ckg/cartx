@@ -87,9 +87,20 @@ class CartController extends Controller
         // $this->layout = 'bg';
         $this->layout = 'cart_shop';
         
+        $Total = 0 ;
+            $sumTotal = 0;
+            //  $model = Product::find()->all();
+			for($i=0;$i<=(int)$_SESSION['inLine'];$i++){
+				if($_SESSION['strProduct']){
+                    $model = Product::find($_SESSION['strProduct'][$i])->one();
+                    $ss['strProduct'][$i] =  $_SESSION['inLine'][$i];
+					//  $Total = $_SESSION['strQty'][$i] * $model->price;
+                    // $sumTotal = $sumTotal + $Total;
+                }
+            }
         
         return $this->render('cart',[
-            
+            'models' => $ss,
         ]);
     }
 
@@ -320,13 +331,30 @@ class CartController extends Controller
         }
     }
 
-    public function actionAdd_to_cart($q = null) {
-        $this->layout = 'cart_shop'; 
-        $query = Product::find()->all();
+    public function actionAdd_to_cart($id = null) {
+        //$this->layout = 'cart_shop'; 
+        if (!isset($_SESSION['inLine'])){
+            $_SESSION['inLine'] = 0;
+            $_SESSION['strProduct'][0] = $id; 
+            $_SESSION['strQty'][0] = 1;
+            
+        } else {
+            $key = array_search($id, $_SESSION['strProduct']);
+            if((string)$key != ""){
+                $_SESSION['strQty'][$key] = $_SESSION['strQty'][$key] + 1;
+            }else{
+                $_SESSION['inLine'] = $_SESSION['inLine'] + 1;
+                $inNewLine =  $_SESSION['inLine'];
+                $_SESSION['strProduct'][$inNewLine ] = $id; 
+                $_SESSION['strQty'][$inNewLine ] = 1;
+            }
+            
+        }
+            
+
+        // $query = Product::find()->all();
         // $models = $query->orderBy(['id' => SORT_ASC])->all();
-        return $this->renderAjax('cart',[
-            'models' => $query, 
-        ]);
+        return $this->renderAjax('cart');
     }
 }
 
