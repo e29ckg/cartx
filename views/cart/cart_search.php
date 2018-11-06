@@ -33,7 +33,7 @@ use yii\data\Pagination;
 									</ul>
 								</div>
 							</div>
-                        </div>
+						</div>
 
 						<?php  endforeach; ?>
                         <div>
@@ -57,7 +57,8 @@ use yii\data\Pagination;
 			$( ".add-to-cart" ).click(function() {    
     			var url = "index.php?r=cart/add_to_cart";
 				id= $(this).data("id");
-        		$.get(url,{q:id},function (data){
+				// alert(id);
+        		$.get(url,{id:id},function (data){
 						$("#content").html(data);
         			}
 				);     

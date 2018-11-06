@@ -312,13 +312,45 @@
 			$( ".add-to-cart" ).click(function() {    
     			var url = "index.php?r=cart/add_to_cart";
 				id= $(this).data("id");
+				
         		$.get(url,{id:id},function (data){
 						$("#content").html(data);
         			}
 				);     
 			});  
+			
+			$(".qty_up").click(function() {    
+    			var url = "index.php?r=cart/qty_up";
+				id= $(this).data("id");
+				// alert(val);
+        		$.get(url,{id:id},function (data){
+						$("#content").html(data);
+        			}
+				);     
+			});
 
-			// // delete_item
+			$(".qty_down").click(function() {    
+    			var url = "index.php?r=cart/qty_down";
+				id= $(this).data("id");
+				// alert(val);
+        		$.get(url,{id:id},function (data){
+						$("#content").html(data);
+        			}
+				);     
+			});
+
+			$(".quantity-input").change(function() {    
+    			var url = "index.php?r=cart/qty_change";
+				id= $(this).data("id");
+				val= $(this).val();
+				// alert(val);
+        		$.get(url,{id:id,val:val},function (data){
+						$("#content").html(data);
+        			}
+				);     
+			});
+
+			// delete_item
 			// $(".delete_item" ).click(function() {    
     		// 	var url = "index.php?r=cart/delete";
 			// 	id= $(this).data("id");
@@ -357,22 +389,3 @@
 	</script>
 </body>
 </html>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>

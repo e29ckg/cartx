@@ -141,13 +141,5 @@ class Cart extends \yii\db\ActiveRecord
        return $json;
     }
 
-public function getProduct()
-{
-    return $this->hasOne(Product::className(), ['id' => 'category']);
-}
 
-public function getProductName(){
-    $model=$this->catalog;
-    return $model?$model->name_catalog:'';
-}
 }

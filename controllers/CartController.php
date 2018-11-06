@@ -288,6 +288,31 @@ class CartController extends Controller
         return $this->render('cart'); 
         // return $this->renderAjax('cart');
     }
+
+    public function actionQty_up($id = null) {
+        $this->layout = 'cart_shop'; 
+        $_SESSION['strQty'][$id] = $_SESSION['strQty'][$id] + 1 ;
+        // return $this->render('cart'); 
+        return $this->renderAjax('cart');
+    }
+
+    public function actionQty_down($id = null) {
+        $this->layout = 'cart_shop'; 
+        if($_SESSION['strQty'][$id] > 1){
+            $_SESSION['strQty'][$id] = $_SESSION['strQty'][$id] - 1 ;
+        }        
+        // return $this->render('cart'); 
+        return $this->renderAjax('cart');
+    }
+
+    public function actionQty_change($id = null,$val = null) {
+        $this->layout = 'cart_shop'; 
+      
+            $_SESSION['strQty'][$id] = $val ;
+               
+        // return $this->render('cart'); 
+        return $this->renderAjax('cart');
+    }
 }
 
 
