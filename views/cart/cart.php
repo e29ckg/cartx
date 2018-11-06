@@ -1,4 +1,8 @@
-<?=var_dump($models)?>
+<?php
+use app\models\Product;
+// echo var_dump($_SESSION['inLine']);
+?>
+
 <section id="cart_items">
 		<div class="container">
 			<div class="breadcrumbs">
@@ -20,34 +24,53 @@
 						</tr>
 					</thead>
 					<tbody>
+						<?php
+							$Total = 0 ;
+            				$sumTotal = 0;
+							//  $model = Product::find()->all();
+							if(isset($_SESSION['inLine'])){
+								for($i=0;$i<=(int)$_SESSION['inLine'];$i++){
+									if($_SESSION['strProductId'][$i] != ""){
+										$idProduct=$_SESSION['strProductId'][$i];
+                    					$model = Product::find()->where(['id'=> $idProduct])->one();
+                    					// $ss['strProductId'][$i] =  $_SESSION['inLine'][$i];
+										$Total = $_SESSION['strQty'][$i] * $model->price;
+										$sumTotal = $sumTotal + $Total;
+										echo $model->product_name;
+										
+						?>
+							<tr>
+								<td class="cart_product"><a href=""><img src="images/cart/one.png" alt=""></a></td>
+								<td class="cart_description">
+									<h4><a href=""><?=$model->product_name?></a></h4>
+									<p>Web ID:<?=$model->id?> </p>
+								</td>
+								<td class="cart_price">
+									<p>$<?=$model->price?></p>
+								</td>
+								<td class="cart_quantity">
+									<div class="cart_quantity_button">
+										<a class="cart_quantity_up" href=""> + </a>
+										<input class="cart_quantity_input" type="text" name="quantity" value="<?=$_SESSION['strQty'][$i]?>" autocomplete="off" size="2">
+										<a class="cart_quantity_down" href=""> - </a>
+									</div>
+								</td>
+								<td class="cart_total">
+									<p class="cart_total_price">$<?=$Total?> </p>
+								</td>
+								<td class="cart_delete">
+									<a class="cart_quantity_delete " data-id="<?=$i?>" href="index.php?r=cart/delete&id=<?=$i?>"><i class="fa fa-times"></i></a>
+								</td>
+							</tr>						
 
-						<?php foreach ($models as $model): ?>
-						<tr>
-							<td class="cart_product">
-								<a href=""><img src="images/cart/one.png" alt=""></a>
-							</td>
-							<td class="cart_description">
-								<h4><a href=""><?=$model->product_name?></a></h4>
-								<p>Web ID: <?=$model->product_name?></p>
-							</td>
-							<td class="cart_price">
-								<p>$59</p>
-							</td>
-							<td class="cart_quantity">
-								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href=""> + </a>
-									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-									<a class="cart_quantity_down" href=""> - </a>
-								</div>
-							</td>
-							<td class="cart_total">
-								<p class="cart_total_price">$59</p>
-							</td>
-							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-							</td>
-						</tr>
-						<?php  endforeach; ?>
+						<?php
+                					}
+								}
+							}
+			
+						?>
+
+						
 
 						<tr>
 							<td class="cart_product">
@@ -96,7 +119,7 @@
 								<p class="cart_total_price">$59</p>
 							</td>
 							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+								<a class="cart_quantity_delete delete_item" href=""><i class="fa fa-times"></i></a>
 							</td>
 						</tr>
 					</tbody>
@@ -104,3 +127,4 @@
 			</div>
 		</div>
 	</section> <!--/#cart_items-->
+	

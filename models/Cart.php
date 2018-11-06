@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use app\models\Product;
+
 use yii\base\Model;
 use yii\web\UploadedFile;
 
@@ -137,5 +139,15 @@ class Cart extends \yii\db\ActiveRecord
            $json = $tempFile;
         }
        return $json;
+    }
+
+public function getProduct()
+{
+    return $this->hasOne(Product::className(), ['id' => 'category']);
+}
+
+public function getProductName(){
+    $model=$this->catalog;
+    return $model?$model->name_catalog:'';
 }
 }

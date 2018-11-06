@@ -43,7 +43,7 @@ class CartController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    // 'delete' => ['POST'],
                 ],
             ],
         ];
@@ -87,21 +87,9 @@ class CartController extends Controller
         // $this->layout = 'bg';
         $this->layout = 'cart_shop';
         
-        $Total = 0 ;
-            $sumTotal = 0;
-            //  $model = Product::find()->all();
-			for($i=0;$i<=(int)$_SESSION['inLine'];$i++){
-				if($_SESSION['strProduct']){
-                    $model = Product::find($_SESSION['strProduct'][$i])->one();
-                    $ss['strProduct'][$i] =  $_SESSION['inLine'][$i];
-					//  $Total = $_SESSION['strQty'][$i] * $model->price;
-                    // $sumTotal = $sumTotal + $Total;
-                }
-            }
         
-        return $this->render('cart',[
-            'models' => $ss,
-        ]);
+        
+        return $this->render('cart');
     }
 
     public function actionLogin()
@@ -208,53 +196,7 @@ class CartController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        $filename = $model->photo;
-
-        //Add This For Ajax Email Exist Validation 
-        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-          } 
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $f = UploadedFile::getInstance($model, 'photo');
-
-            if(!empty($f)){
-                
-                $dir = Url::to('@webroot/uploads/contact/');
-                if (!is_dir($dir)) {
-                    mkdir($dir, 0777, true);
-                }                
-                if($filename && is_file($dir.$filename)){
-                    unlink($dir.$filename);// ลบ รูปเดิม;                    
-                    
-                }
-                $fileName = md5($f->baseName . time()) . '.' . $f->extension;
-                if($f->saveAs($dir . $fileName)){
-                    $model->photo = $fileName;
-                }
-                $model->save();   
-                return $this->redirect(['index', 'id' => $filename]);                            
-            }
-            $model->photo = $filename;
-            $model->save();          
-            return $this->redirect(['index', 'id' => $filename]);
-        }
-        if(Yii::$app->request->isAjax){
-            return $this->renderAjax('update',[
-                    'model' => $model,                    
-            ]);
-        }
-        
-        return $this->render('update',[
-               'model' => $model,                    
-        ]); 
-        
-    }
+    
 
     /**
      * Deletes an existing Profile model.
@@ -263,21 +205,7 @@ class CartController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
-    {
-        $model = $this->findModel($id);
-        $filename = $model->photo;
-        $dir = Url::to('@webroot/uploads/contact/');
-        
-        if($filename && is_file($dir.$filename)){
-            unlink($dir.$filename);// ลบ รูปเดิม;                    
-        }
-        
-        $model->delete();
-
-        return $this->redirect(['index']);
-    }
-
+    
     /**
      * Finds the Profile model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -335,26 +263,30 @@ class CartController extends Controller
         //$this->layout = 'cart_shop'; 
         if (!isset($_SESSION['inLine'])){
             $_SESSION['inLine'] = 0;
-            $_SESSION['strProduct'][0] = $id; 
+            $_SESSION['strProductId'][0] = $id; 
             $_SESSION['strQty'][0] = 1;
             
         } else {
-            $key = array_search($id, $_SESSION['strProduct']);
+            $key = array_search($id, $_SESSION['strProductId']);
             if((string)$key != ""){
                 $_SESSION['strQty'][$key] = $_SESSION['strQty'][$key] + 1;
             }else{
                 $_SESSION['inLine'] = $_SESSION['inLine'] + 1;
                 $inNewLine =  $_SESSION['inLine'];
-                $_SESSION['strProduct'][$inNewLine ] = $id; 
+                $_SESSION['strProductId'][$inNewLine ] = $id; 
                 $_SESSION['strQty'][$inNewLine ] = 1;
             }
             
-        }
-            
-
-        // $query = Product::find()->all();
-        // $models = $query->orderBy(['id' => SORT_ASC])->all();
+        }    
         return $this->renderAjax('cart');
+    }
+
+    public function actionDelete($id = null) {
+        $this->layout = 'cart_shop'; 
+        $_SESSION['strProductId'][$id] = ""; 
+        $_SESSION['strQty'][$id] = "";
+        return $this->render('cart'); 
+        // return $this->renderAjax('cart');
     }
 }
 

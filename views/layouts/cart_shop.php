@@ -308,8 +308,7 @@
     <script src="js/main.js"></script>
 	<script >
 		$(document).ready(function() {
-			// add-to-cart
-						
+			// add-to-cart						
 			$( ".add-to-cart" ).click(function() {    
     			var url = "index.php?r=cart/add_to_cart";
 				id= $(this).data("id");
@@ -317,7 +316,18 @@
 						$("#content").html(data);
         			}
 				);     
-			});  	
+			});  
+
+			// // delete_item
+			// $(".delete_item" ).click(function() {    
+    		// 	var url = "index.php?r=cart/delete";
+			// 	id= $(this).data("id");
+        	// 	$.get(url,{id:id},function (data){
+			// 		alert(id);
+			// 			$("#content").html(data);						
+        	// 		}
+			// 	); 			
+			// }); 
 
 			$( ".search-m" ).click(function() {    
     			var url_create = "index.php?r=cart/search";
