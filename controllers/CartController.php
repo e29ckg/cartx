@@ -65,7 +65,7 @@ class CartController extends Controller
 
         $query = Product::find();
         $pagination = new Pagination([
-            'defaultPageSize' => 10,
+            'defaultPageSize' => 100,
             'totalCount' => $query->count(),
         ]);
     
