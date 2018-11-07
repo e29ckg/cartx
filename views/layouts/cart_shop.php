@@ -74,11 +74,11 @@ $modelCatalogs = ProductCatalog::find()->all();
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
 								<li><?php if(Yii::$app->user->identity->username == 'admin'){
-									echo '<li><a href="index.php?r=site/index"><i class="fa fa-lock"></i> bankEnd</a></li>';
+									echo '<li><a href="index.php?r=site/index"><i class="fa fa-lock"></i> blankEnd</a></li>';
 								}?>
-								<!-- <li><a href=""><i class="fa fa-user"></i> Account</a></li>
-								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li> -->
-								<li><a href="index.php?r=cart/cart"><i class="fa fa-shopping-cart"></i> Cart <span class="badge">2</span></a></li>
+								<li><a href="index.php?r=cart/account"><i class="fa fa-user"></i> Account</a></li>
+								<!-- <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li> -->
+								<li><a href="index.php?r=cart/cart"><i class="fa fa-shopping-cart"></i> Cart <span id="badge_cart" class="badge"></span></a></li>
 								<?php if(Yii::$app->user->identity){
 									echo '<li><a href="index.php?r=site/logout"><i class="fa fa-lock"></i> Logout</a></li>';
 								}else{
@@ -342,6 +342,7 @@ $modelCatalogs = ProductCatalog::find()->all();
 				// alert(val);
         		$.get(url,{id:id},function (data){
 						$("#content").html(data);
+						$("#badge_cart").html($i);
         			}
 				);     
 			});
@@ -360,11 +361,18 @@ $modelCatalogs = ProductCatalog::find()->all();
     			var url = "index.php?r=cart/qty_change";
 				id= $(this).data("id");
 				val= $(this).val();
+				// $("#badge_cart").html(val);
+			});
+
+			$("#content").change(function() {    
+    			var url = "index.php?r=cart/qty_change";
+				id= $(this).data("id");
+				val= $(this).val();
 				// alert(val);
-        		$.get(url,{id:id,val:val},function (data){
-						$("#content").html(data);
-        			}
-				);     
+        		// $.get(url,{id:id,val:val},function (data){
+				// 		$("#content").html(data);
+        		// 	}
+				// );     
 			});
 
 			// delete_item

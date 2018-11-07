@@ -114,7 +114,9 @@ use app\models\Product;
 									</tr>
 									<tr>
 										<td>Total</td>
-										<td><span><a class="btn btn-warning"><i class="fa fa-crosshairs"></i> Checkout</a></span></td>
+										<td>
+											<a class="btn btn-warning" href="index.php?r=cart/checkout"><i class="fa fa-crosshairs"></i> Checkout</a>
+										</td>
 									</tr>
 								</tbody>
 								</table>

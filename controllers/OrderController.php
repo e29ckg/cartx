@@ -54,7 +54,7 @@ class OrderController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $model_lists = OrderList::find()->where(['id_order'=> $model->id])->all();
+        $model_lists = OrderList::find()->where(['id_order'=> $model->code])->all();
 
         return $this->render('view', [
             'model' => $model,

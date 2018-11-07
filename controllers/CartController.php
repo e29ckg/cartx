@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\Cart;
 use app\models\Product;
+use app\models\Order;
+use app\models\OrderList;
 use app\models\ProductCatalog;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -85,8 +87,7 @@ class CartController extends Controller
     public function actionCart()
     {
         // $this->layout = 'bg';
-        $this->layout = 'cart_shop';
-        
+        $this->layout = 'cart_shop';        
         
         
         return $this->render('cart');
@@ -313,6 +314,74 @@ class CartController extends Controller
         // return $this->render('cart'); 
         return $this->renderAjax('cart');
     }
+
+    public function actionCheckout() {
+        $this->layout = 'cart_shop';       
+               
+        return $this->render('checkout'); 
+        // return $this->renderAjax('checkout');
+    }
+
+    public function actionSave_order() {
+        $this->layout = 'cart_shop';    
+
+        $code = date("YmdHis").Yii::$app->security->generateRandomString(4);
+        $create_at = date("Y-m-d H:i:s");
+        try {
+            Yii::$app->db->createCommand()->insert('order', [
+                'code' => $code,
+                'id_user' => Yii::$app->user->identity->id,
+                'status' => 1,
+                'create_at' => $create_at,
+            ])->execute();
+
+            $Total = 0 ;
+            $sumTotal = 0;
+							//  $model = Product::find()->all();
+			if(isset($_SESSION['inLine'])){
+				for($i=0;$i<=(int)$_SESSION['inLine'];$i++){
+					if($_SESSION['strProductId'][$i] != ""){
+						$idProduct=$_SESSION['strProductId'][$i];
+            			$model = Product::find()->where(['id'=> $idProduct])->one();
+               					// $ss['strProductId'][$i] =  $_SESSION['inLine'][$i];
+						$Total = $_SESSION['strQty'][$i] * $model->price;
+                        $sumTotal = $sumTotal + $Total;
+                        $strQty = $_SESSION['strQty'][$i];
+                        
+                        Yii::$app->db->createCommand()->insert('order_list', [
+                            'id_order' => $code,
+                            'id_product' => $model->id,
+                            'quantity' => $strQty,
+                            'create_at' => $create_at,
+                        ])->execute();
+                    }
+                }
+            }
+            unset($_SESSION['inLine']);	
+            unset($_SESSION['strProductId']);	
+            unset($_SESSION['strQty']);
+
+		} catch(\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch(\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }			
+
+        return $this->render('checkout'); 
+        // return $this->renderAjax('checkout');
+    }
+
+    public function actionAccount() {
+        $this->layout = 'cart_shop';   
+        $user_id = Yii::$app->user->identity;
+        $model = Order::find()->where(['id_user'=> $user_id])->all();
+        return $this->render('account',[
+            'models' => $model,
+    ]); 
+    }
+
 }
 
 
