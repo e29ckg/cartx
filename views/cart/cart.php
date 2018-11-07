@@ -89,9 +89,39 @@ use app\models\Product;
 										<td>Total</td>
 										<td><span>$ <?=$sumTotal?></span></td>
 									</tr>
-								</tbody></table>
+								</tbody>
+								</table>
 							</td>
 						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td colspan="2">
+								<table class="table table-condensed total-result">
+									<tbody><tr>
+										<!-- <td>Cart Sub Total</td>
+										<td>$59</td> -->
+									</tr>
+									<tr>
+										<!-- <td>Exo Tax</td>
+										<td>$2</td> -->
+									</tr>
+									<tr class="shipping-cost">
+										<!-- <td>Shipping Cost</td>
+										<td>Free</td>										 -->
+									</tr>
+									<tr>
+										<td>Total</td>
+										<td><span><a class="btn btn-warning"><i class="fa fa-crosshairs"></i> Checkout</a></span></td>
+									</tr>
+								</tbody>
+								</table>
+							</td>
+						
+						</tr>
+
 					</tbody>
 				</table>
 			</div>
