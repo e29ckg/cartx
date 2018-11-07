@@ -1,3 +1,8 @@
+<?php
+
+use app\models\ProductCatalog;
+$modelCatalogs = ProductCatalog::find()->all();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,8 +73,11 @@
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href=""><i class="fa fa-user"></i> Account</a></li>
-								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+								<li><?php if(Yii::$app->user->identity->username == 'admin'){
+									echo '<li><a href="index.php?r=site/index"><i class="fa fa-lock"></i> bankEnd</a></li>';
+								}?>
+								<!-- <li><a href=""><i class="fa fa-user"></i> Account</a></li>
+								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li> -->
 								<li><a href="index.php?r=cart/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
 								<?php if(Yii::$app->user->identity){
 									echo '<li><a href="index.php?r=site/logout"><i class="fa fa-lock"></i> Logout</a></li>';
@@ -97,8 +105,8 @@
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="index.html">Home</a></li>
-								<li class="dropdown"><a href="#" class="active">Shop<i class="fa fa-angle-down"></i></a>
+								<li><a href="index.php?r=cart/index">Home</a></li>
+								<!-- <li class="dropdown"><a href="#" class="active">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="index.php?r=cart/index" class="active">Products</a></li>
 										<li><a href="product-details.html">Product Details</a></li> 
@@ -106,15 +114,26 @@
 										<li><a href="index.php?r=cart/cart">Cart</a></li> 
 										<li><a href="index.php?r=cart/login">Login</a></li> 
                                     </ul>
+                                </li>  -->
+								<li class="dropdown"><a href="#" class="active">Shop<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+									<?php 
+										foreach ($modelCatalogs as $modelCatalog): 
+											echo "<li><a class='' data-id='$modelCatalog->id' href='index.php?r=cart/search&m=$modelCatalog->id'> $modelCatalog->name_catalog</a></li>";
+									  	endforeach; 
+									?>
+                                    </ul>
                                 </li> 
-								<li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
+
+								
+								<!-- <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="blog.html">Blog List</a></li>
 										<li><a href="blog-single.html">Blog Single</a></li>
                                     </ul>
                                 </li> 
 								<li><a href="404.html">404</a></li>
-								<li><a href="contact-us.html">Contact</a></li>
+								<li><a href="contact-us.html">Contact</a></li> -->
 							</ul>
 						</div>
 					</div>
@@ -139,9 +158,7 @@
 	<?= $content ?>
 
 </div>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>	
+	
 	<footer id="footer"><!--Footer-->
 		<div class="footer-top">
 			<div class="container">

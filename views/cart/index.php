@@ -25,36 +25,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-3">
-					<div class="left-sidebar">
-						<h2>Category</h2>
-						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
-														
-							<?php foreach ($modelCatalogs as $modelCatalog): ?>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<!-- <h4 class="panel-title"><a class="search-m" href="index.php?r=cart/search&m=<?=$modelCatalog->id?>"><?=$modelCatalog->name_catalog?></a></h4> -->
-									<h4 class="panel-title"><a class="search-m" data-id="<?=$modelCatalog->id?>" href="#"><?=$modelCatalog->name_catalog?></a></h4>
-								</div>
-							</div>
-							<?php  endforeach; ?>
-							
-						</div><!--/category-productsr-->					
-						
-						<div class="shipping text-center"><!--shipping-->
-							<!-- <img src="images/home/shipping.jpg" alt="" /> -->
-						</div><!--/shipping-->
-						
-					</div>
-				</div>
 				
-				<div class="col-sm-9 padding-right">
+				
+				<div class="col-sm-12 padding-right">
 					<div id="features_items" class="features_items"><!--features_items-->
 						<h2 class="title text-center">Features Items</h2>
 						
 						<?php foreach ($models as $model): ?>
 
-						<div class="col-sm-4">
+						<div class="col-sm-3">
 							<div class="product-image-wrapper">
 								<div class="single-products">
 									<div class="productinfo text-center">
