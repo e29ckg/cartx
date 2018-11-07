@@ -45,7 +45,7 @@ use app\models\Product;
 									<p>Web ID:<?=$model->id?> </p>
 								</td>
 								<td class="cart_price">
-									<p>$<?=$model->price?></p>
+									<p>$ <?= $model->price?></p>
 								</td>
 								<td class="cart_quantity">
 									<div class="cart_quantity_button">
@@ -55,7 +55,7 @@ use app\models\Product;
 									</div>
 								</td>
 								<td class="cart_total">
-									<p class="cart_total_price">$<?=$Total?> </p>
+									<p class="cart_total_price">$ <?=$Total?> </p>
 								</td>
 								<td class="cart_delete">
 									<a class="cart_quantity_delete " data-id="<?=$i?>" href="index.php?r=cart/delete&id=<?=$i?>"><i class="fa fa-times"></i></a>
@@ -87,7 +87,7 @@ use app\models\Product;
 									</tr>
 									<tr>
 										<td>Total</td>
-										<td><span>$<?=$sumTotal?></span></td>
+										<td><span>$ <?=$sumTotal?></span></td>
 									</tr>
 								</tbody></table>
 							</td>
