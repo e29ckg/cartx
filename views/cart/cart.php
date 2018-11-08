@@ -12,6 +12,12 @@ use app\models\Product;
 				</ol>
 			</div> -->
 			<div class="table-responsive cart_info">
+			<?php
+							$Total = 0 ;
+            				$sumTotal = 0;
+							//  $model = Product::find()->all();
+								?>
+
 				<table class="table table-condensed">
 					<thead>
 						<tr class="cart_menu">
@@ -25,10 +31,7 @@ use app\models\Product;
 					</thead>
 					<tbody>
 						<?php
-							$Total = 0 ;
-            				$sumTotal = 0;
-							//  $model = Product::find()->all();
-							if(isset($_SESSION['inLine'])){
+						if(isset($_SESSION['inLine'])){
 								for($i=0;$i<=(int)$_SESSION['inLine'];$i++){
 									if($_SESSION['strProductId'][$i] != ""){
 										$idProduct=$_SESSION['strProductId'][$i];
@@ -62,12 +65,7 @@ use app\models\Product;
 								</td>
 							</tr>						
 
-						<?php
-                					}
-								}
-							}
-			
-						?>
+						<?php }	} } ?>								
 
 						<tr>
 							<td colspan="4">&nbsp;</td>
@@ -86,8 +84,11 @@ use app\models\Product;
 										<td>Free</td>										 -->
 									</tr>
 									<tr>
+									<?php if($sumTotal<>0){ ?>
 										<td>Total</td>
 										<td><span>$ <?=$sumTotal?></span></td>
+									<?php } ?>
+										
 									</tr>
 								</tbody>
 								</table>
@@ -110,12 +111,12 @@ use app\models\Product;
 									</tr>
 									<tr class="shipping-cost">
 										<!-- <td>Shipping Cost</td>
-										<td>Free</td>										 -->
+										<td>Free</td>-->
 									</tr>
 									<tr>
-										<td>Total</td>
+										<td></td>
 										<td>
-											<a class="btn btn-warning" href="index.php?r=cart/checkout"><i class="fa fa-crosshairs"></i> Checkout</a>
+											<?= $sumTotal <> 0 ? '<a class="btn btn-warning" href="index.php?r=cart/checkout"><i class="fa fa-crosshairs"></i> Checkout</a>' : "" ?>
 										</td>
 									</tr>
 								</tbody>
@@ -126,6 +127,7 @@ use app\models\Product;
 
 					</tbody>
 				</table>
+				
 			</div>
 		</div>
 	</section> <!--/#cart_items-->

@@ -369,7 +369,7 @@ class CartController extends Controller
             throw $e;
         }			
 
-        return $this->render('checkout'); 
+        return $this->render('account'); 
         // return $this->renderAjax('checkout');
     }
 
