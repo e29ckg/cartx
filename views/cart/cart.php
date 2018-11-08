@@ -16,6 +16,7 @@ use app\models\Product;
 							$Total = 0 ;
             				$sumTotal = 0;
 							//  $model = Product::find()->all();
+							
 								?>
 
 				<table class="table table-condensed">
