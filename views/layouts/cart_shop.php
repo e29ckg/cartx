@@ -77,7 +77,7 @@ $modelCatalogs = ProductCatalog::find()->all();
 									echo '<li><a href="index.php?r=site/index"><i class="fa fa-lock"></i> blankEnd</a></li>';
 								}?>
 								<li><a href="index.php?r=cart/account"><i class="fa fa-user"></i> Account</a></li>
-								<!-- <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li> -->
+								<li><a href="index.php?r=cart/print"><i class="fa fa-crosshairs"></i> Checkout</a></li>
 								<li><a href="index.php?r=cart/cart"><i class="fa fa-shopping-cart"></i> Cart <span id="badge_cart" class="badge"></span></a></li>
 								<?php if(Yii::$app->user->identity){
 									echo '<li><a href="index.php?r=site/logout"><i class="fa fa-lock"></i> Logout</a></li>';
