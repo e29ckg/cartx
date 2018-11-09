@@ -385,6 +385,15 @@ class CartController extends Controller
     ]); 
     }
 
+    public function actionPrint() {
+        $this->layout = 'blank';   
+        $user_id = Yii::$app->user->id;
+        $model = Order::find()->where(['id_user'=> $user_id])->orderBy(['create_at' => SORT_DESC])->all();
+        return $this->render('print',[
+            'models' => $model,
+    ]); 
+    }
+
 }
 
 
