@@ -31,7 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
 					<div id="features_items" class="features_items"><!--features_items-->
 						<h2 class="title text-center">Features Items</h2>
 						
-						<?php foreach ($models as $model): ?>
+						<?php foreach ($models as $model):
+						  	if($model->instoke >= 1){
+
+							  
+						?>
 
 						<div class="col-sm-3">
 							<div class="product-image-wrapper">
@@ -59,7 +63,10 @@ $this->params['breadcrumbs'][] = $this->title;
 							</div>
 						</div>
 
-						<?php  endforeach; ?>
+						<?php 
+							}	
+						endforeach; 
+						?>
 						
 					</div><!--features_items-->
 					<div>

@@ -89,7 +89,6 @@ class CartController extends Controller
         // $this->layout = 'bg';
         $this->layout = 'cart_shop';        
         
-        
         return $this->render('cart');
     }
 
@@ -189,40 +188,7 @@ class CartController extends Controller
             ]); 
         }
     }    
-
-    /**
-     * Updates an existing Profile model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     
-
-    /**
-     * Deletes an existing Profile model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    
-    /**
-     * Finds the Profile model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Profile the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Co::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
     public function actionSearch($q = null,$m = null) {
 
         $this->layout = 'cart_shop'; 
@@ -271,6 +237,15 @@ class CartController extends Controller
             $key = array_search($id, $_SESSION['strProductId']);
             if((string)$key != ""){
                 $_SESSION['strQty'][$key] = $_SESSION['strQty'][$key] + 1;
+
+                $strQty = $_SESSION['strQty'][$key];
+                $idProduct = $_SESSION['strProductId'][$key];
+                $model = Product::find()->where(['id'=> $idProduct])->one();
+                if ($model->instoke > $strQty){
+                    $_SESSION['strQty'][$key] = $_SESSION['strQty'][$key] + 1 ;
+                }else{
+                    $_SESSION['strQty'][$key] = $model->instoke ;
+                }   
             }else{
                 $_SESSION['inLine'] = $_SESSION['inLine'] + 1;
                 $inNewLine =  $_SESSION['inLine'];
@@ -278,7 +253,9 @@ class CartController extends Controller
                 $_SESSION['strQty'][$inNewLine ] = 1;
             }
             
-        }    
+            
+        } 
+        
         return $this->renderAjax('cart');
     }
 
@@ -292,13 +269,21 @@ class CartController extends Controller
 
     public function actionQty_up($id = null) {
         $this->layout = 'cart_shop'; 
-        $_SESSION['strQty'][$id] = $_SESSION['strQty'][$id] + 1 ;
+        $strQty = $_SESSION['strQty'][$id];
+        $idProduct=$_SESSION['strProductId'][$id];
+        $model = Product::find()->where(['id'=> $idProduct])->one();
+        if ($model->instoke > $strQty){
+            $_SESSION['strQty'][$id] = $_SESSION['strQty'][$id] + 1 ;
+        }else{
+            $_SESSION['strQty'][$id] ;
+        }
+        
         // return $this->render('cart'); 
         return $this->renderAjax('cart');
     }
 
     public function actionQty_down($id = null) {
-        $this->layout = 'cart_shop'; 
+        $this->layout = 'cart_shop';         
         if($_SESSION['strQty'][$id] > 1){
             $_SESSION['strQty'][$id] = $_SESSION['strQty'][$id] - 1 ;
         }        
@@ -308,8 +293,18 @@ class CartController extends Controller
 
     public function actionQty_change($id = null,$val = null) {
         $this->layout = 'cart_shop'; 
-      
-            $_SESSION['strQty'][$id] = $val ;
+        $idProduct = $_SESSION['strProductId'][$id];
+        $model = Product::find()->where(['id'=> $idProduct])->one();
+                
+        if($model->instoke >= $val){
+                $_SESSION['strQty'][$id] = $val ;
+        }else{
+            $_SESSION['strQty'][$id] = $model->instoke;
+        }
+
+        if($_SESSION['strQty'][$id] <= 0){
+            $_SESSION['strQty'][$id] = 1 ;
+        }        
                
         // return $this->render('cart'); 
         return $this->renderAjax('cart');
@@ -341,22 +336,30 @@ class CartController extends Controller
 			if(isset($_SESSION['inLine'])){
 				for($i=0;$i<=(int)$_SESSION['inLine'];$i++){
 					if($_SESSION['strProductId'][$i] != ""){
-						$idProduct=$_SESSION['strProductId'][$i];
+						$idProduct = $_SESSION['strProductId'][$i];
             			$model = Product::find()->where(['id'=> $idProduct])->one();
                					// $ss['strProductId'][$i] =  $_SESSION['inLine'][$i];
 						$Total = $_SESSION['strQty'][$i] * $model->price;
                         $sumTotal = $sumTotal + $Total;
                         $strQty = $_SESSION['strQty'][$i];
                         
+
                         Yii::$app->db->createCommand()->insert('order_list', [
                             'id_order' => $code,
                             'id_product' => $model->id,
                             'quantity' => $strQty,
                             'create_at' => $create_at,
                         ])->execute();
+
+                        $Qty =  $model->instoke - $strQty;
+                        Yii::$app->db->createCommand()->update('product', [
+                            'instoke' => $Qty 
+                        ], 'id = '.$idProduct)->execute();
+                        
                     }
                 }
             }
+
             unset($_SESSION['inLine']);	
             unset($_SESSION['strProductId']);	
             unset($_SESSION['strQty']);
@@ -369,14 +372,14 @@ class CartController extends Controller
             throw $e;
         }			
 
-        return $this->render('account'); 
+        return $this->redirect(['account']); 
         // return $this->renderAjax('checkout');
     }
 
     public function actionAccount() {
         $this->layout = 'cart_shop';   
-        $user_id = Yii::$app->user->identity;
-        $model = Order::find()->where(['id_user'=> $user_id])->all();
+        $user_id = Yii::$app->user->id;
+        $model = Order::find()->where(['id_user'=> $user_id])->orderBy(['create_at' => SORT_DESC])->all();
         return $this->render('account',[
             'models' => $model,
     ]); 

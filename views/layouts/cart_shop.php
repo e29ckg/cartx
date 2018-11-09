@@ -357,11 +357,22 @@ $modelCatalogs = ProductCatalog::find()->all();
 				);     
 			});
 
+			// $(".quantity-input").change(function() {    
+    		// 	var url = "index.php?r=cart/qty_change";
+			// 	id= $(this).data("id");
+			// 	val= $(this).val();
+			// 	// $("#badge_cart").html(val);
+			// });
+
 			$(".quantity-input").change(function() {    
     			var url = "index.php?r=cart/qty_change";
 				id= $(this).data("id");
 				val= $(this).val();
-				// $("#badge_cart").html(val);
+				// alert(val);
+        		$.get(url,{id:id,val:val},function (data){
+						$("#content").html(data);
+        			}
+				);     
 			});
 
 			$("#content").change(function() {    
