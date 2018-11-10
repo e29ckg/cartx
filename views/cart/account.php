@@ -18,9 +18,8 @@
 						            <tr>
 						                <td><?=$model->id?></td>			
 								        <td><?=$model->code?></td>
-										<td><?=$model->id_user?></td>
-										<td><?=$model->create_at?></td>
-								        
+										<td><?=$model->getProfileName()?></td>
+										<td><?=$model->create_at?></td>								        
 									</tr>
 									<?php  endforeach; ?>
 								</tbody>	
