@@ -7,7 +7,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
- 
+use app\models\Profile;
 /**
  * User model
  *
@@ -167,6 +167,16 @@ class User extends ActiveRecord implements IdentityInterface
 
     public static function findByEmail($email){        
         return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
+    }
+
+    public function getProfile()
+    {
+        return $this->hasOne(Profile::className(), ['user_id' => 'id_user']);
+    }
+
+    public function getProfileName(){
+        $model = $this->profile;
+        return $model ? $model->fullname:'';
     }
  
 }
