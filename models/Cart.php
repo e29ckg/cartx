@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\models\Product;
+use app\models\profile;
 
 use yii\base\Model;
 use yii\web\UploadedFile;
@@ -139,6 +140,16 @@ class Cart extends \yii\db\ActiveRecord
            $json = $tempFile;
         }
        return $json;
+    }
+
+    public function getProfile()
+    {
+        return $this->hasOne(Profile::className(), ['user_id' => 'id_user']);
+    }
+
+    public function getProfileName(){
+        $model = $this->profile;
+        return $model ? $model->fullname:'';
     }
 
 
