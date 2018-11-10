@@ -11,7 +11,7 @@ use yii\helpers\Html;
 
     [
 		'label' => 'Dashboard',
-		'url' => ['/site/index'],
+		'url' => ['/site/dashboard'],
 		'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">{label}</span></a>',
 		
 	],

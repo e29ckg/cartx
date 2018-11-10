@@ -81,8 +81,8 @@ if (Yii::$app->user->identity) {
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
-								<li><?php if(Yii::$app->user->identity->username == 'admin'){
-									echo '<li><a href="index.php?r=site/index"><i class="fa fa-lock"></i> blankEnd</a></li>';
+								<li><?php if(Yii::$app->user->identity->role == '9'){
+									echo '<li><a href="index.php?r=site/dashboard"><i class="fa fa-lock"></i> blankEnd</a></li>';
 								}?>
 								<li><a href="index.php?r=cart/account"><i class="fa fa-user"></i> <?= Yii::$app->user->identity ? $profile->fullname : "Guest"?></a></li>
 								<!-- <li><a href="index.php?r=cart/print"><i class="fa fa-crosshairs"></i> Checkout</a></li> -->
