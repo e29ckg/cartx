@@ -2,7 +2,9 @@
 
 namespace app\models;
 
+
 use Yii;
+use app\models\User;
 
 /**
  * This is the model class for table "order".
@@ -49,5 +51,15 @@ class Order extends \yii\db\ActiveRecord
             'status' => 'Status',
             'create_at' => 'Create At',
         ];
+    }
+
+    public function getProfile()
+    {
+        return $this->hasOne(Profile::className(), ['user_id' => 'id_user']);
+    }
+
+    public function getProfileName(){
+        $model = $this->profile;
+        return $model ? $model->fullname:'';
     }
 }
