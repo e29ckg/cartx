@@ -11,6 +11,7 @@
 					                    <th data-hide="phone">code</th>
 					                    <th data-hide="phone">name</th>
 					                    <th data-hide="phone,tablet">เวลา</th>
+										<th ></th>
 						            </tr>
 								</thead>
 								<tbody>
@@ -19,7 +20,8 @@
 						                <td><?=$model->id?></td>			
 								        <td><?=$model->code?></td>
 										<td><?=$model->getProfileName()?></td>
-										<td><?=$model->create_at?></td>								        
+										<td><?=$model->create_at?></td>	
+										<td><a>พิมพ์ใบเบิก</a></td>									        
 									</tr>
 									<?php  endforeach; ?>
 								</tbody>	
