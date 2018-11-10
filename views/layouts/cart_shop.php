@@ -1,8 +1,14 @@
 <?php
 
 use app\models\ProductCatalog;
+use app\models\profile;
 
 $modelCatalogs = ProductCatalog::find()->all();
+
+if (Yii::$app->user->identity) {
+	$id = Yii::$app->user->identity->id;
+	$profile = profile::find()->where(['user_id' => $id])->one();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,7 +84,7 @@ $modelCatalogs = ProductCatalog::find()->all();
 								<li><?php if(Yii::$app->user->identity->username == 'admin'){
 									echo '<li><a href="index.php?r=site/index"><i class="fa fa-lock"></i> blankEnd</a></li>';
 								}?>
-								<li><a href="index.php?r=cart/account"><i class="fa fa-user"></i> <?= Yii::$app->user->identity ? Yii::$app->user->identity->username : "Guest"?></a></li>
+								<li><a href="index.php?r=cart/account"><i class="fa fa-user"></i> <?= Yii::$app->user->identity ? $profile->fullname : "Guest"?></a></li>
 								<!-- <li><a href="index.php?r=cart/print"><i class="fa fa-crosshairs"></i> Checkout</a></li> -->
 								<li><a href="index.php?r=cart/cart"><i class="fa fa-shopping-cart"></i> Cart <span id="badge_cart" class="badge"></span></a></li>
 								<?php if(Yii::$app->user->identity){
