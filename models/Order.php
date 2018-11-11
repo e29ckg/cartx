@@ -62,4 +62,9 @@ class Order extends \yii\db\ActiveRecord
         $model = $this->profile;
         return $model ? $model->fullname:'';
     }
+
+    public function getCountAll()
+    {        
+        return Product::find()->count();           
+    }
 }

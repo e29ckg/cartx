@@ -37,6 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'create_at',
         ],
     ]) ?>
+    
 <section id="widget-grid" class="">
 				
                 <!-- row -->
@@ -101,7 +102,5 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </section>
    
-
-    <?= var_dump($model_lists)?>
 
 </div>

@@ -18,6 +18,7 @@ use yii\helpers\Url;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 use yii\data\Pagination;
+use kartik\mpdf\Pdf;
 
 /**
  * ProfileController implements the CRUD actions for Profile model.
@@ -393,6 +394,35 @@ class CartController extends Controller
             'models' => $model,
     ]); 
     }
+
+    public function actionPdf()
+    {
+        $this->layout = 'cart_shop';   
+        $user_id = Yii::$app->user->id;
+        $model = Order::find()->where(['id_user'=> $user_id])->orderBy(['create_at' => SORT_DESC])->all();
+         
+    
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+    $pdf = new Pdf([
+        'mode' => Pdf::MODE_CORE, // leaner size using standard fonts
+        'content' => $this->renderPartial('account',['models' => $model]),
+        'options' => [
+            // any mpdf options you wish to set
+        ],
+        'methods' => [
+            // 'SetTitle' => 'Privacy Policy - Krajee.com',
+            // 'SetSubject' => 'Generating PDF files via yii2-mpdf extension has never been easy',
+            // 'SetHeader' => ['Krajee Privacy Policy||Generated On: ' . date("r")],
+            // 'SetFooter' => ['|Page {PAGENO}|'],
+            // 'SetAuthor' => 'Kartik Visweswaran',
+            // 'SetCreator' => 'Kartik Visweswaran',
+            // 'SetKeywords' => 'Krajee, Yii2, Export, PDF, MPDF, Output, Privacy, Policy, yii2-mpdf',
+        ]
+    ]);
+    return $pdf->render();
+    }
+
+    
 
 }
 

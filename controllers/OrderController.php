@@ -39,8 +39,16 @@ class OrderController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => Order::find(),
         ]);
-
-        return $this->render('index', [
+        $model = Order::find()->orderBy([
+            'create_at'=>SORT_ASC,
+            'id' => SORT_DESC,
+            ])->limit(200)->all();
+        
+            $countAll = Order::getCountAll();
+        
+        return $this->render('index',[
+            'models' => $model,
+            'countAll' => $countAll,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -55,7 +63,13 @@ class OrderController extends Controller
     {
         $model = $this->findModel($id);
         $model_lists = OrderList::find()->where(['id_order'=> $model->code])->all();
-
+        
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('view',[
+                'model' => $model,
+                'model_lists' => $model_lists,                  
+            ]);
+        }
         return $this->render('view', [
             'model' => $model,
             'model_lists' => $model_lists,
@@ -77,9 +91,15 @@ class OrderController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('create',[
+                    'model' => $model,                    
+            ]);
+        }else{
+            return $this->render('create',[
+                'model' => $model,                    
+            ]); 
+        }
     }
 
     /**

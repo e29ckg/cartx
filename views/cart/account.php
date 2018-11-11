@@ -21,7 +21,7 @@
 								        <td><?=$model->code?></td>
 										<td><?=$model->getProfileName()?></td>
 										<td><?=$model->create_at?></td>	
-										<td><a>พิมพ์ใบเบิก</a></td>									        
+										<td><a href="index.php?r=cart/pdf">พิมพ์ใบเบิก</a></td>									        
 									</tr>
 									<?php  endforeach; ?>
 								</tbody>	
