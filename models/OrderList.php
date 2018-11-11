@@ -50,4 +50,19 @@ class OrderList extends \yii\db\ActiveRecord
             'create_at' => 'Create At',
         ];
     }
+
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['id' => 'id_product']);
+    }
+
+    public function getProductName(){
+        $model = $this->product;
+        return $model ? $model->product_name:'';
+    }
+
+    public function getProductPrice(){
+        $model = $this->product;
+        return $model ? $model->price:'';
+    }
 }

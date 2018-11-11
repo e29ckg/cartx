@@ -395,17 +395,19 @@ class CartController extends Controller
     ]); 
     }
 
-    public function actionPdf()
+    public function actionPdf($id = 56)
     {
         $this->layout = 'cart_shop';   
         $user_id = Yii::$app->user->id;
-        $model = Order::find()->where(['id_user'=> $user_id])->orderBy(['create_at' => SORT_DESC])->all();
-         
+        $model = $this->findModel($id);
+        $user_id = Yii::$app->user->id;
+        $model_lists = OrderList::find()->where(['id_order'=> $model->code])->all();
     
         Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
     $pdf = new Pdf([
-        'mode' => Pdf::MODE_CORE, // leaner size using standard fonts
-        'content' => $this->renderPartial('account',['models' => $model]),
+        'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+        'content' => $this->renderPartial('print',['model' => $model,'model_lists' =>$model_lists]),
+        'cssFile' => 'css/pdf.css',
         'options' => [
             // any mpdf options you wish to set
         ],
@@ -422,6 +424,23 @@ class CartController extends Controller
     return $pdf->render();
     }
 
+    protected function findModel($id)
+    {
+        if (($model = Order::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    protected function findModellist($id)
+    {
+        if (($model = OrderList::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
     
 
 }
