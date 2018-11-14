@@ -55,7 +55,7 @@ class Profile extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'fullname' => 'Fname',
+            'fname' => 'Fname',
             'name' => 'Name',
             'sname' => 'Sname',
             'photo' => 'Photo',
