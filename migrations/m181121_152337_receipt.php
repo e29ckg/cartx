@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Class m181102_122933_order
+ * Class m181121_152337_receipt
  */
-class m181102_122933_order extends Migration
+class m181121_152337_receipt extends Migration
 {
     /**
      * {@inheritdoc}
@@ -17,32 +17,33 @@ class m181102_122933_order extends Migration
         if ($this->db->driverName === 'mysql') {
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
-        $this->createTable('order', [
+        $this->createTable('receipt', [
             'id' => $this->primaryKey(),
-            'order_code' => $this->string(32)->notNull(),
-            'user_id' => $this->string(),
+            'receipt_code' => $this->string(32)->notNull(),
+            'user_id' => $this->integer(),
+            'receipt_from' => $this->string(),
             'sumtotal'=> $this->float(),
             'status' => $this->integer(),
             'create_at' => $this->dateTime(),
         ], $tableOptions);
 
-        $this->insert('order', [
-            'order_code' => 'A1234567890',
-            'user_id' => 1,            
-            'sumtotal'=> 2.01,
-            'status' => 1,           
+        $this->insert('receipt', [            
+            'receipt_code' => 'R1234567890',
+            'user_id' => 1,
+            'receipt_from' => 'receipt_from',
+            'sumtotal'=> 300,
+            'status' => 1,
             'create_at' => date("Y-m-d H:i:s"),
         ]);
-    
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function safeDown()
     {
-        echo "m181102_122933_order cannot be reverted.\n";
-        $this->dropTable('order');
+        echo "m181121_152337_receipt cannot be reverted.\n";
+        $this->dropTable('receipt');
         return false;
     }
 
@@ -55,7 +56,7 @@ class m181102_122933_order extends Migration
 
     public function down()
     {
-        echo "m181102_122933_order cannot be reverted.\n";
+        echo "m181121_152337_receipt cannot be reverted.\n";
 
         return false;
     }

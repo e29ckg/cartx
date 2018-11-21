@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Class m181102_123037_order_list
+ * Class m181121_152347_receipt_list
  */
-class m181102_123037_order_list extends Migration
+class m181121_152347_receipt_list extends Migration
 {
     /**
      * {@inheritdoc}
@@ -17,34 +17,31 @@ class m181102_123037_order_list extends Migration
         if ($this->db->driverName === 'mysql') {
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
-        $this->createTable('order_list', [
+        $this->createTable('receipt_list', [
             'id' => $this->primaryKey(),
-            'order_code' => $this->string(32)->notNull(),
+            'receipt_code' => $this->string(32)->notNull(),
             'product_code' => $this->string(),
             'product_unit_id' => $this->integer(),
-            'product_receipt_code' => $this->string(),
             'unit_price' => $this->float(),
             'quantity' => $this->integer(),
             'create_at' => $this->dateTime(),
         ], $tableOptions);
 
-        $this->insert('order_list', [
-            'order_code' => 'A1234567890',
+        $this->insert('receipt_list', [
+            'receipt_code' => 'R1234567890',
             'product_code' => 'P0987654321',
             'product_unit_id' => 1,
-            'product_receipt_code' => 'R1234567890',
-            'unit_price' => 100,
-            'quantity' => 1,
+            'unit_price' => 300,
+            'quantity' => 100,
             'create_at' => date("Y-m-d H:i:s"),
         ]);
 
-        $this->insert('order_list', [
-            'order_code' => 'A1234567890',
+        $this->insert('receipt_list', [
+            'receipt_code' => 'R1234567890',
             'product_code' => 'P1234567890',
             'product_unit_id' => 1,
-            'product_receipt_code' => 'R1234567890',
-            'unit_price' => 100,
-            'quantity' => 1,
+            'unit_price' => 300,
+            'quantity' => 100,
             'create_at' => date("Y-m-d H:i:s"),
         ]);
     }
@@ -54,8 +51,8 @@ class m181102_123037_order_list extends Migration
      */
     public function safeDown()
     {
-        echo "m181102_123037_order_list cannot be reverted.\n";
-        $this->dropTable('order_lists');
+        echo "m181121_152347_receipt_list cannot be reverted.\n";
+        $this->dropTable('receipt_list');
         return false;
     }
 
@@ -68,7 +65,7 @@ class m181102_123037_order_list extends Migration
 
     public function down()
     {
-        echo "m181102_123037_order_list cannot be reverted.\n";
+        echo "m181121_152347_receipt_list cannot be reverted.\n";
 
         return false;
     }
