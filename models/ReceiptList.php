@@ -55,4 +55,34 @@ class ReceiptList extends \yii\db\ActiveRecord
             'create_at' => 'Create At',
         ];
     }
+
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['code' => 'product_code']);
+    }
+
+    public function getProductName(){
+        $model = $this->product;
+        return $model ? $model->product_name:'';
+    }
+
+    public function getProductPrice(){
+        $model = $this->product;
+        return $model ? $model->price:'';
+    }
+
+    public function getProductImg(){
+        $model = $this->product;
+        return $model ? $model->img:'';
+    }
+
+    public function getProductUnit()
+    {
+        return $this->hasOne(ProductUnit::className(), ['id' => 'product_unit_id']);
+    }
+
+    public function getProductUnitName(){
+        $model = $this->productUnit;
+        return $model ? $model->name_unit:'';
+    }
 }
