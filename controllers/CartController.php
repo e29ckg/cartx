@@ -8,6 +8,7 @@ use app\models\Product;
 use app\models\Order;
 use app\models\OrderList;
 use app\models\ProductCatalog;
+use app\models\ReceiptList;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -66,7 +67,8 @@ class CartController extends Controller
 
         $modelCatalogs = ProductCatalog::find()->all();
 
-        $query = Product::find();
+        // $query = Product::find();
+        $query = ReceiptList::find();
         $pagination = new Pagination([
             'defaultPageSize' => 100,
             'totalCount' => $query->count(),
