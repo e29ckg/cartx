@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						<h2 class="title text-center">Features Items</h2>
 						
 						<?php foreach ($models as $model):
-						  	if($model->instoke >= 1){
+						  	// if($model->instoke >= 1){
 
 							  
 						?>
@@ -41,15 +41,15 @@ $this->params['breadcrumbs'][] = $this->title;
 							<div class="product-image-wrapper">
 								<div class="single-products">
 									<div class="productinfo text-center">
-										<img src="<?= $model->img ? 'uploads/product/img/'.$model->img : 'img/no_image.png'?>"  height="250" width="200" sizes= "50" alt="<?=$model->product_name?>" />
-										<h2>  <?=$model->instoke ? 'มี '.$model->instoke: '-' ?> <?=$model->getUnitName() ?></h2>
-										<p><?=$model->product_name?></p>
+										<img src="<?= $model->getProductImg() ? 'uploads/product/img/'.$model->getProductImg() : 'img/no_image.png'?>"  height="250" width="200" sizes= "50" alt="<?=$model->getProductName()?>" />
+										<h2>  <?=$model->quantity ? 'มี '.$model->quantity: '-' ?> <?=$model->getProductUnitName() ?></h2>
+										<p><?=$model->getProductName()?></p>
 										<a href="#" data-id="<?=$model->id?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 									</div>
 									<div class="product-overlay">
 										<div class="overlay-content">
-											<h2><?=$model->instoke ? $model->instoke: '-' ?></h2>
-											<p><?=$model->product_name?></p>
+											<h2><?=$model->quantity ? $model->quantity: '-' ?></h2>
+											<p><?=$model->getProductName()?></p>
 											<a href="#" data-id="<?=$model->id?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 										</div>
 									</div>
@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						</div>
 
 						<?php 
-							}	
+							// }	
 						endforeach; 
 						?>
 						
