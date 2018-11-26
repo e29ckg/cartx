@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'code',
+            'order_code',
             'id_user',
             'status',
             'create_at',
@@ -77,9 +77,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <tr>
                                                 <td><?=$model_list->id?></td>
                                                 <td>
-                                                    <?=$model_list->id_order?>
+                                                    <?=$model_list->order_code?>
                                                 </td>
-                                                <td><?=$model_list->id_product?></td>
+                                                <td><?=$model_list->product_code?></td>
                                                 <td><?=$model_list->quantity?></td>
                                                 <td>
                                                     <a herf= "#" class="btn btn-warning act-update" data-id=<?=$model_list->id?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>

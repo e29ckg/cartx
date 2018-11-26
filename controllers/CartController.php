@@ -68,7 +68,7 @@ class CartController extends Controller
         $modelCatalogs = ProductCatalog::find()->all();
 
         // $query = Product::find();
-        $query = ReceiptList::find();
+        $query = Product::find();
         $pagination = new Pagination([
             'defaultPageSize' => 100,
             'totalCount' => $query->count(),
@@ -397,13 +397,13 @@ class CartController extends Controller
     ]); 
     }
 
-    public function actionPdf($id = 56)
+    public function actionPdf($id = null)
     {
         $this->layout = 'cart_shop';   
         $user_id = Yii::$app->user->id;
         $model = $this->findModel($id);
         $user_id = Yii::$app->user->id;
-        $model_lists = OrderList::find()->where(['id_order'=> $model->code])->all();
+        $model_lists = OrderList::find()->where(['order_code'=> $model->order_code])->all();
     
         Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
     $pdf = new Pdf([

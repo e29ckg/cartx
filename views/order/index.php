@@ -77,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
 									<?php foreach ($models as $models): ?>
 						            <tr>
 								        <td><?=$models->id?></td>
-								        <td><a herf= "#" class="act-view" data-id=<?=$models->id?>><?=$models->code?></a></td>
+								        <td><a herf= "#" class="act-view" data-id=<?=$models->id?>><?=$models->order_code?></a></td>
 										<td><?=$models->getProfileName()?></td>
 								        <td><?=$models->status?></td> 
 										<td><?=$models->create_at?></td>

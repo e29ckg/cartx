@@ -62,7 +62,7 @@ class OrderController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $model_lists = OrderList::find()->where(['id_order'=> $model->code])->all();
+        $model_lists = OrderList::find()->where(['order_code'=> $model->order_code])->all();
         
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('view',[

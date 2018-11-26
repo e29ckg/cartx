@@ -5,7 +5,7 @@ use yii\helpers\Html;
 <table width="100%">
     <tr>
         <td width="100%" style="text-align: right">
-            <h4>รหัสใบเบิก <?= $model->code ?></h4>
+            <h4>รหัสใบเบิก <?= $model->order_code ?></h4>
         </td>
     </tr>
 </table>
@@ -37,14 +37,14 @@ use yii\helpers\Html;
                 ?>
         <?php foreach ($model_lists as $model_list): ?>
             <tr>
-                <td><?=$i?> <?=$model_list->id?>_<?=$model_list->id_order?></td>
+                <td><?=$i?> <?=$model_list->id?>_<?=''?></td>
                 <td>
-                    <?=$model_list->getProductName()?>
+                    <?=$model_list->product_code?>
                 </td>
-                <td><?=$model_list->getProductPrice()?></td>
+                <td><?=$model_list->getProductUnitPrice();?></td>
                 <td><?=$model_list->quantity?></td>
                 <td>
-                    <?= $total = $model_list->getProductPrice() * $model_list->quantity ?>
+                    <?= $total = $model_list->getProductUnitPrice() * $model_list->quantity ?>
                 </td>
             </tr>
             <?php $totalSum = $totalSum + $total;

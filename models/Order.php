@@ -10,7 +10,7 @@ use app\models\User;
  * This is the model class for table "order".
  *
  * @property int $id
- * @property string $code
+ * @property string $order_code
  * @property string $id_user
  * @property int $status
  * @property string $create_at
@@ -31,10 +31,10 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['code'], 'required'],
+            [['order_code'], 'required'],
             [['status'], 'integer'],
             [['create_at'], 'safe'],
-            [['code'], 'string', 'max' => 32],
+            [['order_code'], 'string', 'max' => 32],
             [['id_user'], 'string', 'max' => 255],
         ];
     }
@@ -46,7 +46,7 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'code' => 'Code',
+            'order_code' => 'Code',
             'id_user' => 'Id User',
             'status' => 'Status',
             'create_at' => 'Create At',

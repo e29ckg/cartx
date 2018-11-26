@@ -20,7 +20,7 @@ class m181102_122933_order extends Migration
         $this->createTable('order', [
             'id' => $this->primaryKey(),
             'order_code' => $this->string(32)->notNull(),
-            'user_id' => $this->string(),
+            'id_user' => $this->string(),
             'sumtotal'=> $this->float(),
             'status' => $this->integer(),
             'create_at' => $this->dateTime(),
@@ -28,7 +28,7 @@ class m181102_122933_order extends Migration
 
         $this->insert('order', [
             'order_code' => 'A1234567890',
-            'user_id' => 1,            
+            'id_user' => 1,            
             'sumtotal'=> 2.01,
             'status' => 1,           
             'create_at' => date("Y-m-d H:i:s"),

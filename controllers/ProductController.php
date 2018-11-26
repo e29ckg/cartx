@@ -6,6 +6,7 @@ use Yii;
 use app\models\Product;
 use app\models\ProductUnit;
 use app\models\ProductCatalog;
+use app\models\ReceiptList;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -210,5 +211,28 @@ class ProductController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionUpdatestroke()
+    {
+        $modelsProduct = Product::find()->All();
+        $modelsRL = ReceiptList::find()->All();
+        // $a = var_dump($models);
+        foreach ($modelsProduct as $modelProduct):
+            $totalSum = 0 ;
+            $modelsRL = ReceiptList::find()->where('quantity >= 1')
+                        ->andWhere(['product_code' => $modelProduct->code])
+                        ->All();
+            foreach ($modelsRL as $modelRL):
+                
+                $totalSum = $totalSum + $modelRL->quantity ;
+
+            endforeach; 
+            $modelProduct->instoke =  $totalSum ;
+            $modelProduct->save() ;
+            echo $modelProduct->code." ".$totalSum."<br>";
+            
+        endforeach; 
+
     }
 }

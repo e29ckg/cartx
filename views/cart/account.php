@@ -8,7 +8,7 @@
 								<thead>
 									<tr>
 					                    <th data-class="expand">Id</th>
-					                    <th data-hide="phone">code</th>
+					                    <th data-hide="phone">order_code</th>
 					                    <th data-hide="phone">name</th>
 					                    <th data-hide="phone,tablet">เวลา</th>
 										<th ></th>
@@ -18,7 +18,7 @@
 									<?php foreach ($models as $model): ?>
 						            <tr>
 						                <td><?=$model->id?></td>			
-								        <td><?=$model->code?></td>
+								        <td><?=$model->order_code?></td>
 										<td><?=$model->getProfileName()?></td>
 										<td><?=$model->create_at?></td>	
 										<td><a href="index.php?r=cart/pdf&id=<?=$model->id?>" target="_blank">พิมพ์ใบเบิก</a></td>									        

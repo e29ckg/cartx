@@ -29,10 +29,10 @@ class OrderList extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_order'], 'required'],
+            [['order_code'], 'required'],
             [['quantity'], 'integer'],
             [['create_at'], 'safe'],
-            [['id_order'], 'string', 'max' => 32],
+            [['order_code'], 'string', 'max' => 32],
             [['id_product'], 'string', 'max' => 255],
         ];
     }
@@ -44,8 +44,11 @@ class OrderList extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_order' => 'Id Order',
-            'id_product' => 'Id Product',
+            'order_code' => 'Id Order',
+            'product_code' => 'Id Product',
+            'product_unit_id' => '$this->integer()',
+            'product_receipt_code' => '$this->string()',
+            'unit_price' => '$this->float()',
             'quantity' => 'Quantity',
             'create_at' => 'Create At',
         ];
@@ -53,7 +56,7 @@ class OrderList extends \yii\db\ActiveRecord
 
     public function getProduct()
     {
-        return $this->hasOne(Product::className(), ['id' => 'id_product']);
+        return $this->hasOne(Product::className(), ['code' => 'product_code']);
     }
 
     public function getProductName(){
@@ -61,8 +64,13 @@ class OrderList extends \yii\db\ActiveRecord
         return $model ? $model->product_name:'';
     }
 
-    public function getProductPrice(){
-        $model = $this->product;
-        return $model ? $model->price:'';
+    public function getReceiptList()
+    {
+        return $this->hasOne(ReceiptList::className(), ['receipt_code' => 'product_receipt_code']);
+    }
+    
+    public function getProductUnitPrice(){
+        $model = $this->receiptList;
+        return $model ? $model->unit_price:'';
     }
 }

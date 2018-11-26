@@ -21,7 +21,6 @@ use yii\helpers\Json;
  * @property int $category
  * @property string $Description
  * @property string $location
- * @property int $price
  * @property int $status
  * @property int $lower
  * @property int $instoke
@@ -49,7 +48,7 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             [['product_name', 'code'], 'required'],
-            [['category', 'price', 'status', 'unit',  'lower', 'instoke'], 'integer'],
+            [['category', 'status', 'unit',  'lower', 'instoke'], 'integer'],
             [['create_at'], 'safe'],
             [['product_name', 'img', 'Description', 'location'], 'string', 'max' => 255],
             [['code'], 'string', 'max' => 32],
@@ -72,10 +71,9 @@ class Product extends \yii\db\ActiveRecord
             'unit' => 'หน่วยนับ',
             'Description' => 'รายละเอียด',
             'location' => 'ที่เก็บ',
-            'price' => 'ราคาต่อหน่วย',
+            'instoke' => 'จำนวนคงเหลือ',
             'status' => 'สถานะ',
             'lower' => 'แจ้งเตือนขั้นต่ำ',
-            'instoke' => 'คงเหลือ',
             'create_at' => 'Create At',
         ];
     }

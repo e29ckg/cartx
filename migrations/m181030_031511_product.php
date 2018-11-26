@@ -28,6 +28,7 @@ class m181030_031511_product extends Migration
             'Description' => $this->string(),
             'location'=> $this->string(),
             'status' => $this->smallInteger(),
+            'instoke' => $this->integer(),
             'lower' => $this->integer(),
             'create_at' => $this->dateTime(),
         ], $tableOptions);
@@ -40,6 +41,7 @@ class m181030_031511_product extends Migration
             'unit' => 1,
             'Description' => '',
             'location'=> 'A2',
+            'instoke' => 1,
             'status' => 1,
             'lower' => 10,
             'create_at' => date("Y-m-d H:i:s"),
@@ -53,6 +55,7 @@ class m181030_031511_product extends Migration
             'unit' => 1,
             'Description' => '',
             'location'=> 'A1',
+            'instoke' => 1,
             'status' => 1,
             'lower' => 10,
             'create_at' => date("Y-m-d H:i:s"),
