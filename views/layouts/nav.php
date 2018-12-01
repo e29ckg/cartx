@@ -46,6 +46,12 @@ use yii\helpers\Html;
 		'template' => '<a href="#" title="{label}"><i class="fa fa-lg fa-fw fa-tags"></i> <span class="menu-item-parent">{label}</span></a>',
 		'items' => [
             [
+				'label' => 'เพิ่มวัสดุเข้าสต็อก',
+				'url' => ['/product/add_to_stroke'],
+				'template' => '<a href="{url}" title="{label}"> <span class="menu-item-parent">{label}</span></a>',
+				
+			],
+			[
 				'label' => 'Product',
 				'url' => ['/product/index'],
 				'template' => '<a href="{url}" title="{label}"> <span class="menu-item-parent">{label}</span></a>',
@@ -59,6 +65,11 @@ use yii\helpers\Html;
 			[
 				'label' => 'หน่วยนับ',
 				'url' => ['/product_unit/index'],
+				'template' => '<a href="{url}" title="{label}"> <span class="menu-item-parent">{label}</span></a>',
+			],
+			[
+				'label' => 'ปรับสต็อก',
+				'url' => ['/product/updatestroke'],
 				'template' => '<a href="{url}" title="{label}"> <span class="menu-item-parent">{label}</span></a>',
 			],
 		],

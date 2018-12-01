@@ -1,4 +1,5 @@
 <?php
+use app\models\ReceiptList;
 use app\models\Product;
 // echo var_dump($_SESSION['inLine']);
 ?>
@@ -32,21 +33,25 @@ use app\models\Product;
 						if(isset($_SESSION['inLine'])){
 								for($i=0;$i<=(int)$_SESSION['inLine'];$i++){
 									if($_SESSION['strProductId'][$i] != ""){
-										$idProduct=$_SESSION['strProductId'][$i];
-                    					$model = Product::find()->where(['id'=> $idProduct])->one();
+										$idProduct = $_SESSION['strProductId'][$i];
+                    					$model = Product::find()->where(['code'=> $idProduct])->one();
                     					// $ss['strProductId'][$i] =  $_SESSION['inLine'][$i];
-										$Total = $_SESSION['strQty'][$i] * $model->price;
+										// $Total = $_SESSION['strQty'][$i] * $model->unit_price;
 										$sumTotal = $sumTotal + $Total;
 										
 						?>
 							<tr>
-								<td class="cart_product"><a href=""><img src="<?= $model->img ? 'uploads/product/img/'.$model->img : 'img/no_image.png'?>" height="110" alt=""></a></td>
+								<!-- <td class="cart_product"><a href=""><img src="<?= $model->img ? 'uploads/product/img/'.$model->img : 'img/no_image.png'?>" height="110" alt=""></a></td> -->
+								<td class="cart_description">
+									<h4><a href=""><?=$model->product_name?></a></h4>
+									<p>Web ID:<?=$model->instoke?> </p>
+								</td>
 								<td class="cart_description">
 									<h4><a href=""><?=$model->product_name?></a></h4>
 									<p>Web ID:<?=$model->instoke?> </p>
 								</td>
 								<td class="cart_price">
-									<p>$ <?= $model->price?></p>
+									<p>$ <?php//= $model->price?></p>
 								</td>
 								<td class="cart_quantity">
 									<div class="cart_quantity_button">

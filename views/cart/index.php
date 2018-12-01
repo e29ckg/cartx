@@ -22,19 +22,15 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php // var_dump($models)?>
 
 <section>
-
 		<div class="container">
-			<div class="row">
-				
+			<div class="row">		
 				
 				<div class="col-sm-12 padding-right">
 					<div id="features_items" class="features_items"><!--features_items-->
 						<h2 class="title text-center">Features Items</h2>
 						
 						<?php foreach ($models as $model):
-						  	 if($model->instoke >= 1){
-
-							  
+						  	 if($model->instoke >= 1){							  
 						?>
 
 						<div class="col-sm-3">
@@ -44,13 +40,13 @@ $this->params['breadcrumbs'][] = $this->title;
 										<img src="<?= $model->img ? 'uploads/product/img/'.$model->img : 'img/no_image.png'?>"  height="250" width="200" sizes= "50" alt="<?=$model->product_name?>" />
 										<h2>  <?=$model->instoke ? 'มี '.$model->instoke: '-' ?> <?=$model->getUnitName() ?></h2>
 										<p><?=$model->product_name?></p>
-										<a href="#" data-id="<?=$model->id?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<a href="#" data-id="<?=$model->code?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 									</div>
 									<div class="product-overlay">
 										<div class="overlay-content">
 											<h2><?=$model->instoke ? $model->instoke: '-' ?></h2>
 											<p><?=$model->product_name?></p>
-											<a href="#" data-id="<?=$model->id?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											<a href="#" data-id="<?=$model->code?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 										</div>
 									</div>
 								</div>
@@ -84,4 +80,4 @@ $this->params['breadcrumbs'][] = $this->title;
 				</div>
 			</div>
 		</div>
-	</section>
+</section>

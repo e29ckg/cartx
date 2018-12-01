@@ -231,6 +231,8 @@ class CartController extends Controller
 
     public function actionAdd_to_cart($id = null) {
         //$this->layout = 'cart_shop'; 
+        $models = ReceiptList::find()->where(['product_code', $id]);
+
         if (!isset($_SESSION['inLine'])){
             $_SESSION['inLine'] = 0;
             $_SESSION['strProductId'][0] = $id; 
@@ -243,7 +245,7 @@ class CartController extends Controller
 
                 $strQty = $_SESSION['strQty'][$key];
                 $idProduct = $_SESSION['strProductId'][$key];
-                $model = Product::find()->where(['id'=> $idProduct])->one();
+                $model = Product::find()->where(['code'=> $idProduct])->one();
                 if ($model->instoke > $strQty){
                     $_SESSION['strQty'][$key] = $_SESSION['strQty'][$key] + 1 ;
                 }else{

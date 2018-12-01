@@ -230,9 +230,99 @@ class ProductController extends Controller
             endforeach; 
             $modelProduct->instoke =  $totalSum ;
             $modelProduct->save() ;
-            echo $modelProduct->code." ".$totalSum."<br>";
+            // echo $modelProduct->code." ".$totalSum."<br>";
             
         endforeach; 
+    }
 
+    public function actionAdd_to_stroke()
+    {
+        if (!isset($_SESSION['inLine'])){
+            $_SESSION['inLine'] = 0;
+            $_SESSION['strProductId'][0] = $id; 
+            $_SESSION['strQty'][0] = 1;
+            
+        } else {
+            $key = array_search($id, $_SESSION['strProductId']);
+            if((string)$key != ""){
+                $_SESSION['strQty'][$key] = $_SESSION['strQty'][$key] + 1;
+
+                $strQty = $_SESSION['strQty'][$key];
+                $idProduct = $_SESSION['strProductId'][$key];
+                $model = Product::find()->where(['id'=> $idProduct])->one();
+                if ($model->instoke > $strQty){
+                    $_SESSION['strQty'][$key] = $_SESSION['strQty'][$key] + 1 ;
+                }else{
+                    $_SESSION['strQty'][$key] = $model->instoke ;
+                }   
+            }else{
+                $_SESSION['inLine'] = $_SESSION['inLine'] + 1;
+                $inNewLine =  $_SESSION['inLine'];
+                $_SESSION['strProductId'][$inNewLine ] = $id; 
+                $_SESSION['strQty'][$inNewLine ] = 1;
+            }
+            
+            
+        } 
+        
+        return $this->renderAjax('cart');
+    }
+
+    public function actionSave_receipt() {
+
+        $code = date("YmdHis").Yii::$app->security->generateRandomString(4);
+        $create_at = date("Y-m-d H:i:s");
+        try {
+            Yii::$app->db->createCommand()->insert('order', [
+                'code' => $code,
+                'id_user' => Yii::$app->user->identity->id,
+                'status' => 1,
+                'create_at' => $create_at,
+            ])->execute();
+
+            $Total = 0 ;
+            $sumTotal = 0;
+							//  $model = Product::find()->all();
+			if(isset($_SESSION['inLine'])){
+				for($i=0;$i<=(int)$_SESSION['inLine'];$i++){
+					if($_SESSION['strProductId'][$i] != ""){
+						$idProduct = $_SESSION['strProductId'][$i];
+            			$model = Product::find()->where(['id'=> $idProduct])->one();
+               					// $ss['strProductId'][$i] =  $_SESSION['inLine'][$i];
+						$Total = $_SESSION['strQty'][$i] * $model->price;
+                        $sumTotal = $sumTotal + $Total;
+                        $strQty = $_SESSION['strQty'][$i];
+                        
+
+                        Yii::$app->db->createCommand()->insert('order_list', [
+                            'id_order' => $code,
+                            'id_product' => $model->id,
+                            'quantity' => $strQty,
+                            'create_at' => $create_at,
+                        ])->execute();
+
+                        $Qty =  $model->instoke - $strQty;
+                        Yii::$app->db->createCommand()->update('product', [
+                            'instoke' => $Qty 
+                        ], 'id = '.$idProduct)->execute();
+                        
+                    }
+                }
+            }
+
+            unset($_SESSION['inLine']);	
+            unset($_SESSION['strProductId']);	
+            unset($_SESSION['strQty']);
+
+		} catch(\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch(\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }			
+
+        return $this->redirect(['account']); 
+        // return $this->renderAjax('checkout');
     }
 }
