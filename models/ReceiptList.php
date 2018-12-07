@@ -1,6 +1,8 @@
 <?php
 
 namespace app\models;
+use app\models\Product;
+use yii\helpers\ArrayHelper;
 
 use Yii;
 
@@ -31,7 +33,7 @@ class ReceiptList extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['receipt_code'], 'required'],
+            // [['receipt_code'], 'required'],
             [['product_unit_id', 'quantity'], 'integer'],
             [['unit_price'], 'number'],
             [['create_at'], 'safe'],
@@ -76,6 +78,11 @@ class ReceiptList extends \yii\db\ActiveRecord
         return $model ? $model->img:'';
     }
 
+    public function getProductList(){
+        $model = Product::find()->select('code, product_name')->orderBy('id')->all();
+        return ArrayHelper::map($model,'code','product_name');
+    }
+
     public function getProductUnit()
     {
         return $this->hasOne(ProductUnit::className(), ['id' => 'product_unit_id']);
@@ -85,4 +92,5 @@ class ReceiptList extends \yii\db\ActiveRecord
         $model = $this->productUnit;
         return $model ? $model->name_unit:'';
     }
+
 }

@@ -55,4 +55,9 @@ class Receipt extends \yii\db\ActiveRecord
             'create_at' => 'Create At',
         ];
     }
+
+    public function getCountAll()
+    {        
+        return Receipt::find()->count();           
+    }
 }
