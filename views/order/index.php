@@ -36,10 +36,19 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?php foreach ($models as $model): ?>
 				<td><?=$model->id?></td>
 					<td><a href= "index.php?r=order/view&id=<?=$model->id?>" class="act-view" data-id=''><?=$model->order_code?></a></td>
-                  <td><?=$model->getProfileName()?></td>
-                  <td><?=$model->status?></td>
-                  <td><?=$model->create_at?></td>
-                  <td>X</td>
+                  	<td><?=$model->getProfileName()?></td>
+                  	<td><?=$model->status?></td>
+                  	<td><?=$model->create_at?></td>
+                  	<td><a herf= "#" class="btn btn-warning act-update" data-id=<?=$model['id']?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
+											<a herf= "#" class="btn btn-warning act-view" data-id=<?=$model['id']?>><i class="fa fa-pencil-square-o"></i> ดู</a>
+											<?= Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $model->id],
+													[
+														'class' => 'btn btn-danger act-update',
+														'data-confirm' => 'Are you sure to delete this item?',
+                                    					'data-method' => 'post',
+													]);
+											?>
+					</td>
 				</tr>
 				<?php  endforeach; ?>
 				</tbody>
@@ -63,75 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
       <!-- /.row -->
     </section>
     <!-- /.content -->
-  
-<div>
-    <!-- widget grid -->
-	<section id="widget-grid" class="">
-				
-        <!-- row -->
-        <div class="row">
-            
-            <!-- NEW WIDGET START -->
-            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            
-             	<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1">
-					<header>
-						<span class="widget-icon"> <i class="fa fa-table"></i> </span>
-						<h2><?= $this->title;?> </h2>
-				
-					</header>
-						<!-- widget div-->
-					<div>
-						<!-- widget edit box -->
-						<div class="jarviswidget-editbox">
-							<!-- This area used as dropdown edit box -->
-						</div>
-						<!-- end widget edit box -->
-						<!-- widget content -->
-						<div class="widget-body no-padding">
-							<table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
-								<thead>
-									<tr>
-					                    <th data-class="expand">Id</th>					                    
-					                    <th data-hide="phone">code</th>
-										<th data-hide="phone">ชื่อ</th>
-					                    <th data-hide="phone">status</th>
-					                    <th data-hide="phone,tablet">เวลา</th>
-					                    <th>เครื่องมือ</th>
-						            </tr>
-								</thead>
-								<tbody>
-									<?php foreach ($models as $models): ?>
-						            <tr>
-								        <td><?=$models->id?></td>
-								        <td><a herf= "#" class="act-view" data-id=<?=$models->id?>><?=$models->order_code?></a></td>
-										<td><?=$models->getProfileName()?></td>
-								        <td><?=$models->status?></td> 
-										<td><?=$models->create_at?></td>
-								        <td>
-											<a herf= "#" class="btn btn-warning act-update" data-id=<?=$models['id']?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
-											<a herf= "#" class="btn btn-warning act-view" data-id=<?=$models['id']?>><i class="fa fa-pencil-square-o"></i> ดู</a>
-											<?= Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $models->id],
-													[
-														'class' => 'btn btn-danger act-update',
-														'data-confirm' => 'Are you sure to delete this item?',
-                                    					'data-method' => 'post',
-													]);
-											?>
-										</td>
-									</tr>
-									<?php  endforeach; ?>
-								</tbody>	
-							</table>
-						</div>
-					</div>							
-            </article>
-        </div>
-	</section>	
-</div>
-
-
+ 
 
 <?php
 $script = <<< JS
