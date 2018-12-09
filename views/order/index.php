@@ -20,15 +20,15 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="example" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>Rendering engine</th>
-				  <th>Browser</th>
-				  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>Engine version</th>
-                  <th>CSS grade</th>
+                  <th>ID</th>
+				  <th>Code</th>
+				  <th>ผู้เบิก</th>
+                  <th>สถานะ(s)</th>
+                  <th>วัน-เวลา</th>
+                  <th>เครื่องมือ</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -40,14 +40,14 @@ $this->params['breadcrumbs'][] = $this->title;
                   	<td><?=$model->status?></td>
                   	<td><?=$model->create_at?></td>
                   	<td><a herf= "#" class="btn btn-warning act-update" data-id=<?=$model['id']?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
-											<a herf= "#" class="btn btn-warning act-view" data-id=<?=$model['id']?>><i class="fa fa-pencil-square-o"></i> ดู</a>
-											<?= Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $model->id],
-													[
-														'class' => 'btn btn-danger act-update',
-														'data-confirm' => 'Are you sure to delete this item?',
-                                    					'data-method' => 'post',
-													]);
-											?>
+						<a herf= "#" class="btn btn-warning act-view" data-id=<?=$model['id']?>><i class="fa fa-pencil-square-o"></i> ดู</a>
+						<?= Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $model->id],
+							[
+								'class' => 'btn btn-danger act-update',
+								'data-confirm' => 'Are you sure to delete this item?',
+                        		'data-method' => 'post',
+							]);
+						?>
 					</td>
 				</tr>
 				<?php  endforeach; ?>
@@ -116,7 +116,8 @@ $('#eg8').click(function() {
      
 $(document).ready(function() {	
 /* BASIC ;*/	
-	
+$('#example').DataTable();
+
 	$('#activity-modal').on('hidden.bs.modal', function () {
  		location.reload();
 	})

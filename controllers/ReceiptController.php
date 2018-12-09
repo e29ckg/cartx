@@ -50,7 +50,7 @@ class ReceiptController extends Controller
         ]);
     }
 
-    public function actionIndex_add()
+    public function actionAdd()
     {
         // $model = ReceiptList::find()->orderBy([
         //     'create_at'=>SORT_ASC,
@@ -59,7 +59,7 @@ class ReceiptController extends Controller
         
         //     $countAll = Receipt::getCountAll();
         
-        return $this->render('index_add',[
+        return $this->render('add',[
             // 'models' => $model,
             // 'countAll' => $countAll,
             //'dataProvider' => $dataProvider,
@@ -73,25 +73,22 @@ class ReceiptController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->create_at = date("Y-m-d H:i:s");
 
-            // $model->save();
-            //$this->layout = 'cart_shop'; 
-
         if (!isset($_SESSION['inLineR'])){
             $_SESSION['inLineR'] = 0;
-            $_SESSION['strProductCode'][0] = $model->product_code; 
-            $_SESSION['strProductUnitPrice'][0] = $model->unit_price; 
-            $_SESSION['strQty'][0] = $model->quantity;
+            $_SESSION['strProductCodeR'][0] = $model->product_code; 
+            $_SESSION['strProductUnitPriceR'][0] = $model->unit_price; 
+            $_SESSION['strQtyR'][0] = $model->quantity;
             
         } else {
             
                 $_SESSION['inLineR'] = $_SESSION['inLineR'] + 1;
                 $inNewLine =  $_SESSION['inLineR'];
-                $_SESSION['strProductCode'][$inNewLine ] = $model->product_code; 
-                $_SESSION['strProductUnitPrice'][$inNewLine] = $model->unit_price; 
-                $_SESSION['strQty'][$inNewLine ] = 1;
+                $_SESSION['strProductCodeR'][$inNewLine ] = $model->product_code; 
+                $_SESSION['strProductUnitPriceR'][$inNewLine] = $model->unit_price; 
+                $_SESSION['strQtyR'][$inNewLine ] = $model->quantity;
             }
         
-            return $this->redirect(['index_add', 'id' => $model->id]);
+            return $this->redirect(['add', 'id' => $model->id]);
         }
 
         if(Yii::$app->request->isAjax){
@@ -104,6 +101,19 @@ class ReceiptController extends Controller
             ]); 
         }
     }
+
+    public function actionDelete_list($id = null) {
+            $_SESSION['strProductCodeR'][$id] = ""; 
+            $_SESSION['strProductUnitPriceR'][$id] = ""; 
+            $_SESSION['strQtyR'][$id] = "";
+        // return $this->render('add'); 
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('add');
+        }else{
+            return $this->render('add'); 
+        }
+    }
+
     /**
      * Displays a single Order model.
      * @param integer $id

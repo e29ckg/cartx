@@ -33,8 +33,8 @@ class ReceiptList extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            // [['receipt_code'], 'required'],
-            [['product_unit_id', 'quantity'], 'integer'],
+            [['quantity', 'unit_price'], 'required'],
+            [['quantity'], 'integer'],
             [['unit_price'], 'number'],
             [['create_at'], 'safe'],
             [['receipt_code'], 'string', 'max' => 32],
@@ -51,7 +51,6 @@ class ReceiptList extends \yii\db\ActiveRecord
             'id' => 'ID',
             'receipt_code' => 'Receipt Code',
             'product_code' => 'Product Code',
-            'product_unit_id' => 'Product Unit ID',
             'unit_price' => 'Unit Price',
             'quantity' => 'Quantity',
             'create_at' => 'Create At',

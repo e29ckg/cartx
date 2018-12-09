@@ -1,7 +1,7 @@
 <?php
 use app\models\ReceiptList;
 use app\models\Product;
-// echo var_dump($_SESSION['inLine']);
+//  echo var_dump($_SESSION['inLine']);
 ?>
 
 <section id="cart_items">
@@ -37,7 +37,7 @@ use app\models\Product;
                     					$model = Product::find()->where(['code'=> $idProduct])->one();
                     					// $ss['strProductId'][$i] =  $_SESSION['inLine'][$i];
 										// $Total = $_SESSION['strQty'][$i] * $model->unit_price;
-										$sumTotal = $sumTotal + $Total;
+										// $sumTotal = $sumTotal + $Total;
 										
 						?>
 							<tr>
@@ -51,7 +51,7 @@ use app\models\Product;
 									<p>Web ID:<?=$model->instoke?> </p>
 								</td>
 								<td class="cart_price">
-									<p>$ <?php//= $model->price?></p>
+									<p>$ </p>
 								</td>
 								<td class="cart_quantity">
 									<div class="cart_quantity_button">
@@ -61,7 +61,7 @@ use app\models\Product;
 									</div>
 								</td>
 								<td class="cart_total">
-									<p class="cart_total_price">$ <?=$Total?> </p>
+									<p class="cart_total_price">$  </p>
 								</td>
 								<td class="cart_delete">
 									<a class="cart_quantity_delete " data-id="<?=$i?>" href="index.php?r=cart/delete&id=<?=$i?>"><i class="fa fa-times"></i></a>
@@ -89,7 +89,7 @@ use app\models\Product;
 									<tr>
 					<?php if($sumTotal<>0){ ?>
 									<td>Total</td>
-									<td><span>$ <?=$sumTotal?></span></td>
+									<td><span>$ </span></td>
 					<?php } ?>
 										
 									</tr>

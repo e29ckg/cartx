@@ -65,7 +65,7 @@ class AppAsset extends AssetBundle
 		// 'js/plugin/datatable-responsive/datatables.responsive.min.js'
     ];
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+        // 'yii\web\YiiAsset',
+        // 'yii\bootstrap\BootstrapAsset',
     ];
 }

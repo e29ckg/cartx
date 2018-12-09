@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>Rendering engine</th>
+                  <th>Id</th>
 				  <th>Browser</th>
 				  <th>Browser</th>
                   <th>Platform(s)</th>

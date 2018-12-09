@@ -10,70 +10,74 @@ $this->title = 'รับเข้าสต็อก';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<!-- Main content -->
+<section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">ใบรับของ</h3>
+			  <div class="box-tools">
+                
+					<a href= "index.php?r=receipt/add" class="btn btn-warning act-update"><i class="fa fa-pencil-square-o"></i> เพิ่ม</a>
 
-<div>
-    <!-- widget grid -->
-	<section id="widget-grid" class="">
-				
-        <!-- row -->
-        <div class="row">
-            
-            <!-- NEW WIDGET START -->
-            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            
-             	<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1">
-					
-						<!-- widget div-->
-					<div>
-						<!-- widget edit box -->
-						<div class="jarviswidget-editbox">
-							<!-- This area used as dropdown edit box -->
-						</div>
-						<!-- end widget edit box -->
-						<!-- widget content -->
-						<div class="widget-body no-padding">
-							<table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
-								<thead>
-									<tr>
-					                    <th data-class="expand">Id</th>					                    
-					                    <th data-hide="phone">code</th>
-										<th data-hide="phone">ชื่อ</th>
-					                    <th data-hide="phone">status</th>
-					                    <th data-hide="phone,tablet">เวลา</th>
-					                    <th>เครื่องมือ</th>
-						            </tr>
-								</thead>
-								<tbody>
-									<?php foreach ($models as $models): ?>
-						            <tr>
-								        <td><?=$models->id?></td>
-								        <td><a herf= "#" class="act-view" data-id=<?=$models->id?>><?=$models->receipt_code?></a></td>
-										<td><?=$models->user_id?></td>
-								        <td><?=$models->receipt_from?></td> 
-										<td><?=$models->create_at?></td>
-								        <td>
-											<a herf= "#" class="btn btn-warning act-update" data-id=<?=$models['id']?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
-											<a herf= "#" class="btn btn-warning act-view" data-id=<?=$models['id']?>><i class="fa fa-pencil-square-o"></i> ดู</a>
-											<?= Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $models->id],
-													[
-														'class' => 'btn btn-danger act-update',
-														'data-confirm' => 'Are you sure to delete this item?',
-                                    					'data-method' => 'post',
-													]);
-											?>
-										</td>
-									</tr>
-									<?php  endforeach; ?>
-								</tbody>	
-							</table>
-						</div>
-					</div>							
-            </article>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="receipt-index" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>ID</th>
+				  <th>Code</th>
+				  <th>ผู้นำเข้าระบบ</th>
+                  <th>สถานะ(s)</th>
+                  <th>วัน-เวลา</th>
+                  <th>เครื่องมือ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>                  
+				<?php foreach ($models as $model): ?>
+				<td><?=$model->id?></td>
+					<td><a href= "index.php?r=receipt/view&id=<?=$model->id?>" class="act-view" data-id=''><?=$model->receipt_code?></a></td>
+                  	<td><?=$model->user_id?></td>
+                  	<td><?=$model->status?></td>
+                  	<td><?=$model->create_at?></td>
+                  	<td><a herf= "#" class="btn btn-warning act-update" data-id=<?=$model->id?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
+						<a herf= "#" class="btn btn-warning act-view" data-id=<?=$model->id?>><i class="fa fa-pencil-square-o"></i> ดู</a>
+						<?= Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $model->id],
+							[
+								'class' => 'btn btn-danger act-update',
+								'data-confirm' => 'Are you sure to delete this item?',
+                        		'data-method' => 'post',
+							]);
+						?>
+					</td>
+				</tr>
+				<?php  endforeach; ?>
+				</tbody>
+                <!-- <tfoot>
+                <tr>
+                  <th>Rendering engine</th>
+                  <th>Browser</th>
+                  <th>Platform(s)</th>
+                  <th>Engine version</th>
+                  <th>CSS grade</th>
+                </tr>
+                </tfoot> -->
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
         </div>
-	</section>	
-</div>
-
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+ 
 
 
 <?php
@@ -118,7 +122,8 @@ $('#eg8').click(function() {
      
 $(document).ready(function() {	
 /* BASIC ;*/	
-	
+	$('#receipt-index').DataTable();
+
 	$('#activity-modal').on('hidden.bs.modal', function () {
  		location.reload();
 	})

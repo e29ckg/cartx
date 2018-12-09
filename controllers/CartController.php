@@ -231,7 +231,7 @@ class CartController extends Controller
 
     public function actionAdd_to_cart($id = null) {
         //$this->layout = 'cart_shop'; 
-        $models = ReceiptList::find()->where(['product_code', $id]);
+        $models = Product::find()->where(['code', $id]);
 
         if (!isset($_SESSION['inLine'])){
             $_SESSION['inLine'] = 0;
