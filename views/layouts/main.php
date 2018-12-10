@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-
+use yii\bootstrap\Modal;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
@@ -37,8 +37,12 @@ if (Yii::$app->controller->action->id === 'login') {
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
         <?php $this->head() ?>
     </head>
+
+    
+
     <body class="hold-transition sidebar-mini <?= \dmstr\helpers\AdminLteHelper::skinClass() ?>">
     <?php $this->beginBody() ?>
+    
     <div class="wrapper">
 
         <?= $this->render(
@@ -64,3 +68,13 @@ if (Yii::$app->controller->action->id === 'login') {
     </html>
     <?php $this->endPage() ?>
 <?php } ?>
+<?php
+		Modal::begin([
+  			'id' => 'activity-modal',
+   			'header' => '<h4 class="modal-title"></h4>',
+   			'size' => 'modal-lg',
+   			// 'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal">ปิด</a>',
+		]);
+		echo "<div id='modalContent'></div>";
+		Modal::end();
+	?>

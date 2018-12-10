@@ -102,7 +102,12 @@ class ProductController extends Controller
                     $model->img = $fileName;
                 }               
             } 
-            
+            if($model->status == ''){
+                $model->status = 1;
+            }
+            if($model->lower == ''){
+                $model->lower = 1;
+            }
             $model->create_at = date("Y-m-d H:i:s"); 
             if($model->save()){
                return $this->redirect(['index']);

@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'รับเข้าสต็อก';
+$this->title = 'ใบรับของเข้าสต๊อก';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">ใบรับของ</h3>
+              <h3 class="box-title"><?=$this->title?></h3>
 			  <div class="box-tools">
                 
 					<a href= "index.php?r=receipt/add" class="btn btn-warning act-update"><i class="fa fa-pencil-square-o"></i> เพิ่ม</a>
@@ -37,8 +37,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 </tr>
                 </thead>
                 <tbody>
-                <tr>                  
+                                  
 				<?php foreach ($models as $model): ?>
+				<tr>
 				<td><?=$model->id?></td>
 					<td><a href= "index.php?r=receipt/view&id=<?=$model->id?>" class="act-view" data-id=''><?=$model->receipt_code?></a></td>
                   	<td><?=$model->user_id?></td>
@@ -73,10 +74,10 @@ $this->params['breadcrumbs'][] = $this->title;
           <!-- /.box -->
         </div>
         <!-- /.col -->
-      </div>
-      <!-- /.row -->
-    </section>
-    <!-- /.content -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
  
 
 

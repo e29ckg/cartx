@@ -5,10 +5,12 @@ namespace app\controllers;
 use Yii;
 use app\models\Receipt;
 use app\models\ReceiptList;
+use app\models\Product;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * OrderController implements the CRUD actions for Order model.
@@ -37,7 +39,7 @@ class ReceiptController extends Controller
     public function actionIndex()
     {
         $model = Receipt::find()->orderBy([
-            'create_at'=>SORT_ASC,
+            //  'create_at'=>SORT_DESC, //SORT_ASC,
             'id' => SORT_DESC,
             ])->limit(200)->all();
         
@@ -112,6 +114,68 @@ class ReceiptController extends Controller
         }else{
             return $this->render('add'); 
         }
+    }
+
+    public function actionAdd_conform() {
+
+        // $code = date("YmdHis").Yii::$app->security->generateRandomString(4);
+        $code = 'R'.date("YmdHis");
+        $create_at = date("Y-m-d H:i:s");
+        try {            
+
+            $Total = 0 ;
+            $sumTotal = 0;
+							
+			if(isset($_SESSION['inLineR'])){
+				for($i=0;$i<=(int)$_SESSION['inLineR'];$i++){
+					if($_SESSION['strProductCodeR'][$i] != ""){
+                        $codeProduct = $_SESSION['strProductCodeR'][$i];
+                        $UnitPrice = $_SESSION['strProductUnitPriceR'][$i];            			 
+               					// $ss['strProductCodeR'][$i] =  $_SESSION['iRnLine'][$i];
+						$Total = $_SESSION['strQtyR'][$i] * $_SESSION['strProductUnitPriceR'][$i];
+                        $sumTotal = $sumTotal + $Total;
+                        $strQtyR = $_SESSION['strQtyR'][$i];
+                        
+
+                        Yii::$app->db->createCommand()->insert('receipt_list', [
+                            'receipt_code' => $code,
+                            'product_code' => $codeProduct,
+                            'unit_price' => $UnitPrice,
+                            'quantity' => $strQtyR,
+                            'create_at' => $create_at,
+                        ])->execute();
+
+                        $model = Product::find()->where(['code'=> $codeProduct])->one();
+                        $model->instoke =  $model->instoke + $strQtyR;
+                        $model->save();
+                        
+                    }
+                }
+                Yii::$app->db->createCommand()->insert('receipt', [
+                    'receipt_code' => $code,
+                    'user_id' => Yii::$app->user->identity->id,
+                    'sumtotal' => $sumTotal,
+                    'status' => 1,
+                    'create_at' => $create_at,
+                ])->execute();
+            }
+            
+
+            unset($_SESSION['inLineR']);	
+            unset($_SESSION['strProductCodeR']);	            
+            unset($_SESSION['strProductUnitPriceR']);	
+            unset($_SESSION['strQtyR']);
+
+		} catch(\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch(\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }			
+
+        return $this->redirect(['index']); 
+        // return $this->renderAjax('checkout');
     }
 
     /**
