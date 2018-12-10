@@ -17,11 +17,10 @@ use app\models\Product;
 					<thead>
 						<tr class="cart_menu">
 							<td class="image">Item</td>
-							<td class="description"></td>
-							<td class="price">Price</td>
+							<td class="description">วัสดุ</td>
+							<td class="description">จำนวนวัสดุที่มี</td>
 							<td class="quantity">Quantity</td>
-							<td class="total">Total</td>
-							<td></td>
+							<td>ลบ</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -32,27 +31,28 @@ use app\models\Product;
 						//  $model = Product::find()->all();
 						if(isset($_SESSION['inLine'])){
 								for($i=0;$i<=(int)$_SESSION['inLine'];$i++){
-									if($_SESSION['strProductId'][$i] != ""){
-										$idProduct = $_SESSION['strProductId'][$i];
-                    					$model = Product::find()->where(['code'=> $idProduct])->one();
-                    					// $ss['strProductId'][$i] =  $_SESSION['inLine'][$i];
-										// $Total = $_SESSION['strQty'][$i] * $model->unit_price;
-										// $sumTotal = $sumTotal + $Total;
+									if($_SESSION['strProductCode'][$i] != ""){
+										$codeProduct = $_SESSION['strProductCode'][$i];
+										$model = Product::find()->where(['code'=> $codeProduct])->one();
+										  									
+                    					// $ss['strProductCode'][$i] =  $_SESSION['inLine'][$i];
+										$Total = $_SESSION['strQty'][$i];
+										$sumTotal = $sumTotal + $Total;
 										
 						?>
 							<tr>
-								<!-- <td class="cart_product"><a href=""><img src="<?= $model->img ? 'uploads/product/img/'.$model->img : 'img/no_image.png'?>" height="110" alt=""></a></td> -->
-								<td class="cart_description">
-									<h4><a href=""><?=$model->product_name?></a></h4>
-									<p>Web ID:<?=$model->instoke?> </p>
+								<td class="cart_product">
+									<a href=""><img src="<?= $model->img ? 'uploads/product/img/'.$model->img : 'img/no_image.png'?>" height="110" alt=""></a></td>
 								</td>
 								<td class="cart_description">
 									<h4><a href=""><?=$model->product_name?></a></h4>
-									<p>Web ID:<?=$model->instoke?> </p>
+									<p>Web ID: <?=$model->code?> </p>
 								</td>
-								<td class="cart_price">
-									<p>$ </p>
+
+								<td class="cart_description">
+									<h4><a href=""><?=$model->instoke?></a></h4>
 								</td>
+								
 								<td class="cart_quantity">
 									<div class="cart_quantity_button">
 										<a data-id="<?=$i?>" class="cart_quantity_up qty_up" href="#"> + </a>
@@ -60,49 +60,15 @@ use app\models\Product;
 										<a data-id="<?=$i?>" class="cart_quantity_down qty_down" href="#"> - </a>
 									</div>
 								</td>
-								<td class="cart_total">
-									<p class="cart_total_price">$  </p>
-								</td>
+								
+								<!-- <td class="cart_quantity"> -->
 								<td class="cart_delete">
-									<a class="cart_quantity_delete " data-id="<?=$i?>" href="index.php?r=cart/delete&id=<?=$i?>"><i class="fa fa-times"></i></a>
+									<a class="cart_quantity_delete" data-id="<?=$i?>" href="index.php?r=cart/delete&id=<?=$i?>"><i class="fa fa-times"></i></a>
 								</td>
 							</tr>						
 
-					<?php }	} } ?>								
-
-						<tr>
-							<td colspan="4">&nbsp;</td>
-							<td colspan="2">
-								<table class="table table-condensed total-result">
-									<tbody><tr>
-										<!-- <td>Cart Sub Total</td>
-										<td>$59</td> -->
-									</tr>
-									<tr>
-										<!-- <td>Exo Tax</td>
-										<td>$2</td> -->
-									</tr>
-									<tr class="shipping-cost">
-										<!-- <td>Shipping Cost</td>
-										<td>Free</td>										 -->
-									</tr>
-									<tr>
-					<?php if($sumTotal<>0){ ?>
-									<td>Total</td>
-									<td><span>$ </span></td>
-					<?php } ?>
-										
-									</tr>
-								</tbody>
-							</table>
-						</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td colspan="2">
+					<?php }	} } ?>		
+						
 								<table class="table table-condensed total-result">
 									<tbody><tr>
 										<!-- <td>Cart Sub Total</td>
@@ -124,16 +90,14 @@ use app\models\Product;
 									</tr>
 								</tbody>
 								</table>
-							</td>
-						
-						</tr>
-
+							
 					</tbody>
 				</table>
 				
 			</div>
 		</div>
 	</section> <!--/#cart_items-->
+
 <script >
 		$(document).ready(function() {
 			

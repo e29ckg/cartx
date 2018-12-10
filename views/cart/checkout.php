@@ -15,10 +15,10 @@ use app\models\Product;
 					<thead>
 						<tr class="cart_menu">
 							<td class="image">Item</td>
-							<td class="description"></td>
-							<td class="price">Price</td>
+							<td class="description">วัสดุ</td>
+							<td class="price">วัสดุที่มี</td>
 							<td class="quantity">Quantity</td>
-							<td class="total">Total</td>
+							<td class="total"></td>
 							<td></td>
 						</tr>
 					</thead>
@@ -29,11 +29,11 @@ use app\models\Product;
 							//  $model = Product::find()->all();
 							if(isset($_SESSION['inLine'])){
 								for($i=0;$i<=(int)$_SESSION['inLine'];$i++){
-									if($_SESSION['strProductId'][$i] != ""){
-										$idProduct=$_SESSION['strProductId'][$i];
-                    					$model = Product::find()->where(['id'=> $idProduct])->one();
-                    					// $ss['strProductId'][$i] =  $_SESSION['inLine'][$i];
-										$Total = $_SESSION['strQty'][$i] * $model->price;
+									if($_SESSION['strProductCode'][$i] != ""){
+										$codeProduct = $_SESSION['strProductCode'][$i];
+                    					$model = Product::find()->where(['code'=> $codeProduct])->one();
+                    					// $ss['strProductCode'][$i] =  $_SESSION['inLine'][$i];
+										$Total = $_SESSION['strQty'][$i];
 										$sumTotal = $sumTotal + $Total;
 										
 						?>
@@ -44,7 +44,7 @@ use app\models\Product;
 									<p>Web ID:<?=$model->id?> </p>
 								</td>
 								<td class="cart_price">
-									<p>$ <?= $model->price?></p>
+									<p> <?= $model->instoke?></p>
 								</td>
 								<td class="cart_quantity">
 									<div class="cart_quantity_button">
@@ -54,7 +54,7 @@ use app\models\Product;
 									</div>
 								</td>
 								<td class="cart_total">
-									<p class="cart_total_price">$ <?=$Total?> </p>
+									<!-- <p class="cart_total_price"></p> -->
 								</td>
 								<td class="cart_delete">
 									<!-- <a class="cart_quantity_delete " data-id="<?=$i?>" href="index.php?r=cart/delete&id=<?=$i?>"><i class="fa fa-times"></i></a> -->

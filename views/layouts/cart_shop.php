@@ -336,9 +336,9 @@ if (Yii::$app->user->identity) {
 			// add-to-cart						
 			$( ".add-to-cart" ).click(function() {    
     			var url = "index.php?r=cart/add_to_cart";
-				id= $(this).data("id");
+				code = $(this).data("id");
 				
-        		$.get(url,{id:id},function (data){
+        		$.get(url,{code:code},function (data){
 						$("#content").html(data);
         			}
 				);     

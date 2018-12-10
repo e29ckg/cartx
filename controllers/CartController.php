@@ -229,23 +229,23 @@ class CartController extends Controller
         }
     }
 
-    public function actionAdd_to_cart($id = null) {
+    public function actionAdd_to_cart($code = null) {
         //$this->layout = 'cart_shop'; 
-        $models = Product::find()->where(['code', $id]);
+        $models = Product::find()->where(['code', $code]);
 
         if (!isset($_SESSION['inLine'])){
             $_SESSION['inLine'] = 0;
-            $_SESSION['strProductId'][0] = $id; 
+            $_SESSION['strProductCode'][0] = $code; 
             $_SESSION['strQty'][0] = 1;
             
         } else {
-            $key = array_search($id, $_SESSION['strProductId']);
+            $key = array_search($code, $_SESSION['strProductCode']);
             if((string)$key != ""){
                 $_SESSION['strQty'][$key] = $_SESSION['strQty'][$key] + 1;
 
                 $strQty = $_SESSION['strQty'][$key];
-                $idProduct = $_SESSION['strProductId'][$key];
-                $model = Product::find()->where(['code'=> $idProduct])->one();
+                $codeProduct = $_SESSION['strProductCode'][$key];
+                $model = Product::find()->where(['code'=> $codeProduct])->one();
                 if ($model->instoke > $strQty){
                     $_SESSION['strQty'][$key] = $_SESSION['strQty'][$key] + 1 ;
                 }else{
@@ -254,7 +254,7 @@ class CartController extends Controller
             }else{
                 $_SESSION['inLine'] = $_SESSION['inLine'] + 1;
                 $inNewLine =  $_SESSION['inLine'];
-                $_SESSION['strProductId'][$inNewLine ] = $id; 
+                $_SESSION['strProductCode'][$inNewLine ] = $code; 
                 $_SESSION['strQty'][$inNewLine ] = 1;
             }
             
@@ -266,7 +266,7 @@ class CartController extends Controller
 
     public function actionDelete($id = null) {
         $this->layout = 'cart_shop'; 
-        $_SESSION['strProductId'][$id] = ""; 
+        $_SESSION['strProductCode'][$id] = ""; 
         $_SESSION['strQty'][$id] = "";
         return $this->render('cart'); 
         // return $this->renderAjax('cart');
@@ -275,8 +275,8 @@ class CartController extends Controller
     public function actionQty_up($id = null) {
         $this->layout = 'cart_shop'; 
         $strQty = $_SESSION['strQty'][$id];
-        $idProduct=$_SESSION['strProductId'][$id];
-        $model = Product::find()->where(['id'=> $idProduct])->one();
+        $codeProduct=$_SESSION['strProductCode'][$id];
+        $model = Product::find()->where(['code'=> $codeProduct])->one();
         if ($model->instoke > $strQty){
             $_SESSION['strQty'][$id] = $_SESSION['strQty'][$id] + 1 ;
         }else{
@@ -298,8 +298,8 @@ class CartController extends Controller
 
     public function actionQty_change($id = null,$val = null) {
         $this->layout = 'cart_shop'; 
-        $idProduct = $_SESSION['strProductId'][$id];
-        $model = Product::find()->where(['id'=> $idProduct])->one();
+        $codeProduct = $_SESSION['strProductCode'][$id];
+        $model = Product::find()->where(['code'=> $codeProduct])->one();
                 
         if($model->instoke >= $val){
                 $_SESSION['strQty'][$id] = $val ;
@@ -325,48 +325,47 @@ class CartController extends Controller
     public function actionSave_order() {
         $this->layout = 'cart_shop';    
 
-        $code = date("YmdHis").Yii::$app->security->generateRandomString(4);
+        $code = 'O'.date("YmdHis");
         $create_at = date("Y-m-d H:i:s");
         try {
-            Yii::$app->db->createCommand()->insert('order', [
-                'code' => $code,
-                'id_user' => Yii::$app->user->identity->id,
-                'status' => 1,
-                'create_at' => $create_at,
-            ])->execute();
-
+            
             $Total = 0 ;
             $sumTotal = 0;
 							//  $model = Product::find()->all();
 			if(isset($_SESSION['inLine'])){
 				for($i=0;$i<=(int)$_SESSION['inLine'];$i++){
-					if($_SESSION['strProductId'][$i] != ""){
-						$idProduct = $_SESSION['strProductId'][$i];
-            			$model = Product::find()->where(['id'=> $idProduct])->one();
-               					// $ss['strProductId'][$i] =  $_SESSION['inLine'][$i];
-						$Total = $_SESSION['strQty'][$i] * $model->price;
+					if($_SESSION['strProductCode'][$i] != ""){
+						$codeProduct = $_SESSION['strProductCode'][$i];
+               					// $ss['strProductCode'][$i] =  $_SESSION['inLine'][$i];
+						$Total = $_SESSION['strQty'][$i];
                         $sumTotal = $sumTotal + $Total;
                         $strQty = $_SESSION['strQty'][$i];
+                                                
+                        $model = new OrderList();
+                            $model->order_code = $code;
+                            $model->product_code = $codeProduct;
+                            $model->quantity = $strQty;
+                            $model->create_at = $create_at;
+                            $model->save();
                         
-
-                        Yii::$app->db->createCommand()->insert('order_list', [
-                            'id_order' => $code,
-                            'id_product' => $model->id,
-                            'quantity' => $strQty,
-                            'create_at' => $create_at,
-                        ])->execute();
-
-                        $Qty =  $model->instoke - $strQty;
-                        Yii::$app->db->createCommand()->update('product', [
-                            'instoke' => $Qty 
-                        ], 'id = '.$idProduct)->execute();
-                        
+                        $modelP = Product::find()->where(['code'=> $codeProduct])->one();
+                        $Qty =  $modelP->instoke - $strQty;
+                        $modelP->instoke = $Qty;
+                        $modelP->save();
+                                            
                     }
                 }
+                $modelO = new Order();
+                            $modelO->order_code = $code;
+                            $modelO->id_user = Yii::$app->user->identity->id;
+                            $modelO->status = 1;
+                            $modelO->create_at = $create_at;
+                            $modelO->save();
             }
+                      
 
             unset($_SESSION['inLine']);	
-            unset($_SESSION['strProductId']);	
+            unset($_SESSION['strProductCode']);	
             unset($_SESSION['strQty']);
 
 		} catch(\Exception $e) {

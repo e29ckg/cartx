@@ -57,6 +57,11 @@ class ReceiptList extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getCountAll()
+    {        
+        return ReceiptList::find()->count();           
+    }
+
     public function getProduct()
     {
         return $this->hasOne(Product::className(), ['code' => 'product_code']);
