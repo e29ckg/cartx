@@ -41,10 +41,10 @@ use yii\helpers\Html;
                 <td>
                     <?=$model_list->product_code?>
                 </td>
-                <td></td>
+                <td><?=$model_list->unit_price?></td>
                 <td><?=$model_list->quantity?></td>
                 <td>
-                    
+                <?=$total = $model_list->unit_price * $model_list->quantity?>
                 </td>
             </tr>
             <?php $totalSum = $totalSum + $total;
