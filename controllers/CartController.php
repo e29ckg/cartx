@@ -358,7 +358,8 @@ class CartController extends Controller
                         foreach ($modelP as $model): 
                             $QLP = 0;
                             
-                            if($strQty <> 0){                                
+                            if($strQty <> 0){             
+                                
                                 $QLP = $model->quantity - $strQty;
 
                                 if($QLP >= 0){
@@ -387,6 +388,15 @@ class CartController extends Controller
                                 $Total = $model->unit_price * $QLP;
                                 $sumTotal = $sumTotal + $Total;
                             }
+
+                            $modelOL = new OrderList();
+                                    $modelOL->order_code = $code;
+                                    $modelOL->product_code = $codeProduct;
+                                    // $modelOL->product_unit_id = $model->product_unit_id; 
+                                    $modelOL->unit_price = $model->unit_price; 
+                                    $modelOL->quantity = $QLP;
+                                    $modelOL->create_at = $create_at;
+                                    $modelOL->save();
                         endforeach; 
                         
                 

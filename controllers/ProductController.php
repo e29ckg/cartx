@@ -109,6 +109,7 @@ class ProductController extends Controller
                 $model->lower = 1;
             }
             $model->create_at = date("Y-m-d H:i:s"); 
+            $model->code = 'P'.date("YmdHis");
             if($model->save()){
                return $this->redirect(['index']);
             }   
