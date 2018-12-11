@@ -32,10 +32,9 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             // [['order_code'], 'required'],
-            [['status'], 'integer'],
+            [['status','id_user'], 'integer'],
             [['create_at'], 'safe'],
             [['order_code'], 'string', 'max' => 32],
-            [['id_user'], 'string', 'max' => 255],
         ];
     }
 

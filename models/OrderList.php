@@ -30,7 +30,7 @@ class OrderList extends \yii\db\ActiveRecord
     {
         return [
             [['order_code'], 'required'],
-            [['quantity'], 'integer'],
+            [['quantity','product_unit_id'], 'integer'],
             [['create_at'], 'safe'],
             [['order_code'], 'string', 'max' => 32],
             [['product_code'], 'string', 'max' => 255],
@@ -46,6 +46,7 @@ class OrderList extends \yii\db\ActiveRecord
             'id' => 'ID',
             'order_code' => 'Id Order',
             'product_code' => 'Id Product',
+            'product_unit_id' => 'หน่วยนับ',
             'unit_price' => '$this->float()',
             'quantity' => 'Quantity',
             'create_at' => 'Create At',
@@ -64,7 +65,7 @@ class OrderList extends \yii\db\ActiveRecord
 
     public function getReceiptList()
     {
-        return $this->hasOne(ReceiptList::className(), ['receipt_code' => 'product_receipt_code']);
+        return $this->hasOne(ReceiptList::className(), ['receipt_code' => 'product_code']);
     }
     
     public function getProductUnitPrice(){

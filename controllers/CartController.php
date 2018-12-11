@@ -322,17 +322,18 @@ class CartController extends Controller
         // return $this->renderAjax('checkout');
     }
 
-    public function actionSave_order() {
-        $this->layout = 'cart_shop';    
 
-        $code = 'O'.date("YmdHis");
+    public function actionSave_order() {
+        $code = 'A'.date("YmdHis");
         $create_at = date("Y-m-d H:i:s");
+        
         try {
             
             $Total = 0 ;
             $sumTotal = 0;
-							//  $model = Product::find()->all();
+		// 					//  $model = Product::find()->all();
 			if(isset($_SESSION['inLine'])){
+                
 				for($i=0;$i<=(int)$_SESSION['inLine'];$i++){
 					if($_SESSION['strProductCode'][$i] != ""){
 						$codeProduct = $_SESSION['strProductCode'][$i];
@@ -340,29 +341,69 @@ class CartController extends Controller
 						$Total = $_SESSION['strQty'][$i];
                         $sumTotal = $sumTotal + $Total;
                         $strQty = $_SESSION['strQty'][$i];
-                                                
-                        $model = new OrderList();
-                            $model->order_code = $code;
-                            $model->product_code = $codeProduct;
-                            $model->quantity = $strQty;
-                            $model->create_at = $create_at;
-                            $model->save();
-                        
+//  $strQty = 20;
+//  $codeProduct = 'P1234567890';
+
                         $modelP = Product::find()->where(['code'=> $codeProduct])->one();
-                        $Qty =  $modelP->instoke - $strQty;
-                        $modelP->instoke = $Qty;
-                        $modelP->save();
-                                            
-                    }
-                }
-                $modelO = new Order();
+                            $Qty =  $modelP->instoke - $strQty;
+                            $modelP->instoke = $Qty;
+                            $modelP->save();
+        
+                        $modelP = ReceiptList::find()
+                                    ->where(['product_code'=> $codeProduct])
+                                    ->andWhere('quantity > 0')
+                                    ->orderBy('id')
+                                    ->all();
+                        
+                        foreach ($modelP as $model): 
+                            $QLP = 0;
+                            
+                            if($strQty <> 0){                                
+                                $QLP = $model->quantity - $strQty;
+
+                                if($QLP >= 0){
+                                    $model->quantity = $model->quantity - $strQty;
+                                    $QLP = $strQty;
+                                    $model->save();
+                                    $strQty = 0;                                    
+
+                                }elseif($QLP < 0){
+                                    $strQty = $strQty - $model->quantity ;
+                                    $QLP = $model->quantity;
+                                    
+                                    $model->quantity = 0;
+                                    $model->save();
+                                }
+
+                                $modelOL = new OrderList();
+                                    $modelOL->order_code = $code;
+                                    $modelOL->product_code = $codeProduct;
+                                    $modelOL->product_unit_id = $model->product_unit_id; 
+                                    $modelOL->unit_price = $model->unit_price; 
+                                    $modelOL->quantity = $QLP;
+                                    $modelOL->create_at = $create_at;
+                                    $modelOL->save();
+                                
+                                $Total = $model->unit_price * $QLP;
+                                $sumTotal = $sumTotal + $Total;
+                            }
+                        endforeach; 
+                        
+                
+                        $modelO = new Order();
                             $modelO->order_code = $code;
                             $modelO->id_user = Yii::$app->user->identity->id;
                             $modelO->status = 1;
+                            $modelO->sumtotal = $sumTotal;
                             $modelO->create_at = $create_at;
-                            $modelO->save();
-            }
-                      
+                            if($modelO->save()){
+                                echo '<script type="text/javascript">alert("ok!");</script>';
+                            }else{
+                                echo '<script type="text/javascript">alert("no save");</script>';
+                            }
+                    }
+                }
+            }      
 
             unset($_SESSION['inLine']);	
             unset($_SESSION['strProductCode']);	
@@ -377,7 +418,7 @@ class CartController extends Controller
         }			
 
         return $this->redirect(['account']); 
-        // return $this->renderAjax('checkout');
+    //     return $this->redirect(['checkout']);
     }
 
     public function actionAccount() {

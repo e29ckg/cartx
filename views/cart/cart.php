@@ -42,7 +42,7 @@ use app\models\Product;
 						?>
 							<tr>
 								<td class="cart_product">
-									<a href=""><img src="<?= $model->img ? 'uploads/product/img/'.$model->img : 'img/no_image.png'?>" height="110" alt=""></a></td>
+									<a href=""><img src="<?= isset($model->img) ? 'uploads/product/img/'.$model->img : 'img/no_image.png'?>" height="110" alt=""></a></td>
 								</td>
 								<td class="cart_description">
 									<h4><a href=""><?=$model->product_name?></a></h4>
