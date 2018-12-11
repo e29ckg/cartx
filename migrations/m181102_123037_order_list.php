@@ -21,7 +21,6 @@ class m181102_123037_order_list extends Migration
             'id' => $this->primaryKey(),
             'order_code' => $this->string(32)->notNull(),
             'product_code' => $this->string(),
-            'product_unit_id' => $this->integer(),
             'unit_price' => $this->float(),
             'quantity' => $this->integer(),
             'create_at' => $this->dateTime(),
@@ -30,18 +29,16 @@ class m181102_123037_order_list extends Migration
         $this->insert('order_list', [
             'order_code' => 'A1234567890',
             'product_code' => 'P0987654321',
-            'product_unit_id' => 1,
             'unit_price' => 100,
-            'quantity' => 1,
+            'quantity' => 10,
             'create_at' => date("Y-m-d H:i:s"),
         ]);
 
         $this->insert('order_list', [
             'order_code' => 'A1234567890',
             'product_code' => 'P1234567890',
-            'product_unit_id' => 1,
             'unit_price' => 100,
-            'quantity' => 1,
+            'quantity' => 10,
             'create_at' => date("Y-m-d H:i:s"),
         ]);
     }

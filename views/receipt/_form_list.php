@@ -12,15 +12,19 @@ use app\models\ProductUnit;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="order-form">
+<div class="receiptlist-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+		'id' => 'receiptlist-form',
+		
+        'enableAjaxValidation' => false,
+	]); ?>
 
 
     <?php 
-echo $form->field($model, 'product_code', ['options' => ['class' => '']])->widget(Select2::classname(), ['data' => ArrayHelper::map(Product::find()->all(), 'code', 'product_name'), 'options' => ['placeholder' => 'Select a state ...'], 'pluginOptions' => ['allowClear' => true]]);
-?>
-
+        echo $form->field($model, 'product_code', ['options' => ['class' => '']])->widget(Select2::classname(), ['data' => ArrayHelper::map(Product::find()->all(), 'code', 'product_name'), 'options' => ['placeholder' => 'select ...'], 'pluginOptions' => ['allowClear' => true]]);
+    ?>
+<a href= "index.php?r=product/create" class="btn btn-warning btn-xs act-update"><i class="fa fa-pencil-square-o"></i> เพิ่มชื่อสินค้าใหม่(กรณีค้นหาไม่พบ)</a>
     <?= $form->field($model, 'unit_price')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'quantity')->textInput() ?>

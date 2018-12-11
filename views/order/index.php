@@ -35,19 +35,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>                  
 				<?php foreach ($models as $model): ?>
 				<td><?=$model->id?></td>
-					<td><a href= "index.php?r=order/view&id=<?=$model->id?>" class="act-view" data-id=''><?=$model->order_code?></a></td>
+					<td><a href= "#" class="act-view" data-id='<?=$model->id?>'><?=$model->order_code?></a></td>
                   	<td><?=$model->getProfileName()?></td>
                   	<td><?=$model->status?></td>
                   	<td><?=$model->create_at?></td>
-                  	<td><a herf= "#" class="btn btn-warning act-update" data-id=<?=$model['id']?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
-						<a herf= "#" class="btn btn-warning act-view" data-id=<?=$model['id']?>><i class="fa fa-pencil-square-o"></i> ดู</a>
-						<?= Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $model->id],
-							[
-								'class' => 'btn btn-danger act-update',
-								'data-confirm' => 'Are you sure to delete this item?',
-                        		'data-method' => 'post',
-							]);
-						?>
+                  	<td>
 					</td>
 				</tr>
 				<?php  endforeach; ?>
@@ -116,7 +108,9 @@ $('#eg8').click(function() {
      
 $(document).ready(function() {	
 /* BASIC ;*/	
-$('#example').DataTable();
+$('#example').DataTable( {
+    "order": [[ 4, 'desc' ], [ 0, 'asc' ]]
+});
 
 	$('#activity-modal').on('hidden.bs.modal', function () {
  		location.reload();

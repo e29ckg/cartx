@@ -42,17 +42,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td><?=$model_list->product_code?></td>
                         <td><?=$model_list->unit_price?></td>
                         <td><?=$model_list->quantity?></td>                        
-                  	    <td><a herf= "#" class="btn btn-warning act-update" data-id=<?=$model->id?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
-						    <a herf= "#" class="btn btn-warning act-view" data-id=<?=$model->id?>><i class="fa fa-pencil-square-o"></i> ดู</a>
-						    <?= Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $model->id],
-							    [
-								    'class' => 'btn btn-danger act-update',
-								    'data-confirm' => 'Are you sure to delete this item?',
-                        		    'data-method' => 'post',
-							    ]);
-						    ?>
-					</td>
-				</tr>
+                  	    <td>
+                          <?php
+                          // echo Html::a('<i class="fa fa-remove"></i> ลบ',['receipt/delete','id' => $model->id],
+							            //   [ 'class' => 'btn btn-danger act-update',
+								          //     'data-confirm' => 'Are you sure to delete this item?',
+                        	// 	  'data-method' => 'post',
+                          //   ]);
+                            ?>
+					              </td>
+				              </tr>
 				<?php  endforeach; ?>
 				</tbody>
                 <!-- <tfoot>

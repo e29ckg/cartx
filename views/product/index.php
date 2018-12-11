@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 	<tr>
 						<th data-class="expand">Id</th>
 						<th>Image</th>
+						<th data-hide="phone">Code</th>
 						<th data-hide="phone">ชื่อวัสดุ</th>
 						<th data-hide="phone">ประเภท</th>
 						<th data-hide="phone,tablet">InStock</th>
@@ -56,12 +57,13 @@ $this->params['breadcrumbs'][] = $this->title;
 												}?>
 											</div>
 										</td>
+										<td><?=$models->code?></td>
 								        <td><?=$models['product_name']?></td>
 								        <td><?=$models->getCatalogtName()?></td>
 								        <td><?=$models['instoke']?> <?=$models->getUnitName()?></td>
 								        <td>
 											<a herf= "#" class="btn btn-warning act-update" data-id=<?=$models['id']?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
-											<a herf= "#" class="btn btn-warning act-view" data-id=<?=$models['id']?>><i class="fa fa-pencil-square-o"></i> ดู</a>
+											<a herf= "#" class="btn btn-warning act-view" data-id=<?=$models->id?>><i class="fa fa-pencil-square-o"></i> ดู</a>
 											<?= Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $models->id],
 													[
 														'class' => 'btn btn-danger act-update',
@@ -116,8 +118,10 @@ $script = <<< JS
     	});
 
 	var url_view = "index.php?r=product/view";		
-    	$(".act-view").click(function(e) {			
+    	$(".act-view").click(function(e) {	
+				
                 var fID = $(this).data("id");
+				alert(fID);
                 $.get(url_view,{id: fID},function (data){
                         $("#activity-modal").find(".modal-body").html(data);
                         $(".modal-body").html(data);

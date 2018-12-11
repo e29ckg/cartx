@@ -273,62 +273,6 @@ class ProductController extends Controller
         
         return $this->renderAjax('cart');
     }
-
-    public function actionSave_receipt() {
-
-        $code = date("YmdHis").Yii::$app->security->generateRandomString(4);
-        $create_at = date("Y-m-d H:i:s");
-        try {
-            Yii::$app->db->createCommand()->insert('order', [
-                'code' => $code,
-                'id_user' => Yii::$app->user->identity->id,
-                'status' => 1,
-                'create_at' => $create_at,
-            ])->execute();
-
-            $Total = 0 ;
-            $sumTotal = 0;
-							//  $model = Product::find()->all();
-			if(isset($_SESSION['inLine'])){
-				for($i=0;$i<=(int)$_SESSION['inLine'];$i++){
-					if($_SESSION['strProductId'][$i] != ""){
-						$idProduct = $_SESSION['strProductId'][$i];
-            			$model = Product::find()->where(['id'=> $idProduct])->one();
-               					// $ss['strProductId'][$i] =  $_SESSION['inLine'][$i];
-						$Total = $_SESSION['strQty'][$i] * $model->price;
-                        $sumTotal = $sumTotal + $Total;
-                        $strQty = $_SESSION['strQty'][$i];
-                        
-
-                        Yii::$app->db->createCommand()->insert('order_list', [
-                            'id_order' => $code,
-                            'id_product' => $model->id,
-                            'quantity' => $strQty,
-                            'create_at' => $create_at,
-                        ])->execute();
-
-                        $Qty =  $model->instoke - $strQty;
-                        Yii::$app->db->createCommand()->update('product', [
-                            'instoke' => $Qty 
-                        ], 'id = '.$idProduct)->execute();
-                        
-                    }
-                }
-            }
-
-            unset($_SESSION['inLine']);	
-            unset($_SESSION['strProductId']);	
-            unset($_SESSION['strQty']);
-
-		} catch(\Exception $e) {
-            $transaction->rollBack();
-            throw $e;
-        } catch(\Throwable $e) {
-            $transaction->rollBack();
-            throw $e;
-        }			
-
-        return $this->redirect(['account']); 
-        // return $this->renderAjax('checkout');
-    }
 }
+
+ 

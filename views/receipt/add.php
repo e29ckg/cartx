@@ -35,16 +35,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 	</thead>
                 	<tbody>
                 	<?php
+						$Total = 0;		
+						$sumTotal = 0;
 						if(isset($_SESSION['inLineR'])){
-						// $Total = "";		
-						// $sumTotal = "";
+						
 						for($i=0;$i<=(int)$_SESSION['inLineR'];$i++){
 							if($_SESSION['strProductCodeR'][$i] != ""){
 								$productCode = $_SESSION['strProductCodeR'][$i];
 								// $model = Product::find()->where(['code'=> $idProduct])->one();
 								// $ss['strProductId'][$i] =  $_SESSION['inLine'][$i];
-								// $Total = $_SESSION['strQtyR'][$i] * $model->unit_price;
-								// $sumTotal = $sumTotal + $Total;
+								$Total = $_SESSION['strQtyR'][$i] * $_SESSION['strProductUnitPriceR'][$i];
+								$sumTotal = $sumTotal + $Total;
 					?>
 						<tr>
 							<td class=""><?=$i?></td>				
@@ -65,7 +66,9 @@ $this->params['breadcrumbs'][] = $this->title;
         	</div>
         	<!-- /.box -->
 			<div>
-				<a data-id="" href="index.php?r=receipt/add_conform" class="btn btn-success"><i class="fa fa-times"></i>ยืนยัน</a>			
+				<?php if($sumTotal <> 0){?>
+					<a data-id="" href="index.php?r=receipt/add_conform" class="btn btn-success"><i class="fa fa-times"></i>ยืนยัน</a>
+				<?php } ?>				
 			</div>
 
     	</div>

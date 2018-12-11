@@ -132,13 +132,20 @@ class ReceiptController extends Controller
                         $codeProduct = $_SESSION['strProductCodeR'][$i];
                         $UnitPrice = $_SESSION['strProductUnitPriceR'][$i];            			 
                					// $ss['strProductCodeR'][$i] =  $_SESSION['iRnLine'][$i];
-						$Total = $_SESSION['strQtyR'][$i] * $_SESSION['strProductUnitPriceR'][$i];
+						$Total = $_SESSION['strQtyR'][$i] * $UnitPrice;
                         $sumTotal = $sumTotal + $Total;
-                        $strQtyR = $_SESSION['strQtyR'][$i];
-                        
+                        $strQtyR = $_SESSION['strQtyR'][$i];                        
 
                         Yii::$app->db->createCommand()->insert('receipt_list', [
                             'receipt_code' => $code,
+                            'product_code' => $codeProduct,
+                            'unit_price' => $UnitPrice,
+                            'quantity' => $strQtyR,
+                            'create_at' => $create_at,
+                        ])->execute();
+
+                        Yii::$app->db->createCommand()->insert('log_st', [
+                            'code' => $code,
                             'product_code' => $codeProduct,
                             'unit_price' => $UnitPrice,
                             'quantity' => $strQtyR,
@@ -151,6 +158,7 @@ class ReceiptController extends Controller
                         
                     }
                 }
+
                 Yii::$app->db->createCommand()->insert('receipt', [
                     'receipt_code' => $code,
                     'user_id' => Yii::$app->user->identity->id,
@@ -158,13 +166,15 @@ class ReceiptController extends Controller
                     'status' => 1,
                     'create_at' => $create_at,
                 ])->execute();
-            }
-            
+
+            }            
 
             unset($_SESSION['inLineR']);	
             unset($_SESSION['strProductCodeR']);	            
             unset($_SESSION['strProductUnitPriceR']);	
             unset($_SESSION['strQtyR']);
+
+            
 
 		} catch(\Exception $e) {
             $transaction->rollBack();
@@ -173,8 +183,7 @@ class ReceiptController extends Controller
             $transaction->rollBack();
             throw $e;
         }			
-
-        return $this->redirect(['index']); 
+        return $this->redirect(['index']);
         // return $this->renderAjax('checkout');
     }
 

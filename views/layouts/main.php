@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
+use kartik\select2\Select2;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
@@ -24,7 +25,7 @@ if (Yii::$app->controller->action->id === 'login') {
 
     dmstr\web\AdminLteAsset::register($this);
 
-    $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
+    $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte');
     ?>
     <?php $this->beginPage() ?>
     <!DOCTYPE html>
@@ -36,9 +37,7 @@ if (Yii::$app->controller->action->id === 'login') {
         <title><?= Html::encode($this->title) ?></title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
         <?php $this->head() ?>
-    </head>
-
-    
+    </head>   
 
     <body class="hold-transition sidebar-mini <?= \dmstr\helpers\AdminLteHelper::skinClass() ?>">
     <?php $this->beginBody() ?>
@@ -72,9 +71,12 @@ if (Yii::$app->controller->action->id === 'login') {
 		Modal::begin([
   			'id' => 'activity-modal',
    			'header' => '<h4 class="modal-title"></h4>',
-   			'size' => 'modal-lg',
+               'size' => 'modal-lg',
+               'options' => ['tabindex' => ''],
    			// 'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal">ปิด</a>',
 		]);
 		echo "<div id='modalContent'></div>";
 		Modal::end();
 	?>
+
+    

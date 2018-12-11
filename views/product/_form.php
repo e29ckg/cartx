@@ -26,15 +26,12 @@ use yii\helpers\Url;
             'template' => "{label}{input}{error}",
             // 'labelOptions' => ['class' => 'label'],
         ],
-        'enableAjaxValidation' => true,
+        // 'enableAjaxValidation' => true,
 	]);  ?>
 
 <fieldset>     
 
 <?= $form->field($model, 'product_name')->textInput()->hint('ass')->label();?>
-    
-
-
 
 <?= $form->field($model, 'category')->dropDownList($model->getCatalogList(),['prompt'=> $model->getAttributeLabel('category')])->label();?>
 
@@ -65,7 +62,6 @@ if (!empty($model->img)){
 }
 ?>
 </fieldset> 
-<?= $form->field($model, 'code')->hiddenInput(['value'=>'P'.date("YmdHis")])->label(false);?>
     <footer>
         <?= Html::submitButton('Save', ['class' => 'btn btn-primary']) ?>
     </footer>

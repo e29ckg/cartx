@@ -341,8 +341,6 @@ class CartController extends Controller
 						$Total = $_SESSION['strQty'][$i];
                         $sumTotal = $sumTotal + $Total;
                         $strQty = $_SESSION['strQty'][$i];
-//  $strQty = 20;
-//  $codeProduct = 'P1234567890';
 
                         $modelP = Product::find()->where(['code'=> $codeProduct])->one();
                             $Qty =  $modelP->instoke - $strQty;
@@ -359,7 +357,7 @@ class CartController extends Controller
                             $QLP = 0;
                             
                             if($strQty <> 0){             
-                                
+                                $unit_price = $model->unit_price;
                                 $QLP = $model->quantity - $strQty;
 
                                 if($QLP >= 0){
@@ -370,37 +368,35 @@ class CartController extends Controller
 
                                 }elseif($QLP < 0){
                                     $strQty = $strQty - $model->quantity ;
-                                    $QLP = $model->quantity;
-                                    
+                                    $QLP = $model->quantity;                                    
                                     $model->quantity = 0;
                                     $model->save();
-                                }
-
+                                }  
+                                
                                 $modelOL = new OrderList();
                                     $modelOL->order_code = $code;
                                     $modelOL->product_code = $codeProduct;
-                                    $modelOL->product_unit_id = $model->product_unit_id; 
-                                    $modelOL->unit_price = $model->unit_price; 
+                                    $modelOL->unit_price = $unit_price; 
                                     $modelOL->quantity = $QLP;
                                     $modelOL->create_at = $create_at;
                                     $modelOL->save();
+
+                                    Yii::$app->db->createCommand()->insert('log_st', [
+                                        'code' => $code,
+                                        'product_code' => $codeProduct,
+                                        'unit_price' => $unit_price,
+                                        'quantity' => $QLP,
+                                        'create_at' => $create_at,
+                                    ])->execute();
+                            }      
                                 
                                 $Total = $model->unit_price * $QLP;
                                 $sumTotal = $sumTotal + $Total;
-                            }
-
-                            $modelOL = new OrderList();
-                                    $modelOL->order_code = $code;
-                                    $modelOL->product_code = $codeProduct;
-                                    // $modelOL->product_unit_id = $model->product_unit_id; 
-                                    $modelOL->unit_price = $model->unit_price; 
-                                    $modelOL->quantity = $QLP;
-                                    $modelOL->create_at = $create_at;
-                                    $modelOL->save();
-                        endforeach; 
-                        
-                
-                        $modelO = new Order();
+                            
+                        endforeach;                         
+                    }
+                }
+                $modelO = new Order();
                             $modelO->order_code = $code;
                             $modelO->id_user = Yii::$app->user->identity->id;
                             $modelO->status = 1;
@@ -411,8 +407,6 @@ class CartController extends Controller
                             }else{
                                 echo '<script type="text/javascript">alert("no save");</script>';
                             }
-                    }
-                }
             }      
 
             unset($_SESSION['inLine']);	

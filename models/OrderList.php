@@ -30,7 +30,7 @@ class OrderList extends \yii\db\ActiveRecord
     {
         return [
             [['order_code'], 'required'],
-            [['quantity','product_unit_id'], 'integer'],
+            [['quantity'], 'integer'],
             [['create_at'], 'safe'],
             [['order_code'], 'string', 'max' => 32],
             [['product_code'], 'string', 'max' => 255],
@@ -45,10 +45,9 @@ class OrderList extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'order_code' => 'Id Order',
-            'product_code' => 'Id Product',
-            'product_unit_id' => 'หน่วยนับ',
-            'unit_price' => '$this->float()',
-            'quantity' => 'Quantity',
+            'product_code' => 'ชื่อสินค้า',
+            'unit_price' => 'ราคาต่อหน่วย',
+            'quantity' => 'จำนวน',
             'create_at' => 'Create At',
         ];
     }

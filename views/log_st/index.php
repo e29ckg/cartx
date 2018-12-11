@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'ใบรับของเข้าสต๊อก';
+$this->title = 'Log';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -20,15 +20,15 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="receipt-index" class="table table-bordered table-hover">
+              <table id="log-index" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>ID</th>
-				  <th>Code</th>
-				  <th>ผู้นำเข้าระบบ</th>
-				  <th>ราคารวม</th>
-                  <th>สถานะ(s)</th>
-                  <th>วัน-เวลา</th>
+                    <th>วัน-เวลา</th>
+				            <th>Code</th>
+				            <th>Product</th>
+				            <th>ราคาต่อหน่วย</th>
+                    <th>จำนวน</th>
+                    
                   <!-- <th>เครื่องมือ</th> -->
                 </tr>
                 </thead>
@@ -36,34 +36,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                   
 				<?php foreach ($models as $model): ?>
 				<tr>
-				<td><?=$model->id?></td>
-					<td><a href= "#" class="act-view" data-id='<?=$model->id?>'><?=$model->receipt_code?></a></td>
-                  	<td><?=$model->user_id?></td>
-                  	<td><?=$model->sumtotal?></td>
-					  <td><?=$model->status?></td>
-                  	<td><?=$model->create_at?></td>
-                  	<!-- <td><a herf= "#" class="btn btn-warning act-update" data-id=<?=$model->id?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
-						<?php 
-							// echo Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $model->id],
-							// [
-							// 	'class' => 'btn btn-danger act-update',
-							// 	'data-confirm' => 'Are you sure to delete this item?',
-                        	// 	'data-method' => 'post',
-							// ]);
-						?>
-					</td> -->
+          <td><?=$model->create_at?></td>
+					<td><?=$model->code?></a></td>
+          <td><?=$model->product_code?></td>
+          <td><?=$model->unit_price?></td>
+					<td><?=$model->quantity?></td>                 	
+           
 				</tr>
 				<?php  endforeach; ?>
 				</tbody>
-                <!-- <tfoot>
-                <tr>
-                  <th>Rendering engine</th>
-                  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>Engine version</th>
-                  <th>CSS grade</th>
-                </tr>
-                </tfoot> -->
+                
               </table>
             </div>
             <!-- /.box-body -->
@@ -107,7 +89,7 @@ $script = <<< JS
          
 $(document).ready(function() {	
 /* BASIC ;*/	
-	$('#receipt-index').DataTable({
+	$('#log-index').DataTable({
     "order": [[ 0, 'desc' ], [ 4, 'asc' ]]
 });
 

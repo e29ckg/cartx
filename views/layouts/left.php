@@ -5,7 +5,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+                <img src="<?= $directoryAsset ?>/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
                 <p>Alexander Pierce</p>
@@ -31,42 +31,51 @@
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
-                    ['label' => 'order', 'icon' => 'file-code-o', 'url' => ['/order']],
-                    ['label' => 'Receipt', 'icon' => 'file-code-o', 'url' => ['/receipt']],
-                    ['label' => 'Product', 'icon' => 'file-code-o', 'url' => ['/product']],
-                    ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
-                    ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
-                    ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
+                    ['label' => 'ใบเบิก', 'icon' => 'file-code-o', 'url' => ['/order']],
                     [
-                        'label' => 'Some tools',
-                        'icon' => 'share',
-                        'url' => '#',
+                        'label' => 'Receipt', 
+                        'icon' => 'file-code-o', 
+                        'url' => ['#'],
                         'items' => [
-                            ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii'],],
-                            ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'],],
-                            [
-                                'label' => 'Level One',
-                                'icon' => 'circle-o',
-                                'url' => '#',
-                                'items' => [
-                                    ['label' => 'Level Two', 'icon' => 'circle-o', 'url' => '#',],
-                                    [
-                                        'label' => 'Level Two',
-                                        'icon' => 'circle-o',
-                                        'url' => '#',
-                                        'items' => [
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
-                                        ],
-                                    ],
-                                ],
-                            ],
-                        ],
+                            ['label' => 'ใบรับสินค้าทั้งหมด', 'icon' => 'file-code-o', 'url' => ['/receipt'],],
+                            ['label' => 'เพิ่มสินค้าเข้าสต๊อก', 'icon' => 'file-code-o', 'url' => ['/receipt/add'],],
+                        ]
                     ],
+
+                    ['label' => 'Product', 'icon' => 'file-code-o', 'url' => ['/product']],
+                    // ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
+                    // ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
+                    // ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
+                    // [
+                    //     'label' => 'Some tools',
+                    //     'icon' => 'share',
+                    //     'url' => '#',
+                    //     'items' => [
+                    //         ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii'],],
+                    //         ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'],],
+                    //         [
+                    //             'label' => 'Level One',
+                    //             'icon' => 'circle-o',
+                    //             'url' => '#',
+                    //             'items' => [
+                    //                 ['label' => 'Level Two', 'icon' => 'circle-o', 'url' => '#',],
+                    //                 [
+                    //                     'label' => 'Level Two',
+                    //                     'icon' => 'circle-o',
+                    //                     'url' => '#',
+                    //                     'items' => [
+                    //                         ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
+                    //                         ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
+                    //                     ],
+                    //                 ],
+                    //             ],
+                    //         ],
+                    //     ],
+                    // ],
                     [
-                        'label' => 'Mailbox',
+                        'label' => 'Log-In-Out',
                         'icon' => 'envelope-o',
-                        'url' => ['/mailbox'],
+                        'url' => ['/log_st'],
                         'template'=>'<a href="{url}">{icon} {label}<span class="pull-right-container"><small class="label pull-right bg-yellow">123</small></span></a>'
                     ],
                 ],

@@ -37,9 +37,9 @@ use yii\helpers\Html;
                 ?>
         <?php foreach ($model_lists as $model_list): ?>
             <tr>
-                <td><?=$i?> <?=$model_list->id?>_<?=''?></td>
+                <td><?=$i?><?='-'.$model_list->product_code?></td>
                 <td>
-                    <?=$model_list->product_code?>
+                    <?=$model_list->getProductName()?>
                 </td>
                 <td><?=$model_list->unit_price?></td>
                 <td><?=$model_list->quantity?></td>

@@ -33,7 +33,7 @@ class ReceiptList extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['quantity', 'unit_price'], 'required'],
+            [['quantity', 'unit_price','product_code'], 'required'],
             [['quantity'], 'integer'],
             [['unit_price'], 'number'],
             [['create_at'], 'safe'],
@@ -50,9 +50,9 @@ class ReceiptList extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'receipt_code' => 'Receipt Code',
-            'product_code' => 'Product Code',
-            'unit_price' => 'Unit Price',
-            'quantity' => 'Quantity',
+            'product_code' => 'ชื่อวัสดุ',
+            'unit_price' => 'ราคาต่อหน่วย',
+            'quantity' => 'จำนวน',
             'create_at' => 'Create At',
         ];
     }
