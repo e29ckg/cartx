@@ -24,7 +24,8 @@ use app\models\ProductUnit;
     <?php 
         echo $form->field($model, 'product_code', ['options' => ['class' => '']])->widget(Select2::classname(), ['data' => ArrayHelper::map(Product::find()->all(), 'code', 'product_name'), 'options' => ['placeholder' => 'select ...'], 'pluginOptions' => ['allowClear' => true]]);
     ?>
-<a href= "index.php?r=product/create" class="btn btn-warning btn-xs act-update"><i class="fa fa-pencil-square-o"></i> เพิ่มชื่อสินค้าใหม่(กรณีค้นหาไม่พบ)</a>
+        <a href= "index.php?r=product/create" class="btn btn-warning btn-xs act-update"><i class="fa fa-pencil-square-o"></i> เพิ่มชื่อสินค้าใหม่(กรณีค้นหาไม่พบ)</a>
+    
     <?= $form->field($model, 'unit_price')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'quantity')->textInput() ?>

@@ -54,4 +54,15 @@ class LogSt extends \yii\db\ActiveRecord
             'create_at' => 'Create At',
         ];
     }
+
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['code' => 'product_code']);
+    }
+
+    public function getProductName(){
+        $model = $this->product;
+        return $model ? $model->product_name:'';
+    }
+    
 }

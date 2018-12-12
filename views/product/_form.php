@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model app\models\Product */
 /* @var $form yii\widgets\ActiveForm */
@@ -32,11 +33,17 @@ use yii\helpers\Url;
 <fieldset>     
 
 <?= $form->field($model, 'product_name')->textInput()->hint('ass')->label();?>
+ 
+<?php 
+        echo $form->field($model, 'category', ['options' => ['class' => '']])->widget(Select2::classname(), ['data' => $model->getCatalogList(), 'options' => ['placeholder' => 'select ...'], 'pluginOptions' => ['allowClear' => true]]);
+    ?>
+<a href= "index.php?r=product_catalog/create" class=" act-update"><i class="fa fa-pencil-square-o"></i> เพิ่มประเภทสินค้า(กรณีค้นหาไม่พบ)</a>
 
-<?= $form->field($model, 'category')->dropDownList($model->getCatalogList(),['prompt'=> $model->getAttributeLabel('category')])->label();?>
-
-<?= $form->field($model, 'unit')->dropDownList($model->getUnitList(),['prompt'=> $model->getAttributeLabel('unit')])->label();?>
-
+ <?php 
+        echo $form->field($model, 'unit', ['options' => ['class' => '']])->widget(Select2::classname(), ['data' => $model->getUnitList(), 'options' => ['placeholder' => 'select ...'], 'pluginOptions' => ['allowClear' => true]]);
+    ?>
+<a href= "index.php?r=product_unit/create" class="act-update"><i class="fa fa-pencil-square-o"></i> เพิ่มหน่วยนับ(กรณีค้นหาไม่พบ)</a>
+    
 <?= $form->field($model, 'Description')->label();?>
 
 <?= $form->field($model, 'location')->label();?>

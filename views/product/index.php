@@ -63,13 +63,14 @@ $this->params['breadcrumbs'][] = $this->title;
 								        <td><?=$models['instoke']?> <?=$models->getUnitName()?></td>
 								        <td>
 											<a herf= "#" class="btn btn-warning act-update" data-id=<?=$models['id']?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
-											<a herf= "#" class="btn btn-warning act-view" data-id=<?=$models->id?>><i class="fa fa-pencil-square-o"></i> ดู</a>
-											<?= Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $models->id],
-													[
-														'class' => 'btn btn-danger act-update',
-														'data-confirm' => 'Are you sure to delete this item?',
-                                    					'data-method' => 'post',
-													]);
+											<!-- <a herf= "#" class="btn btn-warning act-view" data-id=<?=$models->id?>><i class="fa fa-pencil-square-o"></i> ดู</a> -->
+											<?php
+											// echo Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $models->id],
+											// 		[
+											// 			'class' => 'btn btn-danger act-update',
+											// 			'data-confirm' => 'Are you sure to delete this item?',
+                                    		// 			'data-method' => 'post',
+											// 		]);
 											?>
 										</td>
 									</tr>
