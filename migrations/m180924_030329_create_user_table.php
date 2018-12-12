@@ -27,8 +27,8 @@ class m180924_030329_create_user_table extends Migration
             'email' => $this->string()->unique(),
             'role' => $this->smallInteger(),
             'status' => $this->smallInteger()->notNull()->defaultValue(10),
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
+            'created_at' => $this->dateTime(),
+            'updated_at' => $this->dateTime(),
         ], $tableOptions);
 
         $this->insert('user', [

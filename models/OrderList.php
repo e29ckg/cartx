@@ -62,6 +62,11 @@ class OrderList extends \yii\db\ActiveRecord
         return $model ? $model->product_name:'';
     }
 
+    public function getProductImg(){
+        $model = $this->product;
+        return $model ? $model->img:'';
+    }
+
     public function getReceiptList()
     {
         return $this->hasOne(ReceiptList::className(), ['receipt_code' => 'product_code']);

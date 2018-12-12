@@ -30,8 +30,8 @@ class m180925_032309_profile extends Migration
             'dep' => $this->string(),
             'address' => $this->string(),
             'tel' => $this->string(),
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
+            'created_at' => $this->dateTime(),
+            'updated_at' => $this->dateTime(),
         ], $tableOptions);
 
         $this->insert('profile', [

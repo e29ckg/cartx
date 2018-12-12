@@ -51,10 +51,11 @@ $this->params['breadcrumbs'][] = $this->title;
 											<div class="project-members">
 												<a href="javascript:void(0)">
 												<?php if(!empty($models['img'])){
-													echo Html::img('@web/uploads/product/img/'.$models['img'], ['alt' => 'My pic','class'=>'offline']); 
+													echo Html::img('@web/uploads/product/img/'.$models['img'], ['alt' => 'My pic','class'=>'offline','height'=>'50px']); 
 												}else{
-													echo Html::img('@web/img/avatars/male.png', ['alt' => 'My pic','class'=>'offline']); 
+													echo Html::img('@web/img/avatars/male.png', ['alt' => 'My pic','class'=>'offline', 'height'=>'50px']); 
 												}?>
+												</a>
 											</div>
 										</td>
 										<td><?=$models->code?></td>
