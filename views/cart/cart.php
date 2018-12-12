@@ -18,9 +18,9 @@ use app\models\Product;
 						<tr class="cart_menu">
 							<td class="image">Item</td>
 							<td class="description">วัสดุ</td>
-							<td class="description">จำนวนวัสดุที่มี</td>
-							<td class="quantity">Quantity</td>
-							<td>ลบ</td>
+							<td class="description">จำนวนที่มี</td>
+							<td class="quantity">จำนวนที่เบิก</td>
+							<td></td>
 						</tr>
 					</thead>
 					<tbody>
@@ -42,7 +42,7 @@ use app\models\Product;
 						?>
 							<tr>
 								<td class="cart_product">
-									<a href=""><img src="<?= isset($model->img) ? 'uploads/product/img/'.$model->img : 'img/no_image.png'?>" height="110" alt=""></a></td>
+									<a href=""><img src="<?= $model->img ? 'uploads/product/img/'.$model->img : 'img/no_image.png'?>" height="110" alt=""></td>
 								</td>
 								<td class="cart_description">
 									<h4><a href=""><?=$model->product_name?></a></h4>

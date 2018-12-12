@@ -33,7 +33,7 @@
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'ใบเบิก', 'icon' => 'file-code-o', 'url' => ['/order']],
                     [
-                        'label' => 'Receipt', 
+                        'label' => 'รับเข้าสต๊อก', 
                         'icon' => 'file-code-o', 
                         'url' => ['#'],
                         'items' => [
@@ -41,8 +41,17 @@
                             ['label' => 'เพิ่มสินค้าเข้าสต๊อก', 'icon' => 'file-code-o', 'url' => ['/receipt/add'],],
                         ]
                     ],
+                    [
+                        'label' => 'Product', 
+                        'icon' => 'file-code-o', 
+                        'url' => ['#'],
+                        'items' => [
+                            ['label' => 'Product ทั้งหมด', 'icon' => 'file-code-o', 'url' => ['/product'],],
+                            ['label' => 'เพิ่มชื่อสินค้า', 'icon' => 'file-code-o', 'url' => ['/product/create'],],
+                        ]
+                    ],
 
-                    ['label' => 'Product', 'icon' => 'file-code-o', 'url' => ['/product']],
+                    // ['label' => 'Product', 'icon' => 'file-code-o', 'url' => ['/product']],
                     // ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     // ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
                     // ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],

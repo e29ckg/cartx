@@ -30,8 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				            <th>ProductCode</th>
                     <th>Product</th>
                     <th>จำนวน(s)</th>
-                    <th>Engine version</th>
                     <th>สร้างเมื่อ</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>

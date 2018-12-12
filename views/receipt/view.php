@@ -28,7 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>
                   <th>ID</th>
 				          <th>Code</th>
-				          <th>Product</th>
+				          <th>ProductCode</th>
+                  <th>Product</th>
                   <th>ราคาต่อหน่วย</th>
                   <th>จำนวน</th>
                   <th>เครื่องมือ</th>
@@ -40,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td><?=$model_list->id?></td>
                         <td><?=$model_list->receipt_code?></td>
                         <td><?=$model_list->product_code?></td>
+                        <td><?=$model_list->getProductName()?></td>
                         <td><?=$model_list->unit_price?></td>
                         <td><?=$model_list->quantity?></td>                        
                   	    <td>

@@ -241,7 +241,7 @@ class CartController extends Controller
         } else {
             $key = array_search($code, $_SESSION['strProductCode']);
             if((string)$key != ""){
-                $_SESSION['strQty'][$key] = $_SESSION['strQty'][$key] + 1;
+                // $_SESSION['strQty'][$key] = $_SESSION['strQty'][$key] + 1;
 
                 $strQty = $_SESSION['strQty'][$key];
                 $codeProduct = $_SESSION['strProductCode'][$key];

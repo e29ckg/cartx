@@ -7,7 +7,6 @@ use app\models\Product;
 		<div class="container">
 
 			<div class="shopper-informations">
-				<?= Yii::$app->user->identity->username?>
 			</div>			
 
 			<div class="table-responsive cart_info">
@@ -16,8 +15,8 @@ use app\models\Product;
 						<tr class="cart_menu">
 							<td class="image">Item</td>
 							<td class="description">วัสดุ</td>
-							<td class="price">วัสดุที่มี</td>
-							<td class="quantity">Quantity</td>
+							<td class="price">จำนวนที่มี</td>
+							<td class="quantity">จำนวนที่เบิก</td>
 							<td class="total"></td>
 							<td></td>
 						</tr>
