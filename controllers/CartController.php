@@ -9,6 +9,7 @@ use app\models\Order;
 use app\models\OrderList;
 use app\models\ProductCatalog;
 use app\models\ReceiptList;
+use app\models\LogSt;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -381,13 +382,21 @@ class CartController extends Controller
                                     $modelOL->create_at = $create_at;
                                     $modelOL->save();
 
-                                    Yii::$app->db->createCommand()->insert('log_st', [
-                                        'code' => $code,
-                                        'product_code' => $codeProduct,
-                                        'unit_price' => $unit_price,
-                                        'quantity' => $QLP,
-                                        'create_at' => $create_at,
-                                    ])->execute();
+                                $modelLST = new LogSt();
+                                    $modelLST->code = $code;
+                                    $modelLST->product_code = $codeProduct;
+                                    $modelLST->unit_price = $unit_price; 
+                                    $modelLST->quantity = $QLP;
+                                    $modelLST->create_at = $create_at;
+                                    $modelLST->save();
+
+                                    // Yii::$app->db->createCommand()->insert('log_st', [
+                                    //     'code' => $code,
+                                    //     'product_code' => $codeProduct,
+                                    //     'unit_price' => $unit_price,
+                                    //     'quantity' => $QLP,
+                                    //     'create_at' => $create_at,
+                                    // ])->execute();
                             }      
                                 
                                 $Total = $model->unit_price * $QLP;
@@ -403,9 +412,19 @@ class CartController extends Controller
                             $modelO->sumtotal = $sumTotal;
                             $modelO->create_at = $create_at;
                             if($modelO->save()){
-                                echo '<script type="text/javascript">alert("ok!");</script>';
+                                // echo '<script type="text/javascript">alert("ok!");</script>';
+                                
+                                $message = 'รายการเบิกของเลขที่ '.$code.' โดย '.Yii::$app->user->identity->username;
+                                // // $res = $this->notify_message($message);
+                                // if($res->status == 200){
+                                //     Yii::$app->session->setFlash('success', 'Line Notify '.$res->message);
+                                // }else{
+                                //     Yii::$app->session->setFlash('error', 'Line Notify '.$res->message);
+                                // }        
+                                // return $this->redirect(['index', 'ses' => $res]);
                             }else{
-                                echo '<script type="text/javascript">alert("no save");</script>';
+                                // echo '<script type="text/javascript">alert("no save");</script>';
+                                Yii::$app->session->setFlash('error', 'ไม่สำเร็จ');
                             }
             }      
 
@@ -488,6 +507,31 @@ class CartController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    //ส่งข้อความผ่าน line Notify
+    public function notify_message($message)
+    {
+        $line_api = 'https://notify-api.line.me/api/notify';
+        $line_token = 'FVJfvOHD7nkd9mSTxN5573tVSpVuiK8JTEAIgSAOYZx'; //แบบแซบ
+        // $line_token = '4A51UznK0WDNjN1W7JIOMyvcsUl9mu7oTHJ1G1u8ToK';
+        $queryData = array('message' => $message);
+        $queryData = http_build_query($queryData,'','&');
+        $headerOptions = array(
+            'http'=>array(
+                'method'=>'POST',
+                'header'=> "Content-Type: application/x-www-form-urlencoded\r\n"
+                    ."Authorization: Bearer ".$line_token."\r\n"
+                    ."Content-Length: ".strlen($queryData)."\r\n",
+                'content' => $queryData
+            )
+        );
+        $context = stream_context_create($headerOptions);
+        $result = file_get_contents($line_api, FALSE, $context);
+        $res = json_decode($result);
+        
+        return $res;
+    
     }
     
 

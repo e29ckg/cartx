@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\Product;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -27,7 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 	<thead>
                 		<tr>
                   			<th>ID</th>
-				  			<th>CoddProduct</th>
+				  			<th>CodeProduct</th>
+							<th>Product</th>
 				  			<th>ราคาต่อหน่วย</th>
                   			<th>จำนวน</th>
                   			<th>เครื่องมือ</th>
@@ -42,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						for($i=0;$i<=(int)$_SESSION['inLineR'];$i++){
 							if($_SESSION['strProductCodeR'][$i] != ""){
 								$productCode = $_SESSION['strProductCodeR'][$i];
-								// $model = Product::find()->where(['code'=> $idProduct])->one();
+								$model = Product::find()->where(['code'=> $productCode])->one();
 								// $ss['strProductId'][$i] =  $_SESSION['inLine'][$i];
 								$Total = $_SESSION['strQtyR'][$i] * $_SESSION['strProductUnitPriceR'][$i];
 								$sumTotal = $sumTotal + $Total;
@@ -50,6 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						<tr>
 							<td class=""><?=$i?></td>				
 							<td class=""><?=$_SESSION['strProductCodeR'][$i]?></td>
+							<th><?=$model->product_name;?></th>
 							<td class=""><?=$_SESSION['strProductUnitPriceR'][$i]?></td>
 							<td class=""><?=$_SESSION['strQtyR'][$i]?></td>				
 							<td class="cart_delete">
