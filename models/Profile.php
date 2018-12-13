@@ -9,17 +9,21 @@ use Yii;
  *
  * @property int $id
  * @property string $user_id
- * @property string $fname
+ * @property string $id_card
+ * @property string $fullname
  * @property string $name
  * @property string $sname
- * @property string $photo
+ * @property string $img
  * @property string $birthday
+ * @property string $bloodtype
  * @property int $idc
  * @property string $dep
  * @property string $address
- * @property string $tel
- * @property int $created_at
- * @property int $updated_at
+ * @property string $postcode
+ * @property string $phone
+ * @property string $create_at
+ * @property string $updated_at
+ * @property int $st
  */
 class Profile extends \yii\db\ActiveRecord
 {
@@ -32,17 +36,25 @@ class Profile extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return \yii\db\Connection the database connection used by this AR class.
+     */
+    public static function getDb()
+    {
+        return Yii::$app->get('db2');
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['user_id', 'fname', 'name', 'created_at', 'updated_at'], 'required'],
-            [['birthday'], 'safe'],
-            [['idc', 'created_at', 'updated_at'], 'integer'],
-            [['user_id', 'photo', 'dep', 'address', 'tel'], 'string', 'max' => 255],
-            [['fname'], 'string', 'max' => 25],
-            [['name', 'sname'], 'string', 'max' => 50],
+            [['user_id', 'fullname', 'name'], 'required'],
+            [['birthday', 'create_at', 'updated_at'], 'safe'],
+            [['idc', 'st'], 'integer'],
+            [['user_id', 'id_card', 'fullname', 'img', 'dep', 'address', 'phone'], 'string', 'max' => 255],
+            [['name', 'sname', 'bloodtype'], 'string', 'max' => 50],
+            [['postcode'], 'string', 'max' => 5],
             [['user_id'], 'unique'],
         ];
     }
@@ -55,17 +67,21 @@ class Profile extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'fname' => 'Fname',
+            'id_card' => 'Id Card',
+            'fullname' => 'Fullname',
             'name' => 'Name',
             'sname' => 'Sname',
-            'photo' => 'Photo',
+            'img' => 'Img',
             'birthday' => 'Birthday',
+            'bloodtype' => 'Bloodtype',
             'idc' => 'Idc',
             'dep' => 'Dep',
             'address' => 'Address',
-            'tel' => 'Tel',
-            'created_at' => 'Created At',
+            'postcode' => 'Postcode',
+            'phone' => 'Phone',
+            'create_at' => 'Create At',
             'updated_at' => 'Updated At',
+            'st' => 'St',
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$db2 = require __DIR__ . '/db2.php';
 
 $config = [
     'id' => 'basic',
@@ -60,6 +61,7 @@ $config = [
             ],
         ],
         'db' => $db,
+        'db2'=> $db2,
         /*
         'urlManager' => [    
             'class' => 'yii\web\UrlManager',    
