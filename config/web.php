@@ -62,6 +62,11 @@ $config = [
         ],
         'db' => $db,
         'db2'=> $db2,
+        'session' => [
+            'class' => 'yii\web\Session',
+            'cookieParams' => ['lifetime' => 60]
+            // 'cookieParams' => ['lifetime' => 7 * 24 *60 * 60]
+       ],
         /*
         'urlManager' => [    
             'class' => 'yii\web\UrlManager',    

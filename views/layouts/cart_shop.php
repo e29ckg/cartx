@@ -8,6 +8,11 @@ $modelCatalogs = ProductCatalog::find()->all();
 if (Yii::$app->user->identity) {
 	$id = Yii::$app->user->identity->id;
 	$profile = profile::find()->where(['user_id' => $id])->one();
+	if(isset($profile)){
+		$fullname = $profile->fname.$profile->name.' '.$profile->sname;
+	}else{
+		$fullname = Yii::$app->user->identity->username;
+	} 
 }
 ?>
 <!DOCTYPE html>
@@ -84,7 +89,7 @@ if (Yii::$app->user->identity) {
 								<li><?php if(Yii::$app->user->identity->role == '9'){
 									echo '<li><a href="index.php?r=site/dashboard"><i class="fa fa-lock"></i> blankEnd</a></li>';
 								}?>
-								<li><a href="index.php?r=cart/account"><i class="fa fa-user"></i> <?= isset($profile->fullname) ? $profile->fullname : Yii::$app->user->identity->username?></a></li>
+								<li><a href="index.php?r=cart/account"><i class="fa fa-user"></i><font color="red"><?= $fullname?></font></a></li>
 								<!-- <li><a href="index.php?r=cart/print"><i class="fa fa-crosshairs"></i> Checkout</a></li> -->
 								<li><a href="index.php?r=cart/cart"><i class="fa fa-shopping-cart"></i> Cart <span id="badge_cart" class="badge"></span></a></li>
 								<?php if(Yii::$app->user->identity){

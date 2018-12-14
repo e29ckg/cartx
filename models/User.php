@@ -177,12 +177,12 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getProfile()
     {
-        return $this->hasOne(Profile::className(), ['user_id' => 'id_user']);
+        return $this->hasOne(Profile::className(), ['user_id' => 'id']);
     }
 
     public function getProfileName(){
         $model = $this->profile;
-        return $model ? $model->fullname:'';
+        return $model ? $model->fname .$model->name .' '.$model->sname:'';
     }
  
 }

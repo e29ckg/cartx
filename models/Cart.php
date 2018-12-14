@@ -149,8 +149,9 @@ class Cart extends \yii\db\ActiveRecord
 
     public function getProfileName(){
         $model = $this->profile;
-        return $model ? $model->fullname:'';
+        return $model ? $model->fname.$model->name.' '.$model->sname:'';
     }
-
+    
+    
 
 }
