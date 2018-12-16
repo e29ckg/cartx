@@ -50,7 +50,7 @@ class ProductController extends Controller
             ])->limit(200)->all();
         
             $countAll = Product::getCountAll();
-        
+            
         return $this->render('index',[
             'models' => $model,
             'countAll' => $countAll,
@@ -166,7 +166,8 @@ class ProductController extends Controller
                 return $this->redirect(['index', 'id' => $filename]);                            
             }
             $model->img = $filename;
-            $model->save();          
+            $model->save();     
+                    
             return $this->redirect(['index', 'id' => $filename]);
         }
 

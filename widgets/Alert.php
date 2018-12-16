@@ -1,6 +1,6 @@
 <?php
 namespace app\widgets;
-
+use yii\helpers\Html;
 use Yii;
 
 /**
@@ -59,14 +59,17 @@ class Alert extends \yii\bootstrap\Widget
             }
 
             foreach ((array) $flash as $i => $message) {
-                echo \yii\bootstrap\Alert::widget([
-                    'body' => $message,
-                    'closeButton' => $this->closeButton,
-                    'options' => array_merge($this->options, [
-                        'id' => $this->getId() . '-' . $type . '-' . $i,
-                        'class' => $this->alertTypes[$type] . $appendClass,
-                    ]),
-                ]);
+                // echo \yii\bootstrap\Alert::widget([
+                //     'body' => $message,
+                //     'closeButton' => $this->closeButton,
+                //     'options' => array_merge($this->options, [
+                //         'id' => $this->getId() . '-' . $type . '-' . $i,
+                //         'class' => $this->alertTypes[$type] . $appendClass,
+                //     ]),
+                // ]);
+               echo '<script type="text/javascript">swal("'.$message.'", "", "'.$type.'");</script>';
+               
+    
             }
 
             $session->removeFlash($type);

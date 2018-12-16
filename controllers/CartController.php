@@ -415,12 +415,8 @@ class CartController extends Controller
                                 // echo '<script type="text/javascript">alert("ok!");</script>';
                                 
                                 $message = 'มีเบิกของเลขที่ '.$code.' โดย '.Yii::$app->user->identity->username;
-                                $res = $this->notify_message($message);
-                                if($res->status == 200){
-                                    Yii::$app->session->setFlash('success', 'Line Notify '.$res->message);
-                                }else{
-                                    Yii::$app->session->setFlash('error', 'Line Notify '.$res->message);
-                                }        
+                                // $res = $this->notify_message($message);
+                                Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');       
                                 // return $this->redirect(['index', 'ses' => $res]);
                             }else{
                                 // echo '<script type="text/javascript">alert("no save");</script>';
@@ -513,8 +509,8 @@ class CartController extends Controller
     public function notify_message($message)
     {
         $line_api = 'https://notify-api.line.me/api/notify';
-        // $line_token = 'FVJfvOHD7nkd9mSTxN5573tVSpVuiK8JTEAIgSAOYZx'; //แบบแซบ
-        $line_token = '4A51UznK0WDNjN1W7JIOMyvcsUl9mu7oTHJ1G1u8ToK';
+        $line_token = 'FVJfvOHD7nkd9mSTxN5573tVSpVuiK8JTEAIgSAOYZx'; //แบบแซบ
+        // $line_token = '4A51UznK0WDNjN1W7JIOMyvcsUl9mu7oTHJ1G1u8ToK';
         $queryData = array('message' => $message);
         $queryData = http_build_query($queryData,'','&');
         $headerOptions = array(

@@ -36,7 +36,9 @@ if (Yii::$app->controller->action->id === 'login') {
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-        <?php $this->head() ?>
+        
+	    <?php $this->head() ?>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     </head>   
 
     <body class="hold-transition sidebar-mini <?= \dmstr\helpers\AdminLteHelper::skinClass() ?>">
@@ -78,5 +80,3 @@ if (Yii::$app->controller->action->id === 'login') {
 		echo "<div id='modalContent'></div>";
 		Modal::end();
 	?>
-
-    
