@@ -12,7 +12,7 @@ use yii\helpers\Html;
 <table width="100%">
     <tr>
         <td colspan="2" width="80%">
-            <h3>Name : <?= $model->getProfileName() ?></h3>
+            <h3>ผู้เบิก : <?= $model->getProfileName() ?></h3>
         </td>
         <td colspan="2" width="80%">
             
@@ -80,5 +80,18 @@ use yii\helpers\Html;
                 </tr>                
             </table>
         </td>        
+    </tr>
+</table>
+
+<table cellspacing="0" cellpadding="2" border="0" width="100%" style= "margin-top: 50px">
+    <tr>
+        <td width="">ผู้เบิก...............................................................</td>
+        <td width="50%">ผู้อนุมัติ...........................................................</td>        
+    </tr>
+</table>
+    <table cellspacing="0" cellpadding="2" border="0" width="100%" style= "margin-top: 75px">
+    <tr>
+        <td width="50%">ผู้จ่าย............................................................</td>
+        <td width="50%">ผู้รับของ..........................................................</td>        
     </tr>
 </table>

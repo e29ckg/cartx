@@ -28,6 +28,7 @@ class m181030_070804_product_catalog extends Migration
         $this->insert('product_catalog', ['name_catalog' => 'วัสดุสำนักงาน','order' => 1,'detail_catalog' => '']);
         $this->insert('product_catalog', ['name_catalog' => 'วัสดุคอมพิวเตอร์','order' => 2,'detail_catalog' => '']);
         $this->insert('product_catalog', ['name_catalog' => 'วัสดุไฟฟ้า','order' => 3,'detail_catalog' => '']);
+        $this->insert('product_catalog', ['name_catalog' => 'วัสดุงานบ้านงานครัว','order' => 4,'detail_catalog' => '']);
     
     }
 
