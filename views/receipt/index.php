@@ -24,9 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <thead>
                 <tr>
                   <th>ID</th>
-				  <th>Code</th>
-				  <th>ผู้นำเข้าระบบ</th>
-				  <th>ราคารวม</th>
+				          <th>Code</th>
+				          <th>ผู้นำเข้าระบบ</th>
+				          <th>ราคารวม</th>
                   <th>สถานะ(s)</th>
                   <th>วัน-เวลา</th>
                   <!-- <th>เครื่องมือ</th> -->
@@ -38,9 +38,9 @@ $this->params['breadcrumbs'][] = $this->title;
 				<tr>
 				<td><?=$model->id?></td>
 					<td><a href= "#" class="act-view" data-id='<?=$model->id?>'><?=$model->receipt_code?></a></td>
-                  	<td><?=$model->user_id?></td>
+                  	<td><?=$model->getProfileName()?></td>
                   	<td><?=$model->sumtotal?></td>
-					  <td><?=$model->status?></td>
+					          <td><?=$model->status?></td>
                   	<td><?=$model->create_at?></td>
                   	<!-- <td><a herf= "#" class="btn btn-warning act-update" data-id=<?=$model->id?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
 						<?php 

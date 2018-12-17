@@ -60,4 +60,14 @@ class Receipt extends \yii\db\ActiveRecord
     {        
         return Receipt::find()->count();           
     }
+
+    public function getProfile()
+    {
+        return $this->hasOne(Profile::className(), ['user_id' => 'user_id']);
+    }
+
+    public function getProfileName(){
+        $model = $this->profile;
+        return $model ? $model->fname.$model->name.' '.$model->sname:'';
+    }
 }

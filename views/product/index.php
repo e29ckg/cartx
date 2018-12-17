@@ -39,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						<th data-hide="phone">Code</th>
 						<th data-hide="phone">ชื่อวัสดุ</th>
 						<th data-hide="phone">ประเภท</th>
+						<th data-hide="phone">ประเภท</th>
 						<th data-hide="phone,tablet">InStock</th>
 					    <th>เครื่องมือ</th>
                 	</tr>
@@ -61,6 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										<td><?=$models->code?><a href= "index.php?r=product/gencode&id=<?=$models['id']?>" class="btn btn-warning btn-xs" data-id=<?=$models['id']?>><i class="fa fa-pencil-square-o"></i> GenCode</a></td>
 								        <td><?=$models['product_name']?></td>
 								        <td><?=$models->getCatalogtName()?></td>
+										<td><?=$models->create_at?></td>
 								        <td><?=$models['instoke']?> <?=$models->getUnitName()?></td>
 								        <td>
 											<a herf= "#" class="btn btn-warning act-update" data-id=<?=$models['id']?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
@@ -138,6 +140,7 @@ $(document).ready(function() {
 /* BASIC ;*/	
 $('#product-index').DataTable({
 	// lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+	"order": [[ 0, "asc" ]]
 });
 
 	$('#activity-modal').on('hidden.bs.modal', function () {

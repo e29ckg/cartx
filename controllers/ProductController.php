@@ -19,6 +19,7 @@ use yii\web\UploadedFile;
 use yii\helpers\Url;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
+use yii\filters\AccessControl;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -31,6 +32,17 @@ class ProductController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index','create','update'],
+                'rules' => [
+                    [
+                        'actions' => ['index','create','update'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -280,10 +292,10 @@ class ProductController extends Controller
 
     public function actionGencode($id)
     {
-        
+                
         $code = 'P'.date("YmdHis");
         $modelsProduct = Product::findOne($id);
-
+        
         //echo $modelsProduct->code;
         $modelsRL = ReceiptList::find()->where(['product_code' => $modelsProduct->code])->All();
         foreach ($modelsRL as $modelRL): 
@@ -305,7 +317,7 @@ class ProductController extends Controller
         $modelsProduct->code = $code;
         $modelsProduct->create_at = date("Y-m-d H:i:s"); 
         $modelsProduct->save();
-        
+      
         // echo var_dump($modelsOL);
         // Yii::$app->session->setFlash('success', 'Ok');   
         return $this->redirect(['index']);
