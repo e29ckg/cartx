@@ -26,21 +26,21 @@ class m181121_152347_receipt_list extends Migration
             'create_at' => $this->dateTime(),
         ], $tableOptions);
 
-        $this->insert('receipt_list', [
-            'receipt_code' => 'R1234567890',
-            'product_code' => 'P0987654321',
-            'unit_price' => 100,
-            'quantity' => 100,
-            'create_at' => date("Y-m-d H:i:s"),
-        ]);
+        // $this->insert('receipt_list', [
+        //     'receipt_code' => 'R1234567890',
+        //     'product_code' => 'P0987654321',
+        //     'unit_price' => 100,
+        //     'quantity' => 100,
+        //     'create_at' => date("Y-m-d H:i:s"),
+        // ]);
 
-        $this->insert('receipt_list', [
-            'receipt_code' => 'R1234567890',
-            'product_code' => 'P1234567890',
-            'unit_price' => 100,
-            'quantity' => 100,
-            'create_at' => date("Y-m-d H:i:s"),
-        ]);
+        // $this->insert('receipt_list', [
+        //     'receipt_code' => 'R1234567890',
+        //     'product_code' => 'P1234567890',
+        //     'unit_price' => 100,
+        //     'quantity' => 100,
+        //     'create_at' => date("Y-m-d H:i:s"),
+        // ]);
     }
 
     /**

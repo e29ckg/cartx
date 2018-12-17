@@ -27,14 +27,14 @@ class m181121_152337_receipt extends Migration
             'create_at' => $this->dateTime(),
         ], $tableOptions);
 
-        $this->insert('receipt', [            
-            'receipt_code' => 'R1234567890',
-            'user_id' => 1,
-            'receipt_from' => 'receipt_from',
-            'sumtotal'=> 300,
-            'status' => 1,
-            'create_at' => date("Y-m-d H:i:s"),
-        ]);
+        // $this->insert('receipt', [            
+        //     'receipt_code' => 'R1234567890',
+        //     'user_id' => 1,
+        //     'receipt_from' => 'receipt_from',
+        //     'sumtotal'=> 300,
+        //     'status' => 1,
+        //     'create_at' => date("Y-m-d H:i:s"),
+        // ]);
     }
 
     /**

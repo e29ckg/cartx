@@ -26,21 +26,21 @@ class m181102_123037_order_list extends Migration
             'create_at' => $this->dateTime(),
         ], $tableOptions);
 
-        $this->insert('order_list', [
-            'order_code' => 'A1234567890',
-            'product_code' => 'P0987654321',
-            'unit_price' => 100,
-            'quantity' => 10,
-            'create_at' => date("Y-m-d H:i:s"),
-        ]);
+        // $this->insert('order_list', [
+        //     'order_code' => 'A1234567890',
+        //     'product_code' => 'P0987654321',
+        //     'unit_price' => 100,
+        //     'quantity' => 10,
+        //     'create_at' => date("Y-m-d H:i:s"),
+        // ]);
 
-        $this->insert('order_list', [
-            'order_code' => 'A1234567890',
-            'product_code' => 'P1234567890',
-            'unit_price' => 100,
-            'quantity' => 10,
-            'create_at' => date("Y-m-d H:i:s"),
-        ]);
+        // $this->insert('order_list', [
+        //     'order_code' => 'A1234567890',
+        //     'product_code' => 'P1234567890',
+        //     'unit_price' => 100,
+        //     'quantity' => 10,
+        //     'create_at' => date("Y-m-d H:i:s"),
+        // ]);
     }
 
     /**

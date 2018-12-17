@@ -6,7 +6,9 @@ use Yii;
 use app\models\Product;
 use app\models\ProductUnit;
 use app\models\ProductCatalog;
+use app\models\OrderList;
 use app\models\ReceiptList;
+use app\models\LogSt;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -46,6 +48,7 @@ class ProductController extends Controller
     {
         $model = Product::find()->orderBy([
             'create_at'=>SORT_ASC,
+            // 'create_at'=>SORT_DESC,
             'id' => SORT_DESC,
             ])->limit(200)->all();
         
@@ -273,6 +276,39 @@ class ProductController extends Controller
         } 
         
         return $this->renderAjax('cart');
+    }
+
+    public function actionGencode($id)
+    {
+        
+        $code = 'P'.date("YmdHis");
+        $modelsProduct = Product::findOne($id);
+
+        //echo $modelsProduct->code;
+        $modelsRL = ReceiptList::find()->where(['product_code' => $modelsProduct->code])->All();
+        foreach ($modelsRL as $modelRL): 
+            $modelRL->product_code = $code;
+            $modelRL->save();
+        endforeach; 
+        $modelsOL = OrderList::find()->where(['product_code' => $modelsProduct->code])->All();
+        foreach ($modelsOL as $modelOL): 
+            $modelOL->product_code = $code;
+            $modelOL->save();
+        endforeach;
+
+        $modelsGSt = LogSt::find()->where(['product_code' => $modelsProduct->code])->All();
+        foreach ($modelsGSt as $modelGSt): 
+            $modelGSt->product_code = $code;
+            $modelGSt->save();
+        endforeach;
+        
+        $modelsProduct->code = $code;
+        $modelsProduct->create_at = date("Y-m-d H:i:s"); 
+        $modelsProduct->save();
+        
+        // echo var_dump($modelsOL);
+        // Yii::$app->session->setFlash('success', 'Ok');   
+        return $this->redirect(['index']);
     }
 }
 

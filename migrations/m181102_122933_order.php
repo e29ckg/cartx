@@ -26,13 +26,13 @@ class m181102_122933_order extends Migration
             'create_at' => $this->dateTime(),
         ], $tableOptions);
 
-        $this->insert('order', [
-            'order_code' => 'A1234567890',
-            'id_user' => 1,            
-            'sumtotal'=> 2.01,
-            'status' => 1,           
-            'create_at' => date("Y-m-d H:i:s"),
-        ]);
+        // $this->insert('order', [
+        //     'order_code' => 'A1234567890',
+        //     'id_user' => 1,            
+        //     'sumtotal'=> 2.01,
+        //     'status' => 1,           
+        //     'create_at' => date("Y-m-d H:i:s"),
+        // ]);
     
     }
     

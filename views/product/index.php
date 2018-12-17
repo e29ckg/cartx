@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
 												</a>
 											</div>
 										</td>
-										<td><?=$models->code?></td>
+										<td><?=$models->code?><a href= "index.php?r=product/gencode&id=<?=$models['id']?>" class="btn btn-warning btn-xs" data-id=<?=$models['id']?>><i class="fa fa-pencil-square-o"></i> GenCode</a></td>
 								        <td><?=$models['product_name']?></td>
 								        <td><?=$models->getCatalogtName()?></td>
 								        <td><?=$models['instoke']?> <?=$models->getUnitName()?></td>
@@ -136,66 +136,15 @@ $script = <<< JS
      
 $(document).ready(function() {	
 /* BASIC ;*/	
-$('#product-index').DataTable();
+$('#product-index').DataTable({
+	// lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+});
 
 	$('#activity-modal').on('hidden.bs.modal', function () {
  		location.reload();
 	})
 
-				var responsiveHelper_dt_basic = undefined;
-				var responsiveHelper_datatable_fixed_column = undefined;
-				var responsiveHelper_datatable_col_reorder = undefined;
-				var responsiveHelper_datatable_tabletools = undefined;
-				
-				var breakpointDefinition = {
-					tablet : 1024,
-					phone : 480
-				};	
-				
-			/* COLUMN FILTER  */
-		    var otable = $('#datatable_fixed_column').DataTable({
-		    	//"bFilter": false,
-		    	//"bInfo": false,
-		    	//"bLengthChange": false
-		    	//"bAutoWidth": false,
-		    	//"bPaginate": false,
-		    	//"bStateSave": true // saves sort state using localStorage
-				"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 'f><'col-sm-6 col-xs-12 '<'toolbar'>>r>"+
-						"t"+
-						"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-				"autoWidth" : true,
-				"preDrawCallback" : function() {
-					// Initialize the responsive datatables helper once.
-					if (!responsiveHelper_datatable_fixed_column) {
-						responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column'), breakpointDefinition);
-					}
-				},
-				"rowCallback" : function(nRow) {
-					responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-				},
-				"drawCallback" : function(oSettings) {
-					// responsiveHelper_datatable_fixed_column.respond();
-				}		
 			
-		    });
-		    
-		    // custom toolbar
-		    $("div.toolbar").html('<div class="text-right"><button id="act-create" class="btn btn-success btn-md" alt="act-create"><i class="fa fa-plus "></i> act-create</button></div>');
-		    	   
-		    // Apply the filter
-		    $("#datatable_fixed_column thead th input[type=text]").on( 'keyup change', function () {
-		    	
-		        otable
-		            .column( $(this).parent().index()+':visible' )
-		            .search( this.value )
-		            .draw();
-		            
-		    } );
-
-			otable.order( [[ 0, 'desc' ], [ 2, 'asc' ]] ).draw();
-
-/* END COLUMN FILTER */  
-
 
 $( "#act-create" ).click(function() {    
     var url_create = "index.php?r=product/create";
