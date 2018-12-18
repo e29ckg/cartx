@@ -5,9 +5,15 @@ use yii\helpers\Html;
 <table width="100%">
     <tr>
         <td width="100%" style="text-align: right">
-            <h4>รหัสใบเบิก <?= $model->order_code ?></h4>
+            <h4>รหัสใบเบิก <?= $model->order_code ?></h4>            
         </td>
+        
     </tr>
+    <tr>
+    <td width="100%" style="text-align: right">
+            <h5><?= $model->create_at ?></h5>            
+        </td>
+        </tr>
 </table>
 <table width="100%">
     <tr>

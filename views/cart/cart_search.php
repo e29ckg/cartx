@@ -11,18 +11,18 @@ use yii\data\Pagination;
 
 						<div class="col-sm-3">
 							<div class="product-image-wrapper">
-								<div class="single-products">
+							<div class="single-products">
 									<div class="productinfo text-center">
 										<img src="<?= $model->img ? 'uploads/product/img/'.$model->img : 'img/no_image.png'?>"  height="250" width="200" sizes= "50" alt="<?=$model->product_name?>" />
-										<h2> <?=$model->instoke > 0 ? 'มี '.$model->instoke.$model->getUnitName() : 'หมด' ?></h2>
+										<h2>  <?=$model->instoke > 0 ? 'มี '.$model->instoke.$model->getUnitName() : 'หมด' ?></h2>
 										<p><?=$model->product_name?></p>
-										<?=$model->instoke > 0 ? '<a href="#" data-id="'.$model->id.'" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>' : '' ?> 
+										<a href="#" data-id="<?=$model->code?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 									</div>
 									<div class="product-overlay">
 										<div class="overlay-content">
 											<h2><?=$model->instoke > 0 ? 'มี '.$model->instoke.$model->getUnitName() : 'หมด' ?></h2>
 											<p><?=$model->product_name?></p>
-											<?=$model->instoke > 0 ? '<a href="#" data-id="'.$model->id.'" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>' : '' ?> 
+											<a href="#" data-id="<?=$model->code?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 										</div>
 									</div>
 								</div>
@@ -56,9 +56,9 @@ use yii\data\Pagination;
 			// add-to-cart-s
 			$( ".add-to-cart" ).click(function() {    
     			var url = "index.php?r=cart/add_to_cart";
-				id= $(this).data("id");
+				code= $(this).data("id");
 				// alert(id);
-        		$.get(url,{id:id},function (data){
+        		$.get(url,{code:code},function (data){
 						$("#content").html(data);
         			}
 				);     

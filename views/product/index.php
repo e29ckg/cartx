@@ -59,7 +59,9 @@ $this->params['breadcrumbs'][] = $this->title;
 												</a>
 											</div>
 										</td>
-										<td><?=$models->code?><a href= "index.php?r=product/gencode&id=<?=$models['id']?>" class="btn btn-warning btn-xs" data-id=<?=$models['id']?>><i class="fa fa-pencil-square-o"></i> GenCode</a></td>
+										<td><?=$models->code?> 
+											<!-- <a href= "index.php?r=product/gencode&id=<?=$models['id']?>" class="btn btn-warning btn-xs" data-id=<?=$models['id']?>><i class="fa fa-pencil-square-o"></i> GenCode</a> -->
+										</td>
 								        <td><?=$models['product_name']?></td>
 								        <td><?=$models->getCatalogtName()?></td>
 										<td><?=$models->create_at?></td>

@@ -26,6 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   <th>ID</th>
 				  <th>Code</th>
 				  <th>ผู้เบิก</th>
+				  <td>ราคารวม</td>
                   <th>สถานะ(s)</th>
                   <th>วัน-เวลา</th>
                   <th>เครื่องมือ</th>
@@ -37,7 +38,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				<td><?=$model->id?></td>
 					<td><a href= "#" class="act-view" data-id='<?=$model->id?>'><?=$model->order_code?></a></td>
                   	<td><?=$model->getProfileName()?></td>
-                  	<td><?=$model->status?></td>
+                  	<td><?=$model->sumtotal?></td>
+					  <td><?=$model->status?></td>
                   	<td><?=$model->create_at?></td>
                   	<td>
 					</td>

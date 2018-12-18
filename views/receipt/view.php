@@ -35,8 +35,12 @@ $this->params['breadcrumbs'][] = $this->title;
                   <th>เครื่องมือ</th>
                 </tr>
                 </thead>
-                <tbody>                  
-				<?php foreach ($model_lists as $model_list): ?>
+                <tbody>   
+                <?php 
+                    $Total = 0 ;
+                    $sumTotal = 0;
+                ?>               
+				        <?php foreach ($model_lists as $model_list): ?>
                     <tr>
                         <td><?=$model_list->id?></td>
                         <td><?=$model_list->receipt_code?></td>
@@ -45,7 +49,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td><?=$model_list->unit_price?></td>
                         <td><?=$model_list->quantity?></td>                        
                   	    <td>
+                            
                           <?php
+                              $Total = $model_list->quantity * $model_list->unit_price;
+                              echo $Total;
+                              $sumTotal = $sumTotal + $Total;
                           // echo Html::a('<i class="fa fa-remove"></i> ลบ',['receipt/delete','id' => $model->id],
 							            //   [ 'class' => 'btn btn-danger act-update',
 								          //     'data-confirm' => 'Are you sure to delete this item?',
@@ -56,15 +64,17 @@ $this->params['breadcrumbs'][] = $this->title;
 				              </tr>
 				<?php  endforeach; ?>
 				</tbody>
-                <!-- <tfoot>
+                <tfoot>
                 <tr>
-                  <th>Rendering engine</th>
-                  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>Engine version</th>
-                  <th>CSS grade</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th>รวม </th>   
+                  <th><?= $sumTotal?></th>                                 
                 </tr>
-                </tfoot> -->
+                </tfoot>
               </table>
             </div>
             <!-- /.box-body -->

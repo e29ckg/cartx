@@ -30,13 +30,17 @@ $this->params['breadcrumbs'][] = $this->title;
 				            <th>ProductCode</th>
                     <th>Product</th>
                     <th>Product</th>
+                    <th>ราคาต่อหน่วย</th>
                     <th>จำนวน(s)</th>
-                    <th>สร้างเมื่อ</th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>                  
+                  <tr> 
+                  <?php 
+                    $Total = 0 ;
+                    $sumTotal = 0;
+                ?>                  
 				<?php foreach ($model_lists as $model_list): ?>				            
 					          <!-- <td><?php //echo $model_list->order_code?></td> -->
                     <td><?=$model_list->product_code?></td>
@@ -52,11 +56,14 @@ $this->params['breadcrumbs'][] = $this->title;
 											</div>
 										</td>
                     <td><?=$model_list->getProductName()?></td>
+                    <td><?=$model_list->unit_price?></td>
                     <td><?=$model_list->quantity?></td>
-                    <td><?=$model->create_at?></td>
                   <?php ?>
                     <td>
                     <?php
+                     $Total = $model_list->quantity * $model_list->unit_price;
+                     echo $Total;
+                     $sumTotal = $sumTotal + $Total;
                     // echo Html::a('<i class="fa fa-remove"></i> ลบ',['order-/delete','id' => $model_list->id],
                     //         [
                     //             'class' => 'btn btn-danger act-update',
@@ -67,7 +74,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     </td>
 	                </tr>
 				<?php endforeach; ?>
-				        </tbody>                
+				        </tbody> 
+                <tfoot>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th>รวม </th>   
+                  <th><?= $sumTotal?></th>                                 
+                </tr>
+                </tfoot>               
               </table>
             </div>
             <!-- /.box-body -->

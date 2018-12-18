@@ -71,7 +71,7 @@ class CartController extends Controller
         // $query = Product::find();
         $query = Product::find();
         $pagination = new Pagination([
-            'defaultPageSize' => 100,
+            'defaultPageSize' => 200,
             'totalCount' => $query->count(),
         ]);
     
@@ -206,7 +206,7 @@ class CartController extends Controller
                     }
         
         $pagination = new Pagination([
-                'defaultPageSize' => 20,
+                'defaultPageSize' => 200,
                 'totalCount' => $query->count(),
         ]);
         
@@ -339,8 +339,8 @@ class CartController extends Controller
 					if($_SESSION['strProductCode'][$i] != ""){
 						$codeProduct = $_SESSION['strProductCode'][$i];
                					// $ss['strProductCode'][$i] =  $_SESSION['inLine'][$i];
-						$Total = $_SESSION['strQty'][$i];
-                        $sumTotal = $sumTotal + $Total;
+						// $Total = $_SESSION['strQty'][$i];
+                        // $sumTotal = $sumTotal + $Total;
                         $strQty = $_SESSION['strQty'][$i];
 
                         $modelP = Product::find()->where(['code'=> $codeProduct])->one();
@@ -386,6 +386,7 @@ class CartController extends Controller
                                     $modelLST->code = $code;
                                     $modelLST->product_code = $codeProduct;
                                     $modelLST->unit_price = $unit_price; 
+                                    $modelLST->rl_code = $model->receipt_code; 
                                     $modelLST->quantity = $QLP;
                                     $modelLST->create_at = $create_at;
                                     $modelLST->save();
