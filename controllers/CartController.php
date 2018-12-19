@@ -348,61 +348,56 @@ class CartController extends Controller
                             $modelP->instoke = $Qty;
                             $modelP->save();
         
-                        $modelP = ReceiptList::find()
+                        $modelsRL = ReceiptList::find()
                                     ->where(['product_code'=> $codeProduct])
                                     ->andWhere('quantity > 0')
                                     ->orderBy('id')
                                     ->all();
                         
-                        foreach ($modelP as $model): 
+                        $x=0;
+                        foreach ($modelsRL as $modelRL): 
                             $QLP = 0;
                             
                             if($strQty <> 0){             
-                                $unit_price = $model->unit_price;
-                                $QLP = $model->quantity - $strQty;
+                                $unit_price = $modelRL->unit_price;
+                                $QLP = $modelRL->quantity - $strQty;
 
                                 if($QLP >= 0){
-                                    $model->quantity = $model->quantity - $strQty;
+                                    $modelRL->quantity = $modelRL->quantity - $strQty;
                                     $QLP = $strQty;
-                                    $model->save();
+                                    $modelRL->save();
                                     $strQty = 0;                                    
 
                                 }elseif($QLP < 0){
-                                    $strQty = $strQty - $model->quantity ;
-                                    $QLP = $model->quantity;                                    
-                                    $model->quantity = 0;
-                                    $model->save();
+                                    $strQty = $strQty - $modelRL->quantity ;
+                                    $QLP = $modelRL->quantity;                                    
+                                    $modelRL->quantity = 0;
+                                    $modelRL->save();
                                 }  
                                 
                                 $modelOL = new OrderList();
                                     $modelOL->order_code = $code;
                                     $modelOL->product_code = $codeProduct;
+                                    $modelOL->receipt_list_id = $modelRL->id;
                                     $modelOL->unit_price = $unit_price; 
                                     $modelOL->quantity = $QLP;
                                     $modelOL->create_at = $create_at;
                                     $modelOL->save();
-
+                                
                                 $modelLST = new LogSt();
                                     $modelLST->code = $code;
                                     $modelLST->product_code = $codeProduct;
                                     $modelLST->unit_price = $unit_price; 
-                                    $modelLST->rl_code = $model->receipt_code; 
+                                    $modelLST->receipt_list_id = $modelRL->id; 
                                     $modelLST->quantity = $QLP;
                                     $modelLST->create_at = $create_at;
                                     $modelLST->save();
-
-                                    // Yii::$app->db->createCommand()->insert('log_st', [
-                                    //     'code' => $code,
-                                    //     'product_code' => $codeProduct,
-                                    //     'unit_price' => $unit_price,
-                                    //     'quantity' => $QLP,
-                                    //     'create_at' => $create_at,
-                                    // ])->execute();
-                            }      
+                                    
+                            }     
                                 
-                                $Total = $model->unit_price * $QLP;
+                                $Total = $modelRL->unit_price * $QLP;
                                 $sumTotal = $sumTotal + $Total;
-                            
+                                $x++;  
                         endforeach;                         
                     }
                 }

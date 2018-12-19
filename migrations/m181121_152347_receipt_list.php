@@ -20,7 +20,7 @@ class m181121_152347_receipt_list extends Migration
         $this->createTable('receipt_list', [
             'id' => $this->primaryKey(),
             'receipt_code' => $this->string(32)->notNull(),
-            'product_code' => $this->string(),
+            'product_code' => $this->string(32),
             'unit_price' => $this->float(),
             'quantity' => $this->integer(),
             'create_at' => $this->dateTime(),

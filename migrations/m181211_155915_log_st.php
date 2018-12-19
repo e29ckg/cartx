@@ -20,8 +20,8 @@ class m181211_155915_log_st extends Migration
         $this->createTable('log_st', [
             'id' => $this->primaryKey(),
             'code' => $this->string(32)->notNull(),
-            'product_code' => $this->string(),
-            'rl_code' => $this->string(32),
+            'product_code' => $this->string(32),
+            'receipt_list_id' => $this->string(32),
             'unit_price' => $this->float(),
             'quantity' => $this->integer(),
             'create_at' => $this->dateTime(),

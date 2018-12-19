@@ -111,7 +111,7 @@ $('#eg8').click(function() {
 $(document).ready(function() {	
 /* BASIC ;*/	
 $('#example').DataTable( {
-    "order": [[ 4, 'desc' ], [ 0, 'asc' ]]
+    "order": [[ 0, 'desc' ], [ 4, 'asc' ]]
 });
 
 	$('#activity-modal').on('hidden.bs.modal', function () {

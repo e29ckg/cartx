@@ -21,6 +21,7 @@ class m181102_123037_order_list extends Migration
             'id' => $this->primaryKey(),
             'order_code' => $this->string(32)->notNull(),
             'product_code' => $this->string(),
+            'receipt_list_id' => $this->string(32),
             'unit_price' => $this->float(),
             'quantity' => $this->integer(),
             'create_at' => $this->dateTime(),
