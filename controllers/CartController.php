@@ -338,9 +338,6 @@ class CartController extends Controller
 				for($i=0;$i<=(int)$_SESSION['inLine'];$i++){
 					if($_SESSION['strProductCode'][$i] != ""){
 						$codeProduct = $_SESSION['strProductCode'][$i];
-               					// $ss['strProductCode'][$i] =  $_SESSION['inLine'][$i];
-						// $Total = $_SESSION['strQty'][$i];
-                        // $sumTotal = $sumTotal + $Total;
                         $strQty = $_SESSION['strQty'][$i];
 
                         $modelP = Product::find()->where(['code'=> $codeProduct])->one();
@@ -389,7 +386,7 @@ class CartController extends Controller
                                     $modelLST->product_code = $codeProduct;
                                     $modelLST->unit_price = $unit_price; 
                                     $modelLST->receipt_list_id = $modelRL->id; 
-                                    $modelLST->quantity = $QLP;
+                                    $modelLST->quantity = '-'.$QLP;
                                     $modelLST->create_at = $create_at;
                                     $modelLST->save();
                                     

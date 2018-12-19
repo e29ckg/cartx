@@ -78,15 +78,25 @@ class ProductController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($codeProduct)
     {
+        $modelsP = Product::find()
+                        ->where(['code'=> $codeProduct])
+                        ->one();
+
+        $modelsLST = LogSt::find()
+                        ->where(['product_code'=> $codeProduct])
+                        ->all();
+
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('view',[
-                    'model' => $this->findModel($id),                   
+                'modelsP' => $modelsP,
+                'modelsLST' => $modelsLST                  
             ]);
         }
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'modelsP' => $modelsP,
+            'modelsLST' => $modelsLST
         ]);
     }
 

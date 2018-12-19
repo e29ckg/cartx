@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				          <th>ราคารวม</th>
                   <th>สถานะ(s)</th>
                   <th>วัน-เวลา</th>
-                  <!-- <th>เครื่องมือ</th> -->
+                  <th>เครื่องมือ</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -42,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   	<td><?=$model->sumtotal?></td>
 					          <td><?=$model->status?></td>
                   	<td><?=$model->create_at?></td>
+                    <td><a href="index.php?r=receipt/print&id=<?=$model->id?>" target="_blank">พิมพ์ใบนำเข้า</a></td>
                   	<!-- <td><a herf= "#" class="btn btn-warning act-update" data-id=<?=$model->id?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
 						<?php 
 							// echo Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $model->id],

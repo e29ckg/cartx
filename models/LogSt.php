@@ -49,6 +49,7 @@ class LogSt extends \yii\db\ActiveRecord
             'id' => 'ID',
             'code' => 'Code',
             'product_code' => 'Product Code',
+            'receipt_list_id' => 'receipt_list_id',
             'unit_price' => 'Unit Price',
             'quantity' => 'Quantity',
             'create_at' => 'Create At',

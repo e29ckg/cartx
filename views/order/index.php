@@ -39,10 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
 					<td><a href= "#" class="act-view" data-id='<?=$model->id?>'><?=$model->order_code?></a></td>
                   	<td><?=$model->getProfileName()?></td>
                   	<td><?=$model->sumtotal?></td>
-					  <td><?=$model->status?></td>
+					<td><?=$model->status?></td>
                   	<td><?=$model->create_at?></td>
-                  	<td>
-					</td>
+                  	<td><a href="index.php?r=order/print&id=<?=$model->id?>" target="_blank">พิมพ์ใบเบิก</a></td>
 				</tr>
 				<?php  endforeach; ?>
 				</tbody>

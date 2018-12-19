@@ -39,9 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?php foreach ($models as $model): ?>
 				<tr>
           <td><?=$model->create_at?></td>
-          <td><?=$model->receipt_list_id?></td>
 					<td><?=$model->code?></a></td>
-          <td><?=$model->product_code?></td>          
+          <td><?=$model->product_code?></td>
+          <td><?=$model->receipt_list_id?></td>          
           <td><?=$model->getProductName()?></td>
           <td><?=$model->unit_price?></td>
 					<td><?=$model->quantity?></td>  
@@ -93,7 +93,7 @@ $script = <<< JS
 $(document).ready(function() {	
 /* BASIC ;*/	
 	$('#log-index').DataTable({
-    "order": [[ 0, 'desc' ], [ 4, 'asc' ]]
+    "order": [[ 0, 'desc' ], [ 3, 'desc' ],[ 4, 'asc' ]]
 });
 
 	$('#activity-modal').on('hidden.bs.modal', function () {

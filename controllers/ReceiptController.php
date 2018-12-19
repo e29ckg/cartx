@@ -6,12 +6,14 @@ use Yii;
 use app\models\Receipt;
 use app\models\ReceiptList;
 use app\models\Product;
+use app\models\LogSt;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\filters\AccessControl;
+use kartik\mpdf\Pdf;
 
 /**
  * OrderController implements the CRUD actions for Order model.
@@ -156,9 +158,14 @@ class ReceiptController extends Controller
                             'create_at' => $create_at,
                         ])->execute();
 
+                        $modelRL = ReceiptList::find()->where(['receipt_code' => $code])
+                                    ->orderBy(['id' => SORT_DESC])
+                                    ->one();
+
                         Yii::$app->db->createCommand()->insert('log_st', [
                             'code' => $code,
                             'product_code' => $codeProduct,
+                            'receipt_list_id' => $modelRL->id,
                             'unit_price' => $UnitPrice,
                             'quantity' => $strQtyR,
                             'create_at' => $create_at,
@@ -208,7 +215,8 @@ class ReceiptController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $model_lists = ReceiptList::find()->where(['receipt_code'=> $model->receipt_code])->all();
+        // $model_lists = ReceiptList::find()->where(['receipt_code'=> $model->receipt_code])->all();
+        $model_lists = LogSt::find()->where(['code'=> $model->receipt_code])->all();
         
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('view',[
@@ -296,5 +304,31 @@ class ReceiptController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionPrint($id = null)
+    {
+        $model = $this->findModel($id);
+        $model_lists = LogSt::find()->where(['code'=> $model->receipt_code])->all();
+
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+    $pdf = new Pdf([
+        'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+        'content' => $this->renderPartial('print',['model' => $model,'model_lists' =>$model_lists]),
+        'cssFile' => 'css/pdf.css',
+        'options' => [
+            // any mpdf options you wish to set
+        ],
+        'methods' => [
+            // 'SetTitle' => 'Privacy Policy - Krajee.com',
+            // 'SetSubject' => 'Generating PDF files via yii2-mpdf extension has never been easy',
+            // 'SetHeader' => ['Krajee Privacy Policy||Generated On: ' . date("r")],
+            // 'SetFooter' => ['|Page {PAGENO}|'],
+            // 'SetAuthor' => 'Kartik Visweswaran',
+            // 'SetCreator' => 'Kartik Visweswaran',
+            // 'SetKeywords' => 'Krajee, Yii2, Export, PDF, MPDF, Output, Privacy, Policy, yii2-mpdf',
+        ]
+    ]);
+    return $pdf->render();
     }
 }

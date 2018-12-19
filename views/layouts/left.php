@@ -41,15 +41,8 @@
                             ['label' => 'เพิ่มสินค้าเข้าสต๊อก', 'icon' => 'file-code-o', 'url' => ['/receipt/add'],],
                         ]
                     ],
-                    [
-                        'label' => 'Product', 
-                        'icon' => 'file-code-o', 
-                        'url' => ['#'],
-                        'items' => [
-                            ['label' => 'Product ทั้งหมด', 'icon' => 'file-code-o', 'url' => ['/product'],],
-                            ['label' => 'เพิ่มชื่อสินค้า', 'icon' => 'file-code-o', 'url' => ['/product/create'],],
-                        ]
-                    ],
+                    ['label' => 'Product', 'icon' => 'file-code-o', 'url' => ['/product'],],
+                     
 
                     // ['label' => 'Product', 'icon' => 'file-code-o', 'url' => ['/product']],
                     // ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
