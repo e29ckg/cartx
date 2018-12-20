@@ -168,11 +168,13 @@ class ReceiptController extends Controller
                             'receipt_list_id' => $modelRL->id,
                             'unit_price' => $UnitPrice,
                             'quantity' => $strQtyR,
+                            'note' => 'IN',
                             'create_at' => $create_at,
                         ])->execute();
 
                         $model = Product::find()->where(['code'=> $codeProduct])->one();
                         $model->instoke =  $model->instoke + $strQtyR;
+                        $model->create_at = date("Y-m-d H:i:s");
                         $model->save();
                         
                     }

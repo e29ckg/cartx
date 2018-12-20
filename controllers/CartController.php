@@ -343,6 +343,7 @@ class CartController extends Controller
                         $modelP = Product::find()->where(['code'=> $codeProduct])->one();
                             $Qty =  $modelP->instoke - $strQty;
                             $modelP->instoke = $Qty;
+                            $modelP->create_at = $create_at;
                             $modelP->save();
         
                         $modelsRL = ReceiptList::find()
@@ -362,14 +363,14 @@ class CartController extends Controller
                                 if($QLP >= 0){
                                     $modelRL->quantity = $modelRL->quantity - $strQty;
                                     $QLP = $strQty;
-                                    $modelRL->save();
+                                    // $modelRL->save();
                                     $strQty = 0;                                    
 
                                 }elseif($QLP < 0){
                                     $strQty = $strQty - $modelRL->quantity ;
                                     $QLP = $modelRL->quantity;                                    
                                     $modelRL->quantity = 0;
-                                    $modelRL->save();
+                                    // $modelRL->save();
                                 }  
                                 
                                 $modelOL = new OrderList();
@@ -379,7 +380,7 @@ class CartController extends Controller
                                     $modelOL->unit_price = $unit_price; 
                                     $modelOL->quantity = $QLP;
                                     $modelOL->create_at = $create_at;
-                                    $modelOL->save();
+                                    
                                 
                                 $modelLST = new LogSt();
                                     $modelLST->code = $code;
@@ -387,8 +388,14 @@ class CartController extends Controller
                                     $modelLST->unit_price = $unit_price; 
                                     $modelLST->receipt_list_id = $modelRL->id; 
                                     $modelLST->quantity = '-'.$QLP;
+                                    $modelLST->note = 'OUT';
                                     $modelLST->create_at = $create_at;
-                                    $modelLST->save();
+                                if($modelLST->save() and $modelOL->save() and $modelRL->save()){
+                                    // Yii::$app->session->setFlash('error', 'ไม่สำเร็จ');
+                                }else{
+                                    Yii::$app->session->setFlash('error', 'ไม่สำเร็จ');
+                                }    
+                                    
                                     
                             }     
                                 

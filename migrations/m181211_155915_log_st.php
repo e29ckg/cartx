@@ -24,6 +24,7 @@ class m181211_155915_log_st extends Migration
             'receipt_list_id' => $this->string(32),
             'unit_price' => $this->float(),
             'quantity' => $this->integer(),
+            'note' => $this->string(),
             'create_at' => $this->dateTime(),
         ], $tableOptions);        
     }
