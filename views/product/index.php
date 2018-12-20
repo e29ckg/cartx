@@ -144,9 +144,9 @@ $('#product-index').DataTable({
 	"order": [[ 0, "asc" ]]
 });
 
-	$('#activity-modal').on('hidden.bs.modal', function () {
- 		location.reload();
-	})
+	// $('#activity-modal').on('hidden.bs.modal', function () {
+ 	// 	location.reload();
+	// })
 
 			
 

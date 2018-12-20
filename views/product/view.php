@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						<th data-hide="phone">ประเภท</th>
 						<th data-hide="phone">RL_id</th>
 						<th data-hide="phone,tablet">ราคาต่อหน่วย</th>
-					    <th>เครื่องมือ</th>
+					    <th>คงเหลือ</th>
                 	</tr>
                 </thead>
                 <tbody>
