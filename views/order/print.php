@@ -81,7 +81,7 @@ use yii\helpers\Html;
                         Total
                     </td>
                     <td colspan="2" width="50%">
-                        <h3><?=$totalSum?>.-</h3>
+                        <h3><?=$totalSum?></h3>
                     </td>
                 </tr>                
             </table>
