@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\models\ReceiptList;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Product */
@@ -42,10 +43,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     $total = 0;
                     $sumtotal = 0;
                 ?>
-				<?php foreach ($modelsLST as $model): ?>
+				<?php foreach ($modelsLST as $model): 
+              $modelsRL = ReceiptList::findOne($model->receipt_list_id);
+            if($modelsRL['quantity'] <> 0){
+
+            
+            ?>
 						<tr>
 						    <td><?=$model['id']?></td>
-                            <td><?=$model->create_at?></td>
+                <td><?=$model->create_at?></td>
 							<td><?=$model->code?> </td>
 							<td><?=$model->product_code?></td>
 							<td><?=$model->receipt_list_id?></td>
@@ -55,8 +61,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php 
                             $total = $model->quantity;
                             $sumtotal =$sumtotal + $total;
-                        ?>
-				<?php  endforeach; ?>
+                            
+            }
+            endforeach; ?>
 				
 				</tbody>
                 <tfoot>

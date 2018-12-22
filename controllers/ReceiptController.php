@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Receipt;
 use app\models\ReceiptList;
+use app\models\OrderList;
 use app\models\Product;
 use app\models\LogSt;
 use yii\data\ActiveDataProvider;
@@ -218,7 +219,7 @@ class ReceiptController extends Controller
     {
         $model = $this->findModel($id);
         // $model_lists = ReceiptList::find()->where(['receipt_code'=> $model->receipt_code])->all();
-        $model_lists = LogSt::find()->where(['code'=> $model->receipt_code])->all();
+        $model_lists = LogSt::find()->where(['code'=> $model->receipt_code,'create_at'=>$model->create_at])->all();
         
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('view',[
@@ -267,15 +268,70 @@ class ReceiptController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
+        $models = $this->findModel($id);
+        $modelRLs = ReceiptList::find()->where(['receipt_code' => $models->receipt_code])
+        ->orderBy(['id' => SORT_ASC])
+        ->all();
         return $this->render('update', [
-            'model' => $model,
+            'models' => $models,
+            'modelRLs' => $modelRLs,
         ]);
+    }
+
+    public function actionUpdate_list_cancel($id)
+    {
+        $models = $this->findModel($id);
+        $modelRLs = ReceiptList::find()->where(['receipt_code' => $models->receipt_code])->all();
+
+        $create_at = date("Y-m-d H:i:s");
+
+        $x = FALSE;
+        $y = ':';
+        foreach ($modelRLs as $modelRL):
+            $modelOLs = OrderList::find()->where(['receipt_list_id' => $modelRL->id])->all();
+            foreach ($modelOLs as $modelOL):
+              if($modelOL->quantity <> 0){
+                  $x = TRUE;
+                  $y .= $modelOL->order_code.',';
+              }  
+            endforeach;        
+        endforeach;
+
+        if($x){
+            Yii::$app->session->setFlash('error', 'ไม่สามารยกเลิกได้ เนื่องจากมีการเบิก'.$y);
+        }else{
+            foreach ($modelRLs as $modelRL):
+                if($modelRL->quantity <> 0){
+
+                $modelP = Product::find()->where(['code' => $modelRL->product])->one();
+                $modelP->instoke = $modelP->instoke - $modelRL->quantity;
+
+                $modelLST = new LogSt();
+                $modelLST->code = $modelRL->receipt_code;
+                $modelLST->product_code = $modelRL->product_code;
+                $modelLST->unit_price = $modelRL->unit_price; 
+                $modelLST->receipt_list_id = $modelRL->id; 
+                $modelLST->quantity = '-'.$modelRL->quantity;
+                $modelLST->note = 'OUT';
+                $modelLST->create_at = $create_at;
+                
+                $modelRL->product_code = $modelRL->product_code;
+                $modelRL->unit_price = 0;
+                $modelRL->quantity = 0;
+                $modelRL->create_at = $create_at;
+
+                if($modelRL->save() and $modelLST->save() and $modelP->save()){
+
+                }
+            }
+            endforeach;
+            $models->status = 4;
+            $models->sumtotal = 0;
+            $models->create_at = $create_at;
+            $models->save();
+        }
+        // Yii::$app->session->setFlash('error', $x);
+        return $this->redirect(['index']);
     }
 
     /**
@@ -308,10 +364,19 @@ class ReceiptController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    protected function findModelRL($id)
+    {
+        if (($model = ReceiptList::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
     public function actionPrint($id = null)
     {
         $model = $this->findModel($id);
-        $model_lists = LogSt::find()->where(['code'=> $model->receipt_code])->all();
+        $model_lists = LogSt::find()->where(['code'=> $model->receipt_code,'create_at'=>$model->create_at])->all();
 
         Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
     $pdf = new Pdf([

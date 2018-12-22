@@ -42,7 +42,10 @@ $this->params['breadcrumbs'][] = $this->title;
                   	<td><?=$model->sumtotal?></td>
 					          <td><?=$model->status?></td>
                   	<td><?=$model->create_at?></td>
-                    <td><a href="index.php?r=receipt/print&id=<?=$model->id?>" target="_blank">พิมพ์ใบนำเข้า</a></td>
+                    <td><a href="index.php?r=receipt/print&id=<?=$model->id?>" target="_blank">พิมพ์ใบนำเข้า</a>
+                    <a href= "index.php?r=receipt/update&id=<?=$model->id?>" class="btn btn-warning "><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
+                    <a href= "index.php?r=receipt/update_list_cancel&id=<?=$model->id?>" class="btn btn-warning " onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-pencil-square-o"></i> ยกเลิก</a>
+											</td>
                   	<!-- <td><a herf= "#" class="btn btn-warning act-update" data-id=<?=$model->id?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
 						<?php 
 							// echo Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $model->id],
@@ -112,9 +115,9 @@ $(document).ready(function() {
     "order": [[ 0, 'desc' ], [ 4, 'asc' ]]
 });
 
-	$('#activity-modal').on('hidden.bs.modal', function () {
- 		location.reload();
-	})
+	// $('#activity-modal').on('hidden.bs.modal', function () {
+ 	// 	location.reload();
+	// })
 	
 $( "#act-create" ).click(function() {    
     var url_create = "index.php?r=order/create";
