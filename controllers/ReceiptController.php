@@ -218,8 +218,8 @@ class ReceiptController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        // $model_lists = ReceiptList::find()->where(['receipt_code'=> $model->receipt_code])->all();
-        $model_lists = LogSt::find()->where(['code'=> $model->receipt_code,'create_at'=>$model->create_at])->all();
+        // $model_lists = LogSt::find()->where(['code'=> $model->receipt_code,'create_at'=>$model->create_at])->all();
+        $model_lists = LogSt::find()->where(['code'=> $model->receipt_code])->all();
         
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('view',[
@@ -397,5 +397,26 @@ class ReceiptController extends Controller
         ]
     ]);
     return $pdf->render();
+    }
+
+    public function actionUp_receipt_to_logst()
+    {
+        $models = ReceiptList::find()->all();
+        
+        foreach ($models as $model):
+            $modellst = LogSt::find()->where(['receipt_list_id' => $model->id])->one();
+            if(!($modellst)){
+            $modelLS = new LogSt(); 
+                $modelLS->code = $model->receipt_code;
+                $modelLS->product_code = $model->product_code;
+                $modelLS->receipt_list_id = $model->id;
+                $modelLS->unit_price = $model->unit_price;
+                $modelLS->quantity = $model->quantity;
+                $modelLS->create_at = $model->create_at;
+            $modelLS->save();
+        }
+        endforeach; 
+        Yii::$app->session->setFlash('success', 'receipt->Logst ข้อมูลเรียบร้อย');  
+        return $this->redirect(['index']);
     }
 }

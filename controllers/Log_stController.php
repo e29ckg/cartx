@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\LogSt;
+use app\models\ReceiptList;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -61,5 +62,25 @@ class Log_stController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionUp_receipt_list_id()
+    {
+        $models = LogSt::find()->all();
+        
+        foreach ($models as $model):
+            // if($model->receipt_list_id == ''){
+                $modelRLs = ReceiptList::find()->where([
+                    'receipt_code'=>$model->code,
+                    'product_code'=>$model->product_code,
+                    'unit_price'=>$model->unit_price])->all();
+                foreach ($modelRLs as $modelRL):
+                    $model->receipt_list_id = $modelRL->id; 
+                    $model->save();
+                endforeach;                    
+            // }
+        endforeach; 
+        Yii::$app->session->setFlash('success', 'ปรับ Logst->Receipt_list_id ข้อมูลเรียบร้อย');  
+        return $this->redirect(['index']);
     }
 }

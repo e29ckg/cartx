@@ -31,8 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 	<tr>
 						<th data-class="expand">Id</th>
 						<th data-hide="phone">DateTime</th>
+						<th data-hide="phone">code</th>
 						<th data-hide="phone">product</th>
-						<th data-hide="phone">ประเภท</th>
 						<th data-hide="phone">RL_id</th>
 						<th data-hide="phone,tablet">ราคาต่อหน่วย</th>
 					    <th>คงเหลือ</th>
@@ -44,8 +44,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     $sumtotal = 0;
                 ?>
 				<?php foreach ($modelsLST as $model): 
-              $modelsRL = ReceiptList::findOne($model->receipt_list_id);
-            if($modelsRL['quantity'] <> 0){
+            //   $modelsRL = ReceiptList::findOne($model->receipt_list_id);
+            // if($modelsRL['quantity'] <> 0){
 
             
             ?>
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             $total = $model->quantity;
                             $sumtotal =$sumtotal + $total;
                             
-            }
+            // }
             endforeach; ?>
 				
 				</tbody>

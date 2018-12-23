@@ -94,6 +94,7 @@ class ProductController extends Controller
                 'modelsLST' => $modelsLST                  
             ]);
         }
+        
         return $this->render('view', [
             'modelsP' => $modelsP,
             'modelsLST' => $modelsLST
@@ -245,10 +246,10 @@ class ProductController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionUpdatestroke()
+    public function actionUpstoke()
     {
         $modelsProduct = Product::find()->All();
-        $modelsRL = ReceiptList::find()->All();
+        // $modelsRL = ReceiptList::find()->All();
         // $a = var_dump($models);
         foreach ($modelsProduct as $modelProduct):
             $totalSum = 0 ;
@@ -265,6 +266,8 @@ class ProductController extends Controller
             // echo $modelProduct->code." ".$totalSum."<br>";
             
         endforeach; 
+        Yii::$app->session->setFlash('success', 'ปรับ Product->updateStork ข้อมูลเรียบร้อย');  
+        return $this->redirect(['index']);
     }
 
     public function actionAdd_to_stroke()

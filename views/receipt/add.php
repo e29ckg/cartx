@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							<th>Product</th>
 				  			<th>ราคาต่อหน่วย</th>
                   			<th>จำนวน</th>
+							  <th>ราคา</th>
                   			<th>เครื่องมือ</th>
                 		</tr>
                 	</thead>
@@ -54,7 +55,8 @@ $this->params['breadcrumbs'][] = $this->title;
 							<td class=""><?=$_SESSION['strProductCodeR'][$i]?></td>
 							<th><?=$model->product_name;?></th>
 							<td class=""><?=$_SESSION['strProductUnitPriceR'][$i]?></td>
-							<td class=""><?=$_SESSION['strQtyR'][$i]?></td>				
+							<td class=""><?=$_SESSION['strQtyR'][$i]?></td>	
+							<td class=""><?=$Total?></td>				
 							<td class="cart_delete">
 								<a class="btn btn-warning"  data-id="<?=$i?>" href="index.php?r=receipt/delete_list&id=<?=$i?>"><i class="fa fa-times"></i> ลบ</a>
 							</td>
@@ -62,7 +64,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
 					<?php }	} } ?>	
 
-					</tbody>                
+					</tbody> 
+					<tfoot> 
+							<th></th>
+				  			<th></th>
+							<th></th>
+				  			<th></th>
+                  			<th>ราคารวม</th>
+							  <th><?=$sumTotal?></th>
+                  			<th></th>
+					</tfoot>
               	</table>
             	</div>
            	 	<!-- /.box-body -->
