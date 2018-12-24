@@ -81,6 +81,15 @@
                         'template'=>'<a href="{url}">{icon} {label}<span class="pull-right-container"><small class="label pull-right bg-yellow">123</small></span></a>'
                     ],
                     [
+                        'label' => 'รายงาน', 
+                        'icon' => 'file-code-o', 
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'Report', 'icon' => 'file-code-o', 'url' => ['/report/index'],],
+                            ['label' => 'Report/view', 'icon' => 'file-code-o', 'url' => ['/report/view'],],
+                        ]
+                    ],
+                    [
                         'label' => 'Setting', 
                         'icon' => 'file-code-o', 
                         'url' => '#',

@@ -37,7 +37,8 @@ $this->params['breadcrumbs'][] = $this->title;
 										<th data-class="expand">Id</th>
 										<th>name</th>
                     <th>ยกมา</th>
-                    <th>name</th>
+                    <th>นำเข้า</th>
+                    <th>จ่ายออก</th>
 					    			<th>คงเหลือ</th>
                 	</tr>
                 </thead>
@@ -46,20 +47,14 @@ $this->params['breadcrumbs'][] = $this->title;
 						      <tr>    
 										<td><?=$model->product_name?></td>
 										<td></td>
-                    <th></th>
+                    <td></td>
+                    <td></td>
 								    <td></td>
                     <td><?=$model->instoke?></td>
 									</tr>
 
-                  <?php 
-                  $total = 0;
-                  $sumTotal = 0;
-                  foreach ($modelLSts as $modelLSt): 
-                    
-                    ?>
-
-						                      
-							    <?php   endforeach; ?>
+                  
+						           
 							<?php  endforeach; ?>
 				
 				</tbody>

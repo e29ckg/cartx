@@ -75,11 +75,12 @@ class ReportController extends Controller
             ])->all();
         
         // $modelRLs = ReceiptList::find()->where(['<','create_at','2018-10-02 14:51:22'])->all();
-        $start = strtotime(2018-10-02);
-        $end = strtotime(2018-11-02);
-        $modelLSts = LogSt::find()->where(['between','create_at',"2018-10-01" ,"2018-12-31"])->all();
-        
-            // $countAll = Receipt::getCountAll();
+        $start = strtotime('2018-10-02');
+        $end = strtotime('2018-12-31');
+        $end = "2018-12-31";
+
+        $modelLSts = LogSt::find()->where(['between','create_at',"2018-10-01" ,$end])->all();
+
         
         return $this->render('view',[
             'models' => $model,
