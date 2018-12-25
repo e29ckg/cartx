@@ -37,36 +37,36 @@ $this->params['breadcrumbs'][] = $this->title;
 										<th data-class="expand">Id</th>
 										<th>name</th>
                     <th>ยกมา</th>
-                    <th>นำเข้า</th>
-                    <th>จ่ายออก</th>
+                    <th>รับ</th>
+                    <th>จ่าย</th>
 					    			<th>คงเหลือ</th>
                 	</tr>
                 </thead>
               <tbody>
-							<?php foreach ($models as $model): ?>
+							<?php foreach ($modelRLs as $modelRL): ?>
 						      <tr>    
-										<td><?=$model->product_name?></td>
-										<td></td>
-                    <td></td>
-                    <td></td>
+										<td><?=$modelRL->id?></td>
+										<td><?=$modelRL->getProductName()?></td>
+                    <td><?=$modelRL->create_at?></td>
+                    <td><?=$modelRL->create_at?></td>
 								    <td></td>
-                    <td><?=$model->instoke?></td>
+                    <td><?=$modelRL->quantity?></td>
+                    <th><?=$modelRL->unit_price?></th>
 									</tr>
-
-                  
-						           
 							<?php  endforeach; ?>
 				
 				</tbody>
-                <!-- <tfoot>
-                <tr>
+                <tfoot>
+                 <tr>
                   <th>Rendering engine</th>
-                  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>Engine version</th>
-                  <th>CSS grade</th>
+                  <th></th>
+                  <th>KB : <?=$Log_KB_Qty_sum?></th>
+                  <th>รับ : <?=$Log_R_Qty_sum?></th>
+                  <th>จ่าย : <?=$Log_O_Qty_sum?></th>
+                  <th><?=$Log_KB_Qty_sum + $Log_R_Qty_sum - $Order_Qty_sum?> # RL : <?=$Receipt_Qty_sum?> # KB : <?=$Log_K_Qty_sum?></th>
+                  <th></th>
                 </tr>
-                </tfoot> -->
+                </tfoot>  
               </table>
             </div>
             <!-- /.box-body -->
