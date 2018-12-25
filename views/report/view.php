@@ -35,7 +35,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <thead>
                 	<tr>
 										<th data-class="expand">Id</th>
-										<th>name</th>
+                    <th>เดือน</th>
+                    <th>name</th>
+                    <th>หน่วยนับ</th>
                     <th>ยกมา</th>
                     <th>รับ</th>
                     <th>จ่าย</th>
@@ -43,15 +45,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 	</tr>
                 </thead>
               <tbody>
-							<?php foreach ($modelRLs as $modelRL): ?>
+							<?php foreach ($ReportRMLs as $modelRMLs): ?>
 						      <tr>    
-										<td><?=$modelRL->id?></td>
-										<td><?=$modelRL->getProductName()?></td>
-                    <td><?=$modelRL->create_at?></td>
-                    <td><?=$modelRL->create_at?></td>
-								    <td></td>
-                    <td><?=$modelRL->quantity?></td>
-                    <th><?=$modelRL->unit_price?></th>
+										<td><?=$modelRMLs->id?></td>
+										<td><?=$modelRMLs->month?></td>
+                    <td><?=$modelRMLs->product_name?></td>
+                    <td><?=$modelRMLs->product_unit?></td>
+								    <td><?=$modelRMLs->kb?></td>
+                    <td><?=$modelRMLs->r?></td>
+                    <td><?=$modelRMLs->o?></td>
+                    <td><?=$modelRMLs->k?></td>
+                    <td><?=$modelRMLs->unit_price?></td>
+                    <td><?=$modelRMLs->total_price?></td>
+                    <td><?=$modelRMLs->create_at?></td>
 									</tr>
 							<?php  endforeach; ?>
 				
@@ -60,10 +66,10 @@ $this->params['breadcrumbs'][] = $this->title;
                  <tr>
                   <th>Rendering engine</th>
                   <th></th>
-                  <th>KB : <?=$Log_KB_Qty_sum?></th>
-                  <th>รับ : <?=$Log_R_Qty_sum?></th>
-                  <th>จ่าย : <?=$Log_O_Qty_sum?></th>
-                  <th><?=$Log_KB_Qty_sum + $Log_R_Qty_sum - $Order_Qty_sum?> # RL : <?=$Receipt_Qty_sum?> # KB : <?=$Log_K_Qty_sum?></th>
+                  <th>KB : </th>
+                  <th>รับ :</th>
+                  <th>จ่าย : </th>
+                  <th> # RL :  # KB : </th>
                   <th></th>
                 </tr>
                 </tfoot>  
