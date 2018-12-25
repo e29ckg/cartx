@@ -12,7 +12,17 @@ class m181225_090609_report_m extends Migration
      */
     public function safeUp()
     {
-
+        $tableOptions = null;
+ 
+        if ($this->db->driverName === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
+        }
+        $this->createTable('report_m', [
+            'id' => $this->primaryKey(),
+            'month' => $this->string(),
+            'detail' => $this->string(),
+            'create_at' => $this->dateTime(),
+        ], $tableOptions); 
     }
 
     /**
@@ -21,7 +31,7 @@ class m181225_090609_report_m extends Migration
     public function safeDown()
     {
         echo "m181225_090609_report_m cannot be reverted.\n";
-
+        $this->dropTable('report_m');
         return false;
     }
 
