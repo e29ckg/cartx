@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
               <h3 class="box-title"><?=$this->title?></h3>
 			  <div class="box-tools">
                 
-					<a href= "#" id="act-create" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> สร้างรายงาน</a>
+					<a href= "index.php?r=report/report_add" id="act-create" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> สร้างรายงาน</a>
 
               </div>
             </div>

@@ -33,7 +33,7 @@ class LogSt extends \yii\db\ActiveRecord
         return [
             [['code'], 'required'],
             [['quantity'], 'integer'],
-            [['unit_price'], 'number'],
+            // [['unit_price'], 'number'],
             [['create_at'], 'safe'],
             [['code'], 'string', 'max' => 32],
             [['product_code'], 'string', 'max' => 255],

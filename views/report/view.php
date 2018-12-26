@@ -24,11 +24,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="box-header">
               <h3 class="box-title"><?=$this->title?> : <?=$month?></h3>
 			  <div class="box-tools">
-                
-					<a href= "#" id="act-create" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> สร้างรายงาน</a>
+          <?=$start .' - '.$end?>
+					<!-- <a href= "#" id="act-create" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> สร้างรายงาน</a> -->
 
-              </div>
-            </div>
+        </div>
+      </div>
             <!-- /.box-header -->
             <div class="box-body">
             <table id="product-index" class="table table-bordered table-hover">
@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?=$modelRMLs->product_unit?></td>
 								    <td><?=$modelRMLs->kb ? $modelRMLs->kb : '0' ?></td>
                     <td><?=$modelRMLs->r ? $modelRMLs->r : '0' ?></td>
-                    <td><?=$modelRMLs->o ? $modelRMLs->o : '0' ?></td>
+                    <td><?=$modelRMLs->o ? $modelRMLs->o : '0'  ?></td>
                     <td><?=$k = $modelRMLs->kb + $modelRMLs->r - $modelRMLs->o?></td>
                     <td><?=$modelRMLs->unit_price?></td>
                     <td><?=$K_price = $k * $modelRMLs->unit_price?></td>
@@ -81,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   <th></th>
                   <th></th>
                   <th></th>
-                  <th></th>
+                  <th>ราคารวม</th>
                   <th><?=$K_price_sum?></th>
                   <th></th>
                 </tr>

@@ -26,8 +26,8 @@ class m181225_090619_report_m_l extends Migration
             'r' => $this->integer(),
             'o' => $this->integer(),
             'k' => $this->integer(),
-            'unit_price' => $this->float(),
-            'total_price' => $this->float(),
+            'unit_price' => $this->string(),
+            'total_price' => $this->string(),
             'detail' => $this->string(),
             'create_at' => $this->dateTime(),
         ], $tableOptions);   

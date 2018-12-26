@@ -40,6 +40,7 @@ class m181030_071221_product_unit extends Migration
         $this->insert('product_unit', ['name_unit' => 'ขวด']);
         $this->insert('product_unit', ['name_unit' => 'ก้อน']);
         $this->insert('product_unit', ['name_unit' => 'ไม้']);
+        $this->insert('product_unit', ['name_unit' => 'แผ่น']);
 
     }
 
@@ -49,7 +50,7 @@ class m181030_071221_product_unit extends Migration
     public function safeDown()
     {
         echo "m181030_071221_product_unit cannot be reverted.\n";
-
+        $this->dropTable('product_unit');
         return false;
     }
 

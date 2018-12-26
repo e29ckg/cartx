@@ -37,9 +37,9 @@ class ReportML extends \yii\db\ActiveRecord
     {
         return [
             [['kb', 'r', 'o', 'k'], 'integer'],
-            [['unit_price', 'total_price'], 'number'],
+            // [['unit_price','total_price'], 'number'],
             [['create_at'], 'safe'],
-            [['month', 'product_code', 'product_unit', 'detail'], 'string', 'max' => 255],
+            [['month', 'product_code', 'detail'], 'string', 'max' => 255],
         ];
     }
 

@@ -8,6 +8,7 @@ use app\models\ReceiptList;
 use app\models\OrderList;
 use app\models\Product;
 use app\models\LogSt;
+use app\models\ReportM;
 use app\models\ReportML;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -69,11 +70,12 @@ class ReportController extends Controller
     }
 
     public function actionView()
-    {                
-        $start = "2018-09-01";
-        $end = "2018-10-01";        
-        $month = "201809";
-        $monthB = "201808";
+    {
+
+        $start = "2018-12-01";
+        $end = "2018-12-30";        
+        $month = "2018-12";
+        $monthB = "2018-11";
         $create_at = date("Y-m-d H:i:s");
 
         $ReportRMLs = ReportML::find()->where(['month' => $month])->all();
@@ -81,9 +83,9 @@ class ReportController extends Controller
             $ReportRML->delete();
         endforeach;
 
-        $modelPs = Product::find()->orderBy([
-            'id' => SORT_ASC,
-            ])->all();
+        $modelPs = Product::find()->where(['status' => 1])
+            ->orderBy(['category' => SORT_ASC])
+            ->all();
 
         // $modelLSts = LogSt::find()->where(['between','create_at',"2018-10-01" ,$end])->all();
         foreach ($modelPs as $modelP):
@@ -93,6 +95,7 @@ class ReportController extends Controller
 
             $modelRLs = ReceiptList::find()
                 // ->where(['between','create_at',$start,$end])
+                ->where(['<=','create_at',$end])
                 ->andWhere(['product_code'=> $product_code])
                 // ->orderBy(['unit_price' => SORT_ASC])
                 ->all();
@@ -104,6 +107,7 @@ class ReportController extends Controller
                     ->one();
                     if($modelRML){
                         $modelML->create_at = $create_at;
+                        $modelML->unit_price = $modelRL->unit_price;
                         $modelML->save();
                     }else{
                         $modelML = new ReportML();
@@ -193,16 +197,17 @@ class ReportController extends Controller
                                 // $modelML->o = $Order_Qty_sum;
                                 // $modelML->k = $Log_KB_Qty_sum + $Log_R_Qty_sum - $Log_O_Qty_sum;
                                 // $modelML->k = $Log_All_Qty_sum;
-                                $modelML->unit_price = $modelRL->unit_price;
+                                // $modelML->unit_price = $modelRL->unit_price;
                                 // $modelML->total_price = $modelRL->unit_price * ($Log_KB_Qty_sum + $Log_R_Qty_sum - $Log_O_Qty_sum);
                                 $modelML->create_at = $create_at;
                                 $modelML->save();  
                     } 
                     endforeach;
                 // } 
+
                 $modelLSts = LogSt::find()
                     ->where(['between','create_at',$start,$end])
-                    ->andWhere(['product_code'=> $product_code,'unit_price'=>$modelRL->unit_price])
+                    ->andWhere(['product_code'=> $product_code,'unit_price'=> $modelRL->unit_price])
                     ->all();
                         $Log_R_Qty = 0 ;
                         $Log_R_Qty_sum = 0;
@@ -230,10 +235,10 @@ class ReportController extends Controller
                                     // $modelML->o = $Order_Qty_sum;
                                     // $modelML->k = $Log_KB_Qty_sum + $Log_R_Qty_sum - $Log_O_Qty_sum;
                                     // $modelML->k = $Log_All_Qty_sum;
-                                    $modelML->unit_price = $modelRL->unit_price;
+                                    // $modelML->unit_price = $modelRL->unit_price;
                                     // $modelML->total_price = $modelRL->unit_price * ($Log_KB_Qty_sum + $Log_R_Qty_sum - $Log_O_Qty_sum);
                                     $modelML->create_at = $create_at;
-                                    $modelML->save();  
+                                    $modelML->save(); 
                         }
                     }   
 
@@ -253,6 +258,27 @@ class ReportController extends Controller
             'end' => $end,
             'ReportRMLs' => $ReportRMLs, 
         ]);
+    }
+
+    public function actionReport_add()
+    {
+        $model = new ReportM();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->create_at = date("Y-m-d H:i:s");
+            $model->save();
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('form_report',[
+                    'model' => $model,                    
+            ]);
+        }else{
+            return $this->render('form_report',[
+                'model' => $model,                    
+            ]); 
+        }
     }
  
 }
