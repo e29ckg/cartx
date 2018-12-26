@@ -224,7 +224,6 @@ class OrderController extends Controller
                   
                     $modelP = Product::find()->where(['code'=> $model_order_list->product_code])->one();
                     $modelP->instoke = $modelP->instoke + $QTY;
-                    $modelP->create_at = date("Y-m-d H:i:s"); 
 
                     $model_order_list->quantity = 0;
 

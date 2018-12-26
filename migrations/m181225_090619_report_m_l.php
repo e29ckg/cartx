@@ -20,7 +20,7 @@ class m181225_090619_report_m_l extends Migration
         $this->createTable('report_m_l', [
             'id' => $this->primaryKey(),
             'month' => $this->string(),
-            'product_name' => $this->string(),
+            'product_code' => $this->string(),
             'product_unit' => $this->string(),
             'kb' => $this->integer(),
             'r' => $this->integer(),

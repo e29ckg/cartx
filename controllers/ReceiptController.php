@@ -175,7 +175,6 @@ class ReceiptController extends Controller
 
                         $model = Product::find()->where(['code'=> $codeProduct])->one();
                         $model->instoke =  $model->instoke + $strQtyR;
-                        $model->create_at = date("Y-m-d H:i:s");
                         $model->save();
                         
                     }

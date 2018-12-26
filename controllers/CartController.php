@@ -343,7 +343,6 @@ class CartController extends Controller
                         $modelP = Product::find()->where(['code'=> $codeProduct])->one();
                             $Qty =  $modelP->instoke - $strQty;
                             $modelP->instoke = $Qty;
-                            $modelP->create_at = $create_at;
                             $modelP->save();
         
                         $modelsRL = ReceiptList::find()

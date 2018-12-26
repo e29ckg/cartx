@@ -9,7 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property string $month
- * @property string $product_name
+ * @property string $product_code
  * @property string $product_unit
  * @property int $kb
  * @property int $r
@@ -39,7 +39,7 @@ class ReportML extends \yii\db\ActiveRecord
             [['kb', 'r', 'o', 'k'], 'integer'],
             [['unit_price', 'total_price'], 'number'],
             [['create_at'], 'safe'],
-            [['month', 'product_name', 'product_unit', 'detail'], 'string', 'max' => 255],
+            [['month', 'product_code', 'product_unit', 'detail'], 'string', 'max' => 255],
         ];
     }
 
@@ -51,7 +51,7 @@ class ReportML extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'month' => 'Month',
-            'product_name' => 'Product Name',
+            'product_code' => 'Product ode',
             'product_unit' => 'Product Unit',
             'kb' => 'Kb',
             'r' => 'R',
@@ -62,5 +62,15 @@ class ReportML extends \yii\db\ActiveRecord
             'detail' => 'Detail',
             'create_at' => 'Create At',
         ];
+    }
+
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['code' => 'product_code']);
+    }
+
+    public function getProductName(){
+        $model = $this->product;
+        return $model ? $model->product_name:'';
     }
 }

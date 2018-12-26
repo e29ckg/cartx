@@ -45,21 +45,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 	</tr>
                 </thead>
               <tbody>
-							<?php foreach ($ReportRMLs as $modelRMLs): ?>
+              <?php 
+                $i = 1 ;
+              foreach ($ReportRMLs as $modelRMLs): ?>
 						      <tr>    
-										<td><?=$modelRMLs->id?></td>
+										<td><?=$i?></td>
 										<td><?=$modelRMLs->month?></td>
-                    <td><?=$modelRMLs->product_name?></td>
+                    <td><?=$modelRMLs->getProductName()?></td>
                     <td><?=$modelRMLs->product_unit?></td>
 								    <td><?=$modelRMLs->kb?></td>
                     <td><?=$modelRMLs->r?></td>
                     <td><?=$modelRMLs->o?></td>
-                    <td><?=$modelRMLs->k?></td>
+                    <td><?=$modelRMLs->kb + $modelRMLs->r - $modelRMLs->o?></td>
                     <td><?=$modelRMLs->unit_price?></td>
                     <td><?=$modelRMLs->total_price?></td>
                     <td><?=$modelRMLs->create_at?></td>
 									</tr>
-							<?php  endforeach; ?>
+              <?php  
+                $i++;
+                endforeach; ?>
 				
 				</tbody>
                 <tfoot>

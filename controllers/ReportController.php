@@ -75,8 +75,8 @@ class ReportController extends Controller
             $ReportRML->delete();
         endforeach;
         
-        $start = "2018-11-01";
-        $end = "2018-12-31";        
+        $start = "2018-10-02";
+        $end = "2018-10-31";        
         $month = "201810";
         $create_at = date("Y-m-d H:i:s");
 
@@ -86,23 +86,42 @@ class ReportController extends Controller
 
         // $modelLSts = LogSt::find()->where(['between','create_at',"2018-10-01" ,$end])->all();
         foreach ($modelPs as $modelP):
+            if($modelP->create_at < $start){
             // $product_code = "P20181217225643";
-
             $product_code = $modelP->code;
 
+        
+
             $modelRLs = ReceiptList::find()
-                ->where(['between','create_at',$start,$end])
+                // ->where(['between','create_at',$start,$end])
                 ->andWhere(['product_code'=> $product_code])
-                ->orderBy(['unit_price' => SORT_ASC])
+                // ->orderBy(['unit_price' => SORT_ASC])
                 ->all();
 
-            $Receipt_Qty = 0 ;
-            $Receipt_Qty_sum = 0;
-            $unit_price = 0;
+            foreach ($modelRLs as $modelRL):                
+                
 
-            foreach ($modelRLs as $modelRL):
-                                
-                $modelOLs = OrderList::find()
+                $modelRML = ReportML::find()->where(['month' => $month,'product_code'=>$modelP->code,'unit_price'=>$modelRL->unit_price])->one();
+                    if($modelRML){
+                        $modelML->create_at = $create_at;
+                        $modelML->save();
+                    }else{
+                        $modelML = new ReportML();
+                            $modelML->month = $month;
+                            // $modelML->product_name = $modelRL->getProductName();
+                            $modelML->product_code = $modelP->code;
+                            $modelML->product_unit = $modelP->getUnitName();
+                            // $modelML->kb = $Log_KB_Qty_sum;
+                            // $modelML->r = $Log_R_Qty_sum;
+                            // $modelML->o = $Order_Qty_sum;
+                            // $modelML->k = $Log_KB_Qty_sum + $Log_R_Qty_sum - $Log_O_Qty_sum;
+                            $modelML->unit_price = $modelRL->unit_price;
+                            // $modelML->total_price = $modelRL->unit_price * ($Log_KB_Qty_sum + $Log_R_Qty_sum - $Log_O_Qty_sum);
+                            $modelML->create_at = $create_at;
+                            $modelML->save();  
+                    }
+
+                    $modelOLs = OrderList::find()
                 ->where(['between','create_at',$start,$end])
                 ->andWhere(['product_code'=> $product_code])
                 ->all();
@@ -112,63 +131,121 @@ class ReportController extends Controller
 
                 foreach ($modelOLs as $modelOL):
                     $Order_Qty = $modelOL->quantity;	      
-                    $Order_Qty_sum = $Order_Qty_sum + $Order_Qty;		           
+                    $Order_Qty_sum = $Order_Qty_sum + $Order_Qty;	
+                    
+                    $modelRML = ReportML::find()->where(['month' => $month,'product_code'=>$modelP->code,'unit_price'=>$modelRL->unit_price])->one();
+                    if($modelRML){
+                        $modelML->o = $Order_Qty_sum;
+                        $modelML->create_at = $create_at;
+                        $modelML->save();
+                    }else{
+                        $modelML = new ReportML();
+                                    $modelML->month = $month;
+                                    // $modelML->product_name = $modelRL->getProductName();
+                                    $modelML->product_code = $modelP->code;
+                                    $modelML->product_unit = $modelP->getUnitName();
+                                    // $modelML->kb = $Log_KB_Qty_sum;
+                                    // $modelML->r = $Log_R_Qty_sum;
+                                    $modelML->o = $Order_Qty_sum;
+                                    // $modelML->k = $Log_KB_Qty_sum + $Log_R_Qty_sum - $Log_O_Qty_sum;
+                                    // $modelML->unit_price = $modelRL->unit_price;
+                                    // $modelML->total_price = $modelRL->unit_price * ($Log_KB_Qty_sum + $Log_R_Qty_sum - $Log_O_Qty_sum);
+                                    $modelML->create_at = $create_at;
+                                    $modelML->save();  
+                    }
                 endforeach;  
 
+                $modelLSt_KBs = LogSt::find()
+                    ->where(['<','create_at',$start])
+                    ->andWhere(['product_code'=> $product_code])
+                    ->all();
+                        $Log_KB_Qty = 0 ;
+                        $Log_KB_Qty_sum = 0;
+                    foreach ($modelLSt_KBs as $modelLSt_KB):
+                        $Log_KB_Qty = $modelLSt_KB->quantity;	      
+                        $Log_KB_Qty_sum = $Log_KB_Qty_sum + $Log_KB_Qty;	
+                        $modelRML = ReportML::find()
+                        ->where(['month' => $month,'product_code'=>$modelP->code,'unit_price'=>$modelRL->unit_price])
+                        ->one();
+                        
+                    if($modelRML){
+                        $modelML->kb = $modelML->kb + $Log_KB_Qty_sum;
+                        $modelML->save();
+                    }else{
+                        $modelML = new ReportML();
+                                $modelML->month = $month;
+                                // $modelML->product_name = $modelRL->getProductName();
+                                $modelML->product_code = $modelP->code;
+                                $modelML->product_unit = $modelP->getUnitName();
+                                $modelML->kb = $Log_KB_Qty_sum;
+                                // $modelML->r = $Log_R_Qty_sum;
+                                // $modelML->o = $Order_Qty_sum;
+                                // $modelML->k = $Log_KB_Qty_sum + $Log_R_Qty_sum - $Log_O_Qty_sum;
+                                // $modelML->k = $Log_All_Qty_sum;
+                                $modelML->unit_price = $modelRL->unit_price;
+                                // $modelML->total_price = $modelRL->unit_price * ($Log_KB_Qty_sum + $Log_R_Qty_sum - $Log_O_Qty_sum);
+                                $modelML->create_at = $create_at;
+                                $modelML->save();  
+                    } 
+                    endforeach;
 
-            // $modelLSts = LogSt::find()
-            //     ->where(['between','create_at',$start,$end])
-            //     ->andWhere(['product_code'=> $product_code])
-            //     ->all();
-            //         $Log_All_Qty = 0 ;
-            //         $Log_All_Qty_sum = 0;
-            //     foreach ($modelLSts as $modelLSt):
-            //         $Log_All_Qty = $modelLSt->quantity;	      
-			//         $Log_All_Qty_sum = $Log_All_Qty_sum + $Log_All_Qty;		           
-            //     endforeach;
+                $modelLSts = LogSt::find()
+                    ->where(['between','create_at',$start,$end])
+                    ->andWhere(['product_code'=> $product_code])
+                    ->all();
+                        $Log_All_Qty = 0 ;
+                        $Log_All_Qty_sum = 0;
+                        $Log_R_Qty = 0 ;
+                        $Log_R_Qty_sum = 0;
+                    foreach ($modelLSts as $modelLSt):
+                        $Log_R_Qty = $modelLSt->quantity;	      
+                        $Log_R_Qty_sum = $Log_R_Qty_sum + $Log_R_Qty;	
+                        
+                        if($modelLSt->quantity > 0){
+                        
+                        $modelRML = ReportML::find()
+                            ->where(['month' => $month,'product_code'=>$modelP->code,'unit_price'=>$modelRL->unit_price])
+                            ->one();
+                            
+                        if($modelRML){
+                            $modelML->r = $modelML->k + $Log_R_Qty_sum;
+                            $modelML->save();
+                        }else{
+                            $modelML = new ReportML();
+                                    $modelML->month = $month;
+                                    // $modelML->product_name = $modelRL->getProductName();
+                                    $modelML->product_code = $modelP->code;
+                                    $modelML->product_unit = $modelP->getUnitName();
+                                    // $modelML->kb = $Log_KB_Qty_sum;
+                                    $modelML->r = $Log_R_Qty_sum;
+                                    // $modelML->o = $Order_Qty_sum;
+                                    // $modelML->k = $Log_KB_Qty_sum + $Log_R_Qty_sum - $Log_O_Qty_sum;
+                                    // $modelML->k = $Log_All_Qty_sum;
+                                    $modelML->unit_price = $modelRL->unit_price;
+                                    // $modelML->total_price = $modelRL->unit_price * ($Log_KB_Qty_sum + $Log_R_Qty_sum - $Log_O_Qty_sum);
+                                    $modelML->create_at = $create_at;
+                                    $modelML->save();  
+                        }
+                    }   
 
+                    endforeach;
                 
-            
+               
 
-                  
+
+
             endforeach;
-            $modelML = new ReportML();
-                            $modelML->month = $month;
-                            // $modelML->product_name = $modelRL->getProductName();
-                            $modelML->product_name = $modelP->product_name;
-                            // $modelML->product_unit = $modelP->getUnitName();
-                            // $modelML->kb = $Log_KB_Qty_sum;
-                            // $modelML->r = $Log_R_Qty_sum;
-                            // $modelML->o = $Order_Qty_sum;
-                            // $modelML->k = $Log_KB_Qty_sum + $Log_R_Qty_sum - $Log_O_Qty_sum;
-                            // $modelML->unit_price = $modelRL->unit_price;
-                            // $modelML->total_price = $modelRL->unit_price * ($Log_KB_Qty_sum + $Log_R_Qty_sum - $Log_O_Qty_sum);
-                            $modelML->create_at = $create_at;
-                            $modelML->save();  
+
+        }
+
         endforeach;
 
             $ReportRMLs = ReportML::find()->all();
         
         return $this->render('view',[
             // 'models' => $model,
-            'ReportRMLs' => $ReportRMLs,
-            // 'modelLSts' => $modelLSts,
-            // 'modelOLs' => $modelOLs,
-            // 'modelRLs' => $modelRLs,
-            // 'modelLSt_Rs' => $modelLSt_Rs,
-            // 'modelLSt_Os' => $modelLSt_Os,
-            // 'modelLSt_KBs' => $modelLSt_KBs,
-            // 'Order_Qty_sum' => $Order_Qty_sum,
-            // 'Receipt_Qty_sum' => $Receipt_Qty_sum,
-            // 'Log_R_Qty_sum' => $Log_R_Qty_sum,
-            // 'Log_O_Qty_sum' => $Log_O_Qty_sum,
-            // 'Log_KB_Qty_sum' => $Log_KB_Qty_sum,
-            // 'Log_K_Qty_sum' => $Log_K_Qty_sum,          
-            //'dataProvider' => $dataProvider,
+            'ReportRMLs' => $ReportRMLs, 
         ]);
     }
-
-    
-
-    
+ 
 }
