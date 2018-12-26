@@ -69,16 +69,17 @@ class ReportController extends Controller
     }
 
     public function actionView()
-    {
-        $ReportRMLs = ReportML::find()->all();
+    {                
+        $start = "2018-09-01";
+        $end = "2018-10-01";        
+        $month = "201809";
+        $monthB = "201808";
+        $create_at = date("Y-m-d H:i:s");
+
+        $ReportRMLs = ReportML::find()->where(['month' => $month])->all();
         foreach ($ReportRMLs as $ReportRML):
             $ReportRML->delete();
         endforeach;
-        
-        $start = "2018-10-02";
-        $end = "2018-10-31";        
-        $month = "201810";
-        $create_at = date("Y-m-d H:i:s");
 
         $modelPs = Product::find()->orderBy([
             'id' => SORT_ASC,
@@ -86,11 +87,9 @@ class ReportController extends Controller
 
         // $modelLSts = LogSt::find()->where(['between','create_at',"2018-10-01" ,$end])->all();
         foreach ($modelPs as $modelP):
-            if($modelP->create_at < $start){
+            if($modelP->create_at < $end){
             // $product_code = "P20181217225643";
             $product_code = $modelP->code;
-
-        
 
             $modelRLs = ReceiptList::find()
                 // ->where(['between','create_at',$start,$end])
@@ -98,10 +97,11 @@ class ReportController extends Controller
                 // ->orderBy(['unit_price' => SORT_ASC])
                 ->all();
 
-            foreach ($modelRLs as $modelRL):                
-                
+            foreach ($modelRLs as $modelRL):    
 
-                $modelRML = ReportML::find()->where(['month' => $month,'product_code'=>$modelP->code,'unit_price'=>$modelRL->unit_price])->one();
+                $modelRML = ReportML::find()
+                    ->where(['month' => $month,'product_code'=>$modelP->code,'unit_price'=>$modelRL->unit_price])
+                    ->one();
                     if($modelRML){
                         $modelML->create_at = $create_at;
                         $modelML->save();
@@ -121,10 +121,10 @@ class ReportController extends Controller
                             $modelML->save();  
                     }
 
-                    $modelOLs = OrderList::find()
-                ->where(['between','create_at',$start,$end])
-                ->andWhere(['product_code'=> $product_code])
-                ->all();
+                $modelOLs = OrderList::find()
+                        ->where(['between','create_at',$start,$end])
+                        ->andWhere(['product_code'=> $product_code])
+                        ->all();
 
                 $Order_Qty = 0 ;
                 $Order_Qty_sum = 0;
@@ -154,22 +154,33 @@ class ReportController extends Controller
                                     $modelML->save();  
                     }
                 endforeach;  
+                
+
+                // $modelLSt_KB_RML = ReportML::find()
+                //     ->where(['month' => $monthB,'product_code'=> $product_code,'unit_price'=>$modelRL->unit_price])
+                //     // ->andWhere(['product_code'=> $product_code])
+                //     ->one();
+                //     if($modelLSt_KB_RML['month'] == $monthB){
+                //         $modelML->kb = $modelLSt_KB_RML->kb;
+                //         $modelML->save();
+                //     }else{            
 
                 $modelLSt_KBs = LogSt::find()
                     ->where(['<','create_at',$start])
-                    ->andWhere(['product_code'=> $product_code])
+                    ->andWhere(['product_code'=> $product_code,'unit_price'=>$modelRL->unit_price])
                     ->all();
                         $Log_KB_Qty = 0 ;
                         $Log_KB_Qty_sum = 0;
                     foreach ($modelLSt_KBs as $modelLSt_KB):
                         $Log_KB_Qty = $modelLSt_KB->quantity;	      
-                        $Log_KB_Qty_sum = $Log_KB_Qty_sum + $Log_KB_Qty;	
+                        $Log_KB_Qty_sum = $Log_KB_Qty_sum + $Log_KB_Qty;
+
                         $modelRML = ReportML::find()
                         ->where(['month' => $month,'product_code'=>$modelP->code,'unit_price'=>$modelRL->unit_price])
                         ->one();
                         
                     if($modelRML){
-                        $modelML->kb = $modelML->kb + $Log_KB_Qty_sum;
+                        $modelML->kb = $Log_KB_Qty_sum;
                         $modelML->save();
                     }else{
                         $modelML = new ReportML();
@@ -188,13 +199,11 @@ class ReportController extends Controller
                                 $modelML->save();  
                     } 
                     endforeach;
-
+                // } 
                 $modelLSts = LogSt::find()
                     ->where(['between','create_at',$start,$end])
-                    ->andWhere(['product_code'=> $product_code])
+                    ->andWhere(['product_code'=> $product_code,'unit_price'=>$modelRL->unit_price])
                     ->all();
-                        $Log_All_Qty = 0 ;
-                        $Log_All_Qty_sum = 0;
                         $Log_R_Qty = 0 ;
                         $Log_R_Qty_sum = 0;
                     foreach ($modelLSts as $modelLSt):
@@ -229,10 +238,6 @@ class ReportController extends Controller
                     }   
 
                     endforeach;
-                
-               
-
-
 
             endforeach;
 
@@ -240,10 +245,12 @@ class ReportController extends Controller
 
         endforeach;
 
-            $ReportRMLs = ReportML::find()->all();
+            $ReportRMLs = ReportML::find()->where(['month' => $month])->all();
         
         return $this->render('view',[
-            // 'models' => $model,
+            'month' => $month,
+            'start' => $start,
+            'end' => $end,
             'ReportRMLs' => $ReportRMLs, 
         ]);
     }
