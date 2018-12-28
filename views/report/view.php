@@ -11,7 +11,7 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Report';
+$this->title = 'ตารางสรุปการรับ-จ่ายวัสดุ ประจำเดือน '.$month;
 $this->params['breadcrumbs'][] = $this->title;
 // var_dump();
 ?>
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="box-header">
               <h3 class="box-title"><?=$this->title?> : <?=$month?></h3>
 			  <div class="box-tools">
-          <?=$start .' - '.$end?>
+          ระหว่างวันที่ <?=$start .' - '.$end?>
 					<!-- <a href= "#" id="act-create" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> สร้างรายงาน</a> -->
 
         </div>

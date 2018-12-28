@@ -89,7 +89,7 @@ class ReportController extends Controller
 
         // $modelLSts = LogSt::find()->where(['between','create_at',"2018-10-01" ,$end])->all();
         foreach ($modelPs as $modelP):
-            if($modelP->create_at < $end){
+            if($modelP->create_at <= $end){
             // $product_code = "P20181217225643";
             $product_code = $modelP->code;
 
@@ -134,12 +134,12 @@ class ReportController extends Controller
                 $Order_Qty_sum = 0;
 
                 foreach ($modelOLs as $modelOL):
-                    $Order_Qty = $modelOL->quantity;	      
-                    $Order_Qty_sum = $Order_Qty_sum + $Order_Qty;	
+                    // $Order_Qty = $modelOL->quantity;	      
+                    // $Order_Qty_sum = $Order_Qty_sum + $Order_Qty;	
                     
                     $modelRML = ReportML::find()->where(['month' => $month,'product_code'=>$modelP->code,'unit_price'=>$modelRL->unit_price])->one();
                     if($modelRML){
-                        $modelML->o = $Order_Qty_sum;
+                        $modelML->o = $modelOL->quantity;
                         $modelML->create_at = $create_at;
                         $modelML->save();
                     }else{
@@ -150,9 +150,9 @@ class ReportController extends Controller
                                     $modelML->product_unit = $modelP->getUnitName();
                                     // $modelML->kb = $Log_KB_Qty_sum;
                                     // $modelML->r = $Log_R_Qty_sum;
-                                    $modelML->o = $Order_Qty_sum;
+                                    $modelML->o = $modelOL->quantity;
                                     // $modelML->k = $Log_KB_Qty_sum + $Log_R_Qty_sum - $Log_O_Qty_sum;
-                                    // $modelML->unit_price = $modelRL->unit_price;
+                                    $modelML->unit_price = $modelRL->unit_price;
                                     // $modelML->total_price = $modelRL->unit_price * ($Log_KB_Qty_sum + $Log_R_Qty_sum - $Log_O_Qty_sum);
                                     $modelML->create_at = $create_at;
                                     $modelML->save();  
@@ -251,7 +251,11 @@ class ReportController extends Controller
         endforeach;
 
             $ReportRMLs = ReportML::find()->where(['month' => $month])->all();
-        
+            foreach ($ReportRMLs as $ReportRML):
+                $ReportRML->k = $ReportRML->kb + $ReportRML->r -$ReportRML->o;
+                $ReportRML->save();
+            endforeach;
+
         return $this->render('view',[
             'month' => $month,
             'start' => $start,
