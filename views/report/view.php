@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 $i = 1 ;
                 $K_price = 0 ;
                 $K_price_sum = 0;
-              foreach ($ReportRMLs as $modelRMLs): ?>
+              foreach ($rRMLs as $modelRMLs): ?>
 						      <tr>    
 										<td><?=$i?></td>
 										<!-- <td><?=$modelRMLs->month?></td> -->
