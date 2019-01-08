@@ -284,8 +284,8 @@ class CartController extends Controller
             $_SESSION['strQty'][$id] ;
         }
         
-        return $_SESSION['strQty'][$id]; 
-        // return $this->renderAjax('cart');
+        // return $_SESSION['strQty'][$id]; 
+        return $this->renderAjax('cart');
     }
 
     public function actionQty_down($id = null) {
