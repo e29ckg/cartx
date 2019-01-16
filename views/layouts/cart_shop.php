@@ -16,6 +16,18 @@ if (Yii::$app->user->identity) {
 	} 
 }
 ?>
+<?php
+			$bCart = 0 ;
+			//  $model = Product::find()->all();
+			if(isset($_SESSION['inLine'])){
+					for($i=0;$i<=(int)$_SESSION['inLine'];$i++){
+						if($_SESSION['strProductCode'][$i] != ""){
+							$bCart++; 
+						}
+					}
+			}
+							
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -79,8 +91,7 @@ if (Yii::$app->user->identity) {
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="logo pull-left">
-							<a href="index.php?r=cart"><img src="images/home/logo.png" alt="" /></a>
-							
+							<a href="index.php?r=cart"><img src="images/home/logo.png" alt="" /></a>							
 						</div>
 						<div class="btn-group pull-right">
 						
@@ -95,7 +106,7 @@ if (Yii::$app->user->identity) {
 								<li><a href="index.php?r=cart/account"><i class="fa fa-user"></i><font color="green"><?= $fullname?></font></a></li>
 								<li><a href="index.php?r=cart/account"><i class="fa fa-bookmark"></i><font color="red"> ประวัติการเบิก</font></a></li>
 								<!-- <li><a href="index.php?r=cart/print"><i class="fa fa-crosshairs"></i> Checkout</a></li> -->
-								<li><a href="index.php?r=cart/cart"><i class="fa fa-shopping-cart"></i> Cart <span id="badge_cart" class="badge"></span></a></li>
+								<li><a href="index.php?r=cart/cart"><i class="fa fa-shopping-cart"></i> Cart <span id="badge_cart" class="badge"><?=$bCart<>0 ? $bCart : ''?></span></a></li>
 								<?php if(Yii::$app->user->identity){
 									echo '<li><a href="index.php?r=site/logout"><i class="fa fa-lock"></i> Logout</a></li>';
 								}else{
@@ -343,15 +354,15 @@ if (Yii::$app->user->identity) {
 	<script >
 		$(document).ready(function() {
 			// add-to-cart						
-			$( ".add-to-cart" ).click(function() {    
-    			var url = "index.php?r=cart/add_to_cart";
-				code = $(this).data("id");
+			// $( ".add-to-cart" ).click(function() {    
+    		// 	var url = "index.php?r=cart/add_to_cart";
+			// 	code = $(this).data("id");
 				
-        		$.get(url,{code:code},function (data){
-						$("#content").html(data);
-        			}
-				);     
-			});  
+        	// 	$.get(url,{code:code},function (data){
+			// 			$("#content").html(data);
+        	// 		}
+			// 	);     
+			// });  
 			
 			$(".qty_up").click(function() {    
     			var url = "index.php?r=cart/qty_up";

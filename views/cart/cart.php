@@ -50,14 +50,14 @@ use app\models\Product;
 								</td>
 
 								<td class="cart_description">
-									<h4><a href=""><?=$model->instoke?></a></h4>
+									<h4>มี <?=$model->instoke.' '.$model->getUnitName()?></h4>
 								</td>
 								
 								<td class="cart_quantity">
 									<div class="cart_quantity_button">
-										<a data-id="<?=$i?>" class="cart_quantity_up qty_up" href="#"> + </a>
+										<!-- <a data-id="<?=$i?>" class="cart_quantity_up qty_up" href="#"> + </a> -->
 										<input data-id="<?=$i?>" class="cart_quantity_input quantity-input" type="number" name="quantity" value="<?=$_SESSION['strQty'][$i]?>" autocomplete="off" size="2">
-										<a data-id="<?=$i?>" class="cart_quantity_down qty_down" href="#"> - </a>
+										<!-- <a data-id="<?=$i?>" class="cart_quantity_down qty_down" href="#"> - </a> -->
 									</div>
 								</td>
 								

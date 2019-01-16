@@ -231,7 +231,7 @@ class CartController extends Controller
     }
 
     public function actionAdd_to_cart($code = null) {
-        //$this->layout = 'cart_shop'; 
+        $this->layout = 'cart_shop'; 
         $models = Product::find()->where(['code', $code]);
 
         if (!isset($_SESSION['inLine'])){
@@ -257,12 +257,10 @@ class CartController extends Controller
                 $inNewLine =  $_SESSION['inLine'];
                 $_SESSION['strProductCode'][$inNewLine ] = $code; 
                 $_SESSION['strQty'][$inNewLine ] = 1;
-            }
+            }           
             
-            
-        } 
-        
-        return $this->renderAjax('cart');
+        }         
+        return $this->render('cart');
     }
 
     public function actionDelete($id = null) {

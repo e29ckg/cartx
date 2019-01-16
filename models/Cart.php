@@ -151,7 +151,10 @@ class Cart extends \yii\db\ActiveRecord
         $model = $this->profile;
         return $model ? $model->fname.$model->name.' '.$model->sname:'';
     }
-    
-    
+
+    public function getProductUnit()
+    {
+        return $this->hasOne(Profile::className(), ['id' => 'id_user']);
+    }
 
 }
