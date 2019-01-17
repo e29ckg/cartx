@@ -47,9 +47,8 @@ $this->params['breadcrumbs'][] = 'Update';
                         <td><?=$modelRL->getProductName()?></td>
                         <td><?=$modelRL->unit_price?></td>
                         <td><?=$modelRL->quantity?></td>                        
-                  	    <td>
-                            
-                          <?php
+                  	    <td>                           
+                        <?php
                               $Total = $modelRL->quantity * $modelRL->unit_price;
                               echo $Total;
                               $sumTotal = $sumTotal + $Total;
@@ -58,15 +57,15 @@ $this->params['breadcrumbs'][] = 'Update';
 								          //     'data-confirm' => 'Are you sure to delete this item?',
                         	// 	  'data-method' => 'post',
                           //   ]);
-                            ?>
-					    </td>
+                        ?>
+					              </td>
                         <td>
-                        <a href= "index.php?r=receipt/update_list_cancel&id=<?=$modelRL->id?>" class="btn btn-warning "><i class="fa fa-pencil-square-o"></i> ยกเลิก</a>
+                        <a href= "index.php?r=receipt/update_list_cancel&id=<?=$modelRL->id?>" class="btn btn-warning " data-confirm="Are you sure to ยกเลิก this item?"><i class="fa fa-pencil-square-o"></i> ยกเลิก</a>
                         </td>
-				    </tr>
-				<?php  endforeach; ?>
-				</tbody>
-                <tfoot>
+				            </tr>
+				        <?php  endforeach; ?>
+				          </tbody>
+                  <tfoot>
                 <tr>
                   <th></th>
                   <th></th>
