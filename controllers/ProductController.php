@@ -37,7 +37,7 @@ class ProductController extends Controller
                 'only' => ['index','create','update'],
                 'rules' => [
                     [
-                        'actions' => ['index','create','update'],
+                        'actions' => ['index','create','update','stock_down'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -67,6 +67,24 @@ class ProductController extends Controller
             $countAll = Product::getCountAll();
             
         return $this->render('index',[
+            'models' => $model,
+            'countAll' => $countAll,
+        ]);
+    }
+
+    public function actionStock_down()
+    {
+        $model = Product::find()->where([
+            'status'=> 1,
+            ])->orderBy([
+            'create_at'=>SORT_ASC,
+            // 'create_at'=>SORT_DESC,
+            'id' => SORT_DESC,
+            ])->limit(200)->all();
+        
+            $countAll = Product::getCountAll();
+            
+        return $this->render('productStockDown',[
             'models' => $model,
             'countAll' => $countAll,
         ]);
@@ -195,6 +213,55 @@ class ProductController extends Controller
             $model->save();     
                     
             return $this->redirect(['index', 'id' => $filename]);
+        }
+
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('update',[
+                    'model' => $model,                    
+            ]);
+        }
+        
+        return $this->render('update',[
+               'model' => $model,                    
+        ]); 
+    }
+
+    public function actionUpdate_stock_down($id)
+    {
+        $model = $this->findModel($id);
+
+        $filename = $model->img;
+
+        //Add This For Ajax Email Exist Validation 
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+          }
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $f = UploadedFile::getInstance($model, 'img');
+
+            if(!empty($f)){
+                
+                $dir = Url::to('@webroot/uploads/product/img/');
+                if (!is_dir($dir)) {
+                    mkdir($dir, 0777, true);
+                }                
+                if($filename && is_file($dir.$filename)){
+                    unlink($dir.$filename);// ลบ รูปเดิม;                    
+                    
+                }
+                $fileName = md5($f->baseName . time()) . '.' . $f->extension;
+                if($f->saveAs($dir . $fileName)){
+                    $model->img = $fileName;
+                }
+                $model->save();   
+                return $this->redirect(['stock_down', 'id' => $filename]);                            
+            }
+            $model->img = $filename;
+            $model->save();     
+                    
+            return $this->redirect(['stock_down', 'id' => $filename]);
         }
 
         if(Yii::$app->request->isAjax){
