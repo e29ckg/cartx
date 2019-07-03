@@ -15,7 +15,7 @@ use yii\data\Pagination;
 									<div class="productinfo text-center">
 										<img src="<?= $model->img ? 'uploads/product/img/'.$model->img : 'img/no_image.png'?>"  height="250" width="200" sizes= "50" alt="<?=$model->product_name?>" />
 										<h2>  <?=$model->instoke > 0 ? 'มี '.$model->instoke.' '.$model->getUnitName() : 'หมด' ?></h2>
-										<p><?=$model->product_name?></p>
+										<p class="text-short"><?=$model->product_name?></p>
 										<a href="index.php?r=cart/add_to_cart&code=<?=$model->code?>" data-id="<?=$model->code?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 									</div>
 									<div class="product-overlay">
