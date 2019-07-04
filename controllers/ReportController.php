@@ -53,6 +53,31 @@ class ReportController extends Controller
      * Lists all Order models.
      * @return mixed
      */
+
+    public function actionTest()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+            'content' => $this->renderPartial('_preview',[]),
+            'cssFile' => 'css/pdf.css',
+            'options' => [
+                // any mpdf options you wish to set
+            ],
+            'methods' => [
+                // 'SetTitle' => 'Privacy Policy - Krajee.com',
+                // 'SetSubject' => 'Generating PDF files via yii2-mpdf extension has never been easy',
+                // 'SetHeader' => ['Krajee Privacy Policy||Generated On: ' . date("r")],
+                // 'SetFooter' => ['|Page {PAGENO}|'],
+                // 'SetAuthor' => 'Kartik Visweswaran',
+                // 'SetCreator' => 'Kartik Visweswaran',
+                // 'SetKeywords' => 'Krajee, Yii2, Export, PDF, MPDF, Output, Privacy, Policy, yii2-mpdf',
+            ]
+        ]);
+        return $pdf->render();
+        
+            
+    } 
     public function actionIndex()
     {
         $model = Receipt::find()->orderBy([

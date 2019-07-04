@@ -6,11 +6,22 @@ use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use app\models\Product;
 use app\models\ProductUnit;
-
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Order */
 /* @var $form yii\widgets\ActiveForm */
+// usage without model
+echo '<label>Check Issue Date</label>';
+echo DatePicker::widget([
+	'name' => 'dp_1',
+    'type' => DatePicker::TYPE_INPUT,
+    'value' => '23-Feb-1982',
+    'pluginOptions' => [
+        'autoclose'=>true,
+        'format' => 'dd-M-yyyy'
+    ]
+]);
 ?>
 
 <div class="receiptlist-form">
@@ -23,7 +34,20 @@ use app\models\ProductUnit;
 
     <?php 
     
-        // echo $form->field($model, 'product_code', ['options' => ['class' => '']])->widget(Select2::classname(), ['data' => $model->getProductList(), 'options' => ['placeholder' => 'select ...'], 'pluginOptions' => ['allowClear' => true]]);
+        echo Select2::widget([
+            'model' => $model,
+            'attribute' => 'month',
+            'data' => [
+                '2018-10' => '2018-10',
+            '2018-11' => '2018-11',
+            '2018-12' => '2018-12',
+            '2019-01' => '2019-01',
+            ],
+            'options' => ['placeholder' => 'Select a state ...'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]);
     ?>
     <?php echo $form->field($model, 'month')->dropDownList([
         '2018-10' => '2018-10',
