@@ -37,7 +37,7 @@ class ProductController extends Controller
                 'only' => ['index','create','update'],
                 'rules' => [
                     [
-                        'actions' => ['index','create','update'],
+                        'actions' => ['index','create','update','stock_down'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -72,21 +72,52 @@ class ProductController extends Controller
         ]);
     }
 
+    public function actionStock_down()
+    {
+        $model = Product::find()->where([
+            'status'=> 1,
+            ])->orderBy([
+            'create_at'=>SORT_ASC,
+            // 'create_at'=>SORT_DESC,
+            'id' => SORT_DESC,
+            ])->limit(200)->all();
+        
+            $countAll = Product::getCountAll();
+            
+        return $this->render('productStockDown',[
+            'models' => $model,
+            'countAll' => $countAll,
+        ]);
+    }
+
     /**
      * Displays a single Product model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($codeProduct)
     {
+        $modelsP = Product::find()
+                        ->where(['code'=> $codeProduct])
+                        ->one();
+
+        $modelsLST = LogSt::find()
+                        ->where(['product_code'=> $codeProduct])
+                        ->orderBy(['create_at' => SORT_ASC])
+                        // ->limit(10)
+                        ->all();
+
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('view',[
-                    'model' => $this->findModel($id),                   
+                'modelsP' => $modelsP,
+                'modelsLST' => $modelsLST                  
             ]);
         }
+        
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'modelsP' => $modelsP,
+            'modelsLST' => $modelsLST
         ]);
     }
 
@@ -197,6 +228,55 @@ class ProductController extends Controller
         ]); 
     }
 
+    public function actionUpdate_stock_down($id)
+    {
+        $model = $this->findModel($id);
+
+        $filename = $model->img;
+
+        //Add This For Ajax Email Exist Validation 
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+          }
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $f = UploadedFile::getInstance($model, 'img');
+
+            if(!empty($f)){
+                
+                $dir = Url::to('@webroot/uploads/product/img/');
+                if (!is_dir($dir)) {
+                    mkdir($dir, 0777, true);
+                }                
+                if($filename && is_file($dir.$filename)){
+                    unlink($dir.$filename);// ลบ รูปเดิม;                    
+                    
+                }
+                $fileName = md5($f->baseName . time()) . '.' . $f->extension;
+                if($f->saveAs($dir . $fileName)){
+                    $model->img = $fileName;
+                }
+                $model->save();   
+                return $this->redirect(['stock_down', 'id' => $filename]);                            
+            }
+            $model->img = $filename;
+            $model->save();     
+                    
+            return $this->redirect(['stock_down', 'id' => $filename]);
+        }
+
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('update',[
+                    'model' => $model,                    
+            ]);
+        }
+        
+        return $this->render('update',[
+               'model' => $model,                    
+        ]); 
+    }
+
     /**
      * Deletes an existing Product model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -235,10 +315,10 @@ class ProductController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionUpdatestroke()
+    public function actionUpstoke()
     {
         $modelsProduct = Product::find()->All();
-        $modelsRL = ReceiptList::find()->All();
+        // $modelsRL = ReceiptList::find()->All();
         // $a = var_dump($models);
         foreach ($modelsProduct as $modelProduct):
             $totalSum = 0 ;
@@ -255,6 +335,8 @@ class ProductController extends Controller
             // echo $modelProduct->code." ".$totalSum."<br>";
             
         endforeach; 
+        Yii::$app->session->setFlash('success', 'ปรับ Product->updateStork ข้อมูลเรียบร้อย');  
+        return $this->redirect(['index']);
     }
 
     public function actionAdd_to_stroke()

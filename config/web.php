@@ -32,7 +32,7 @@ $config = [
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '992999929',
+            'cookieValidationKey' => '99299929',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -70,7 +70,7 @@ $config = [
         'db' => $db,
         'db2'=> $db2,
         
-        /*
+    
         'urlManager' => [    
             'class' => 'yii\web\UrlManager',    
             'showScriptName' => false,
@@ -84,7 +84,7 @@ $config = [
                   'module/<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
          ),
         ],
-        */
+        
     ],
     'params' => $params,
 ];

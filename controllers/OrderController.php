@@ -5,11 +5,15 @@ namespace app\controllers;
 use Yii;
 use app\models\Order;
 use app\models\OrderList;
+use app\models\ReceiptList;
+use app\models\LogSt;
+use app\models\Product;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use kartik\mpdf\Pdf;
 
 /**
  * OrderController implements the CRUD actions for Order model.
@@ -163,4 +167,85 @@ class OrderController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionPrint($id = null)
+    {
+        $this->layout = 'cart_shop';   
+        $user_id = Yii::$app->user->id;
+        $model = $this->findModel($id);
+        $user_id = Yii::$app->user->id;
+        $model_lists = OrderList::find()->where(['order_code'=> $model->order_code])->all();
+    
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+    $pdf = new Pdf([
+        'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+        'content' => $this->renderPartial('print',['model' => $model,'model_lists' =>$model_lists]),
+        'cssFile' => 'css/pdf.css',
+        'options' => [
+            // any mpdf options you wish to set
+        ],
+        'methods' => [
+            // 'SetTitle' => 'Privacy Policy - Krajee.com',
+            // 'SetSubject' => 'Generating PDF files via yii2-mpdf extension has never been easy',
+            // 'SetHeader' => ['Krajee Privacy Policy||Generated On: ' . date("r")],
+            // 'SetFooter' => ['|Page {PAGENO}|'],
+            // 'SetAuthor' => 'Kartik Visweswaran',
+            // 'SetCreator' => 'Kartik Visweswaran',
+            // 'SetKeywords' => 'Krajee, Yii2, Export, PDF, MPDF, Output, Privacy, Policy, yii2-mpdf',
+        ]
+    ]);
+    return $pdf->render();
+    }
+
+    protected function findModel_rl($id)
+    {
+        if (($model = ReceiptList::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionCancel($id)
+    {  
+        $user_id = Yii::$app->user->id;
+        $modelOD = $this->findModel($id);
+
+        $model_order_lists = OrderList::find()->where(['order_code'=> $modelOD->order_code])->all();
+            
+        foreach ($model_order_lists as $model_order_list): 
+            if(!($model_order_list->receipt_list_id == null)){     
+
+                $QTY = $model_order_list->quantity;
+                if($QTY <> 0){
+                    $model_receipt_lists = $this->findModel_rl($model_order_list->receipt_list_id);
+                    $model_receipt_lists->quantity = $model_receipt_lists->quantity + $QTY;
+                    $model_receipt_lists->create_at = date("Y-m-d H:i:s");
+                  
+                    $modelP = Product::find()->where(['code'=> $model_order_list->product_code])->one();
+                    $modelP->instoke = $modelP->instoke + $QTY;
+
+                    $model_order_list->quantity = 0;
+
+                    if($model_receipt_lists->save() and $model_order_list->save() and $modelP->save()){
+                        $modelLST = new LogSt();
+                        $modelLST->code = $modelOD->order_code;
+                        $modelLST->product_code = $model_order_list->product_code;
+                        $modelLST->unit_price = $model_order_list->unit_price; 
+                        $modelLST->receipt_list_id = $model_order_list->receipt_list_id; 
+                        $modelLST->quantity = $QTY;
+                        $modelLST->note = 'ยกเลิก Order';
+                        $modelLST->create_at = date("Y-m-d H:i:s");
+                        $modelLST->save();
+                    }  
+                }                  
+            }
+        endforeach;
+        $modelOD->sumtotal = 0;
+        $modelOD->status = 4;
+        $modelOD->save();
+        Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
+        return $this->redirect(['index']);
+    }
+    
 }

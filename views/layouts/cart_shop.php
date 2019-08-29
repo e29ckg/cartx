@@ -3,6 +3,7 @@
 use app\models\ProductCatalog;
 use app\models\profile;
 use app\widgets\Alert;
+use yii\helpers\Url;
 
 $modelCatalogs = ProductCatalog::find()->all();
 
@@ -16,6 +17,18 @@ if (Yii::$app->user->identity) {
 	} 
 }
 ?>
+<?php
+	$bCart = 0 ;
+	//  $model = Product::find()->all();
+	if(isset($_SESSION['inLine'])){
+			for($i=0;$i<=(int)$_SESSION['inLine'];$i++){
+				if($_SESSION['strProductCode'][$i] != ""){
+					$bCart++; 
+				}
+			}
+	}
+							
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,13 +37,13 @@ if (Yii::$app->user->identity) {
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Shop | E-Shopper</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/prettyPhoto.css" rel="stylesheet">
-    <link href="css/price-range.css" rel="stylesheet">
-    <link href="css/animate.css" rel="stylesheet">
-	<link href="css/main.css" rel="stylesheet">
-	<link href="css/responsive.css" rel="stylesheet">
+    <link href="<?=Url::to(['css/bootstrap.min.css'])?>" rel="stylesheet">
+    <link href="<?=Url::to(['css/font-awesome.min.css'])?>" rel="stylesheet">
+    <link href="<?=Url::to(['css/prettyPhoto.css'])?>" rel="stylesheet">
+    <link href="<?=Url::to(['css/price-range.css'])?>" rel="stylesheet">
+    <link href="<?=Url::to(['css/animate.css'])?>" rel="stylesheet">
+	<link href="<?=Url::to(['css/main.css'])?>" rel="stylesheet">
+	<link href="<?=Url::to(['css/responsive.css'])?>" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -79,25 +92,28 @@ if (Yii::$app->user->identity) {
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="logo pull-left">
-							<a href="index.php?r=cart"><img src="images/home/logo.png" alt="" /></a>
+							<a href="<?=Url::to(['cart/index'])?>"><img src="<?=Url::to('@web/images/home/logo.png')?>" alt="" /></a>							
 						</div>
 						<div class="btn-group pull-right">
-							
+						
 						</div>
 					</div>
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
-								<li><?php if(Yii::$app->user->identity->role == '9'){
+								<li>
+								<?php if(Yii::$app->user->identity->role == '9'){
 									echo '<li><a href="index.php?r=site/dashboard"><i class="fa fa-lock"></i> blankEnd</a></li>';
-								}?>
-								<li><a href="index.php?r=cart/account"><i class="fa fa-user"></i><font color="red"><?= $fullname?></font></a></li>
-								<!-- <li><a href="index.php?r=cart/print"><i class="fa fa-crosshairs"></i> Checkout</a></li> -->
-								<li><a href="index.php?r=cart/cart"><i class="fa fa-shopping-cart"></i> Cart <span id="badge_cart" class="badge"></span></a></li>
+								}
+								?>
+								<li><a href="<?=Url::to(['cart/account'])?>"><i class="fa fa-user"></i><font color="green"><?= $fullname?></font></a></li>
+								<li><a href="<?=Url::to(['cart/account'])?>"><i class="fa fa-bookmark"></i><font color="red"> ประวัติการเบิก</font></a></li>
+								<!-- <li><a href="print"><i class="fa fa-crosshairs"></i> Checkout</a></li> -->
+								<li><a href="<?=Url::to(['cart/cart'])?>"><i class="fa fa-shopping-cart"></i> Cart <span id="badge_cart" class="badge"><?=$bCart<>0 ? $bCart : ''?></span></a></li>
 								<?php if(Yii::$app->user->identity){
-									echo '<li><a href="index.php?r=site/logout"><i class="fa fa-lock"></i> Logout</a></li>';
+									echo '<li><a href="'.Url::to(['site/logout']).'"><i class="fa fa-lock"></i> Logout</a></li>';
 								}else{
-									echo '<li><a href="index.php?r=cart/login"><i class="fa fa-lock"></i> Login</a></li>';
+									echo '<li><a href="'.Url::to(['site/login']).'"><i class="fa fa-lock"></i> Login</a></li>';
 								}  ?>
 							</ul>
 						</div>
@@ -120,35 +136,19 @@ if (Yii::$app->user->identity) {
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="index.php?r=cart/index">Home</a></li>
-								<!-- <li class="dropdown"><a href="#" class="active">Shop<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="index.php?r=cart/index" class="active">Products</a></li>
-										<li><a href="product-details.html">Product Details</a></li> 
-										<li><a href="checkout.html">Checkout</a></li> 
-										<li><a href="index.php?r=cart/cart">Cart</a></li> 
-										<li><a href="index.php?r=cart/login">Login</a></li> 
-                                    </ul>
-                                </li>  -->
+								<li><a href="<?=Url::to(['cart/index'])?>">Home</a></li>
+								
 								<li class="dropdown"><a href="#" class="active">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
 									<?php 
 										foreach ($modelCatalogs as $modelCatalog): 
-											echo "<li><a class='' data-id='$modelCatalog->id' href='index.php?r=cart/search&m=$modelCatalog->id'> $modelCatalog->name_catalog</a></li>";
+											echo '<li><a class="" data-id="$modelCatalog->id" href="'.Url::to(['cart/search','m'=> $modelCatalog->id]).'"> '.$modelCatalog->name_catalog.'</a></li>';
 									  	endforeach; 
 									?>
                                     </ul>
                                 </li> 
 
 								
-								<!-- <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="blog.html">Blog List</a></li>
-										<li><a href="blog-single.html">Blog Single</a></li>
-                                    </ul>
-                                </li> 
-								<li><a href="404.html">404</a></li>
-								<li><a href="contact-us.html">Contact</a></li> -->
 							</ul>
 						</div>
 					</div>
@@ -169,190 +169,52 @@ if (Yii::$app->user->identity) {
 		</div>
 	</section> -->
 <div id="content">	
-	<?= Alert::widget() ?>
-	<?= $content ?>
+	<section>
+		<div id="container1" class="container">
+			<div class="row">
+				<?= Alert::widget() ?>
+				<?= $content ?>
+			</div>
+		</div>
+	</section>
 
 </div>
 	
-	<footer id="footer"><!--Footer-->
-		<div class="footer-top">
-			<div class="container">
-				<div class="row">
-					<!-- <div class="col-sm-2">
-						<div class="companyinfo">
-							<h2><span>e</span>-shopper</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
-						</div>
-					</div>
-					<div class="col-sm-7">
-						<div class="col-sm-3">
-							<div class="video-gallery text-center">
-								<a href="#">
-									<div class="iframe-img">
-										<img src="images/home/iframe1.png" alt="" />
-									</div>
-									<div class="overlay-icon">
-										<i class="fa fa-play-circle-o"></i>
-									</div>
-								</a>
-								<p>Circle of Hands</p>
-								<h2>24 DEC 2014</h2>
-							</div>
-						</div>
-						
-						<div class="col-sm-3">
-							<div class="video-gallery text-center">
-								<a href="#">
-									<div class="iframe-img">
-										<img src="images/home/iframe2.png" alt="" />
-									</div>
-									<div class="overlay-icon">
-										<i class="fa fa-play-circle-o"></i>
-									</div>
-								</a>
-								<p>Circle of Hands</p>
-								<h2>24 DEC 2014</h2>
-							</div>
-						</div>
-						
-						<div class="col-sm-3">
-							<div class="video-gallery text-center">
-								<a href="#">
-									<div class="iframe-img">
-										<img src="images/home/iframe3.png" alt="" />
-									</div>
-									<div class="overlay-icon">
-										<i class="fa fa-play-circle-o"></i>
-									</div>
-								</a>
-								<p>Circle of Hands</p>
-								<h2>24 DEC 2014</h2>
-							</div>
-						</div>
-						
-						<div class="col-sm-3">
-							<div class="video-gallery text-center">
-								<a href="#">
-									<div class="iframe-img">
-										<img src="images/home/iframe4.png" alt="" />
-									</div>
-									<div class="overlay-icon">
-										<i class="fa fa-play-circle-o"></i>
-									</div>
-								</a>
-								<p>Circle of Hands</p>
-								<h2>24 DEC 2014</h2>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="address">
-							<img src="images/home/map.png" alt="" />
-							<p>505 S Atlantic Ave Virginia Beach, VA(Virginia)</p>
-						</div>
-					</div>
-				</div> -->
-			</div>
-		</div>
+	<footer>
 		
 		<div class="footer-widget">
 			<div class="container">
-				<div class="row">
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>Service</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="">Online Help</a></li>
-								<li><a href="">Contact Us</a></li>
-								<li><a href="">Order Status</a></li>
-								<li><a href="">Change Location</a></li>
-								<li><a href="">FAQ’s</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>Quock Shop</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="">T-Shirt</a></li>
-								<li><a href="">Mens</a></li>
-								<li><a href="">Womens</a></li>
-								<li><a href="">Gift Cards</a></li>
-								<li><a href="">Shoes</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>Policies</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="">Terms of Use</a></li>
-								<li><a href="">Privecy Policy</a></li>
-								<li><a href="">Refund Policy</a></li>
-								<li><a href="">Billing System</a></li>
-								<li><a href="">Ticket System</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>About Shopper</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="">Company Information</a></li>
-								<li><a href="">Careers</a></li>
-								<li><a href="">Store Location</a></li>
-								<li><a href="">Affillate Program</a></li>
-								<li><a href="">Copyright</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-3 col-sm-offset-1">
-						<div class="single-widget">
-							<h2>About Shopper</h2>
-							<form action="#" class="searchform">
-								<input type="text" placeholder="Your email address" />
-								<button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
-								<p>Get the most recent updates from <br />our site and be updated your self...</p>
-							</form>
-						</div>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-		
-		<div class="footer-bottom">
-			<div class="container">
+				
 				<div class="row">
 					<p class="pull-left">Copyright © 2013 E-Shopper. All rights reserved.</p>
-					<p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+					<p class="pull-right">Designed by <span><a target="_blank" href="#">Themeum</a></span></p>
 				</div>
 			</div>
 		</div>
 		
 	</footer><!--/Footer-->
   
-    <script src="js/jquery.js"></script>
-	<script src="js/price-range.js"></script>
-    <script src="js/jquery.scrollUp.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.prettyPhoto.js"></script>
-    <script src="js/main.js"></script>
+    <script src="<?=Url::to(['js/jquery.js'])?>"></script>
+	<script src="<?=Url::to(['js/price-range.js'])?>"></script>
+    <script src="<?=Url::to(['js/jquery.scrollUp.min.js'])?>"></script>
+	<script src="<?=Url::to(['js/bootstrap.min.js'])?>"></script>
+    <script src="<?=Url::to(['js/jquery.prettyPhoto.js'])?>"></script>
+    <script src="<?=Url::to(['js/main.js'])?>"></script>
 	<script >
 		$(document).ready(function() {
 			// add-to-cart						
-			$( ".add-to-cart" ).click(function() {    
-    			var url = "index.php?r=cart/add_to_cart";
-				code = $(this).data("id");
+			// $( ".add-to-cart" ).click(function() {    
+    		// 	var url = "add_to_cart";
+			// 	code = $(this).data("id");
 				
-        		$.get(url,{code:code},function (data){
-						$("#content").html(data);
-        			}
-				);     
-			});  
+        	// 	$.get(url,{code:code},function (data){
+			// 			$("#content").html(data);
+        	// 		}
+			// 	);     
+			// });  
 			
 			$(".qty_up").click(function() {    
-    			var url = "index.php?r=cart/qty_up";
+    			var url = "qty_up";
 				id= $(this).data("id");
 				// alert(val);
         		$.get(url,{id:id},function (data){
@@ -363,7 +225,7 @@ if (Yii::$app->user->identity) {
 			});
 
 			$(".qty_down").click(function() {    
-    			var url = "index.php?r=cart/qty_down";
+    			var url = "qty_down";
 				id= $(this).data("id");
 				// alert(val);
         		$.get(url,{id:id},function (data){
@@ -373,14 +235,14 @@ if (Yii::$app->user->identity) {
 			});
 
 			// $(".quantity-input").change(function() {    
-    		// 	var url = "index.php?r=cart/qty_change";
+    		// 	var url = "qty_change";
 			// 	id= $(this).data("id");
 			// 	val= $(this).val();
 			// 	// $("#badge_cart").html(val);
 			// });
 
 			$(".quantity-input").change(function() {    
-    			var url = "index.php?r=cart/qty_change";
+    			var url = "qty_change";
 				id= $(this).data("id");
 				val= $(this).val();
 				// alert(val);
@@ -391,7 +253,7 @@ if (Yii::$app->user->identity) {
 			});
 
 			$("#content").change(function() {    
-    			var url = "index.php?r=cart/qty_change";
+    			var url = "qty_change";
 				id= $(this).data("id");
 				val= $(this).val();
 				// alert(val);
@@ -403,7 +265,7 @@ if (Yii::$app->user->identity) {
 
 			// delete_item
 			// $(".delete_item" ).click(function() {    
-    		// 	var url = "index.php?r=cart/delete";
+    		// 	var url = "delete";
 			// 	id= $(this).data("id");
         	// 	$.get(url,{id:id},function (data){
 			// 		alert(id);
@@ -413,7 +275,7 @@ if (Yii::$app->user->identity) {
 			// }); 
 
 			$( ".search-m" ).click(function() {    
-    			var url_create = "index.php?r=cart/search";
+    			var url_create = "search";
 				id= $(this).data("id");
         		$.get(url_create,{m:id},
 					function (data){
@@ -425,13 +287,13 @@ if (Yii::$app->user->identity) {
 			$("#search").keyup(function () {
 		//        var that = this,
 			value = $(this).val();
-			if(value == ""){
-	  			location.reload();  
-			}
-			$.get("?r=cart/search",{q:value},
+			// if(value == ""){
+	  		// 	location.reload();  
+			// }
+			$.get("search",{q:value},
 				function (data)
 					{
-						$("#features_items").html(data);
+						$("#container1").html(data);
 					}
 				);
 

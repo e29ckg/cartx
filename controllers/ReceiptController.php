@@ -5,13 +5,16 @@ namespace app\controllers;
 use Yii;
 use app\models\Receipt;
 use app\models\ReceiptList;
+use app\models\OrderList;
 use app\models\Product;
+use app\models\LogSt;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\filters\AccessControl;
+use kartik\mpdf\Pdf;
 
 /**
  * OrderController implements the CRUD actions for Order model.
@@ -156,11 +159,17 @@ class ReceiptController extends Controller
                             'create_at' => $create_at,
                         ])->execute();
 
+                        $modelRL = ReceiptList::find()->where(['receipt_code' => $code])
+                                    ->orderBy(['id' => SORT_DESC])
+                                    ->one();
+
                         Yii::$app->db->createCommand()->insert('log_st', [
                             'code' => $code,
                             'product_code' => $codeProduct,
+                            'receipt_list_id' => $modelRL->id,
                             'unit_price' => $UnitPrice,
                             'quantity' => $strQtyR,
+                            'note' => 'IN',
                             'create_at' => $create_at,
                         ])->execute();
 
@@ -208,7 +217,8 @@ class ReceiptController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $model_lists = ReceiptList::find()->where(['receipt_code'=> $model->receipt_code])->all();
+        // $model_lists = LogSt::find()->where(['code'=> $model->receipt_code,'create_at'=>$model->create_at])->all();
+        $model_lists = LogSt::find()->where(['code'=> $model->receipt_code])->all();
         
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('view',[
@@ -257,15 +267,70 @@ class ReceiptController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
+        $models = $this->findModel($id);
+        $modelRLs = ReceiptList::find()->where(['receipt_code' => $models->receipt_code])
+        ->orderBy(['id' => SORT_ASC])
+        ->all();
         return $this->render('update', [
-            'model' => $model,
+            'models' => $models,
+            'modelRLs' => $modelRLs,
         ]);
+    }
+
+    public function actionUpdate_list_cancel($id)
+    {
+        $models = $this->findModel($id);
+        $modelRLs = ReceiptList::find()->where(['receipt_code' => $models->receipt_code])->all();
+
+        $create_at = date("Y-m-d H:i:s");
+
+        $x = FALSE;
+        $y = ':';
+        foreach ($modelRLs as $modelRL):
+            $modelOLs = OrderList::find()->where(['receipt_list_id' => $modelRL->id])->all();
+            foreach ($modelOLs as $modelOL):
+              if($modelOL->quantity <> 0){
+                  $x = TRUE;
+                  $y .= $modelOL->order_code.',';
+              }  
+            endforeach;        
+        endforeach;
+
+        if($x){
+            Yii::$app->session->setFlash('error', 'ไม่สามารยกเลิกได้ เนื่องจากมีการเบิก'.$y);
+        }else{
+            foreach ($modelRLs as $modelRL):
+                if($modelRL->quantity <> 0){
+
+                $modelP = Product::find()->where(['code' => $modelRL->product])->one();
+                $modelP->instoke = $modelP->instoke - $modelRL->quantity;
+
+                $modelLST = new LogSt();
+                $modelLST->code = $modelRL->receipt_code;
+                $modelLST->product_code = $modelRL->product_code;
+                $modelLST->unit_price = $modelRL->unit_price; 
+                $modelLST->receipt_list_id = $modelRL->id; 
+                $modelLST->quantity = '-'.$modelRL->quantity;
+                $modelLST->note = 'OUT';
+                $modelLST->create_at = $create_at;
+                
+                $modelRL->product_code = $modelRL->product_code;
+                $modelRL->unit_price = 0;
+                $modelRL->quantity = 0;
+                $modelRL->create_at = $create_at;
+
+                if($modelRL->save() and $modelLST->save() and $modelP->save()){
+
+                }
+            }
+            endforeach;
+            $models->status = 4;
+            $models->sumtotal = 0;
+            $models->create_at = $create_at;
+            $models->save();
+        }
+        // Yii::$app->session->setFlash('error', $x);
+        return $this->redirect(['index']);
     }
 
     /**
@@ -296,5 +361,61 @@ class ReceiptController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    protected function findModelRL($id)
+    {
+        if (($model = ReceiptList::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionPrint($id = null)
+    {
+        $model = $this->findModel($id);
+        $model_lists = LogSt::find()->where(['code'=> $model->receipt_code,'create_at'=>$model->create_at])->all();
+
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+    $pdf = new Pdf([
+        'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+        'content' => $this->renderPartial('print',['model' => $model,'model_lists' =>$model_lists]),
+        'cssFile' => 'css/pdf.css',
+        'options' => [
+            // any mpdf options you wish to set
+        ],
+        'methods' => [
+            // 'SetTitle' => 'Privacy Policy - Krajee.com',
+            // 'SetSubject' => 'Generating PDF files via yii2-mpdf extension has never been easy',
+            // 'SetHeader' => ['Krajee Privacy Policy||Generated On: ' . date("r")],
+            // 'SetFooter' => ['|Page {PAGENO}|'],
+            // 'SetAuthor' => 'Kartik Visweswaran',
+            // 'SetCreator' => 'Kartik Visweswaran',
+            // 'SetKeywords' => 'Krajee, Yii2, Export, PDF, MPDF, Output, Privacy, Policy, yii2-mpdf',
+        ]
+    ]);
+    return $pdf->render();
+    }
+
+    public function actionUp_receipt_to_logst()
+    {
+        $models = ReceiptList::find()->all();
+        
+        foreach ($models as $model):
+            $modellst = LogSt::find()->where(['receipt_list_id' => $model->id])->one();
+            if(!($modellst)){
+            $modelLS = new LogSt(); 
+                $modelLS->code = $model->receipt_code;
+                $modelLS->product_code = $model->product_code;
+                $modelLS->receipt_list_id = $model->id;
+                $modelLS->unit_price = $model->unit_price;
+                $modelLS->quantity = $model->quantity;
+                $modelLS->create_at = $model->create_at;
+            $modelLS->save();
+        }
+        endforeach; 
+        Yii::$app->session->setFlash('success', 'receipt->Logst ข้อมูลเรียบร้อย');  
+        return $this->redirect(['index']);
     }
 }

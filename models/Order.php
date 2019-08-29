@@ -5,6 +5,7 @@ namespace app\models;
 
 use Yii;
 use app\models\User;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "order".
@@ -65,5 +66,17 @@ class Order extends \yii\db\ActiveRecord
     public function getCountAll()
     {        
         return Product::find()->count();           
+    }
+
+    public function getNameStatus(){
+        return [       
+        
+            1 => 'นาย',
+            2 => 'นางสาว',
+            3 => 'นาง',
+            4 => 'ยกเลิก'
+          
+          
+      ];
     }
 }

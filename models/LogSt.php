@@ -33,7 +33,7 @@ class LogSt extends \yii\db\ActiveRecord
         return [
             [['code'], 'required'],
             [['quantity'], 'integer'],
-            [['unit_price'], 'number'],
+            // [['unit_price'], 'number'],
             [['create_at'], 'safe'],
             [['code'], 'string', 'max' => 32],
             [['product_code'], 'string', 'max' => 255],
@@ -49,6 +49,7 @@ class LogSt extends \yii\db\ActiveRecord
             'id' => 'ID',
             'code' => 'Code',
             'product_code' => 'Product Code',
+            'receipt_list_id' => 'receipt_list_id',
             'unit_price' => 'Unit Price',
             'quantity' => 'Quantity',
             'create_at' => 'Create At',
@@ -60,9 +61,29 @@ class LogSt extends \yii\db\ActiveRecord
         return $this->hasOne(Product::className(), ['code' => 'product_code']);
     }
 
+    public function getReceipt()
+    {
+        return $this->hasOne(Receipt::className(), ['receipt_code' => 'code']);
+    }
+    public function getOrder()
+    {
+        return $this->hasOne(Order::className(), ['order_code' => 'code']);
+    }
+
     public function getProductName(){
         $model = $this->product;
         return $model ? $model->product_name:'';
+    }
+
+    public function getUserName(){
+        // $model = $this->receipt;
+        $model = $this->order;
+        if ($model){
+            $modelP = Profile::find()->where(['user_id'=> $model->id_user])->one();
+            return $modelP ? $modelP->fname.$modelP->name.' '.$modelP->sname : '-' ;
+        }
+
+        return $model ? $model->user_id:'-';
     }
     
 }

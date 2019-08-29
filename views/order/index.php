@@ -39,9 +39,19 @@ $this->params['breadcrumbs'][] = $this->title;
 					<td><a href= "#" class="act-view" data-id='<?=$model->id?>'><?=$model->order_code?></a></td>
                   	<td><?=$model->getProfileName()?></td>
                   	<td><?=$model->sumtotal?></td>
-					  <td><?=$model->status?></td>
+					<td><?=$model->status?></td>
                   	<td><?=$model->create_at?></td>
                   	<td>
+					  	<a href="index.php?r=order/print&id=<?=$model->id?>" class ="btn btn-success" target="_blank">พิมพ์ใบเบิก</a>
+						<?php
+							echo Html::a('<i class="fa fa-remove"></i> ยกเลิกใบเบิก',['order/cancel','id' => $model->id],
+								[
+									'class' => 'btn btn-danger',
+									'data-confirm' => 'Are you sure to ยกเลิก this item?',
+                        			'data-method' => 'post',
+								]);
+						?>
+								<!-- <a href="index.php?r=order/cancel&id=<?=$model->id?>">ยกเลิก</a> -->
 					</td>
 				</tr>
 				<?php  endforeach; ?>
@@ -114,9 +124,9 @@ $('#example').DataTable( {
     "order": [[ 0, 'desc' ], [ 4, 'asc' ]]
 });
 
-	$('#activity-modal').on('hidden.bs.modal', function () {
- 		location.reload();
-	})
+	// $('#activity-modal').on('hidden.bs.modal', function () {
+ 	// 	location.reload();
+	// })
 
 				var responsiveHelper_dt_basic = undefined;
 				var responsiveHelper_datatable_fixed_column = undefined;

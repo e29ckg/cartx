@@ -69,22 +69,16 @@ class CartController extends Controller
         $modelCatalogs = ProductCatalog::find()->all();
 
         // $query = Product::find();
-        $query = Product::find();
-        $pagination = new Pagination([
-            'defaultPageSize' => 200,
-            'totalCount' => $query->count(),
-        ]);
-    
-        $models = $query->orderBy(['id' => SORT_ASC])
-               ->offset($pagination->offset)
-                ->limit($pagination->limit)
-                ->all();
+        $models = Product::find()
+            ->where(['status' => 1])
+            ->orderBy(['id' => SORT_ASC])
+            ->all();
         
         return $this->render('index',[
             'models' => $models,
             'countAll' => $countAll,
             'modelCatalogs' => $modelCatalogs,
-            'pagination' => $pagination,
+            // 'pagination' => $pagination,
         ]);
     }
 
@@ -113,8 +107,8 @@ class CartController extends Controller
         ]);
     
         $models = $query->orderBy(['id' => SORT_DESC])
-               ->offset($pagination->offset)
-                ->limit($pagination->limit)
+            //    ->offset($pagination->offset)
+            //     ->limit($pagination->limit)
                 ->all();
         
         return $this->render('login',[
@@ -192,46 +186,40 @@ class CartController extends Controller
             ]); 
         }
     }    
-    
+        
     public function actionSearch($q = null,$m = null) {
 
         $this->layout = 'cart_shop'; 
 
-        if (!empty($q)) {
-                $query = Product::find()->where(['LIKE', 'product_name', $q]);
-            } else if(!empty($m)){
-                    $query = Product::find()->where(['LIKE', 'category', $m]);
-                } else {
-                        $query = Product::find();
-                    }
-        
-        $pagination = new Pagination([
-                'defaultPageSize' => 200,
-                'totalCount' => $query->count(),
-        ]);
-        
-        $models = $query->orderBy(['id' => SORT_ASC])
-                   ->offset($pagination->offset)
-                    ->limit($pagination->limit)
-                    ->all();
-                
+        if (isset($m)) {
+            $models = Product::find()            
+            ->where(['category' => $m])->all();
+        }elseif(isset($q)){
+            $models = Product::find()
+            ->where(['category' => $m])
+            ->where(['LIKE', 'product_name', $q])->all();
+        }else{
+            $models = Product::find()->all();
+        }
+        $modelCatalogs = ProductCatalog::find()->all();              
         if(Yii::$app->request->isAjax){
-                return $this->renderAjax('cart_search',[
+                return $this->renderAjax('index',[
                     'models' => $models,  
-                    'pagination' => $pagination, 
+                    // 'pagination' => $pagination, 
+                    'modelCatalogs' => $modelCatalogs,
                 ]);
         } else {
                 $modelCatalogs = ProductCatalog::find()->all();
                 return $this->render('index',[
                     'models' => $models,   
-                    'pagination' => $pagination, 
+                    // 'pagination' => $pagination, 
                     'modelCatalogs' => $modelCatalogs,
                 ]);
         }
     }
 
     public function actionAdd_to_cart($code = null) {
-        //$this->layout = 'cart_shop'; 
+        $this->layout = 'cart_shop'; 
         $models = Product::find()->where(['code', $code]);
 
         if (!isset($_SESSION['inLine'])){
@@ -257,12 +245,10 @@ class CartController extends Controller
                 $inNewLine =  $_SESSION['inLine'];
                 $_SESSION['strProductCode'][$inNewLine ] = $code; 
                 $_SESSION['strQty'][$inNewLine ] = 1;
-            }
+            }           
             
-            
-        } 
-        
-        return $this->renderAjax('cart');
+        }         
+        return $this->render('cart');
     }
 
     public function actionDelete($id = null) {
@@ -284,7 +270,7 @@ class CartController extends Controller
             $_SESSION['strQty'][$id] ;
         }
         
-        // return $this->render('cart'); 
+        // return $_SESSION['strQty'][$id]; 
         return $this->renderAjax('cart');
     }
 
@@ -338,9 +324,6 @@ class CartController extends Controller
 				for($i=0;$i<=(int)$_SESSION['inLine'];$i++){
 					if($_SESSION['strProductCode'][$i] != ""){
 						$codeProduct = $_SESSION['strProductCode'][$i];
-               					// $ss['strProductCode'][$i] =  $_SESSION['inLine'][$i];
-						// $Total = $_SESSION['strQty'][$i];
-                        // $sumTotal = $sumTotal + $Total;
                         $strQty = $_SESSION['strQty'][$i];
 
                         $modelP = Product::find()->where(['code'=> $codeProduct])->one();
@@ -365,14 +348,14 @@ class CartController extends Controller
                                 if($QLP >= 0){
                                     $modelRL->quantity = $modelRL->quantity - $strQty;
                                     $QLP = $strQty;
-                                    $modelRL->save();
+                                    // $modelRL->save();
                                     $strQty = 0;                                    
 
                                 }elseif($QLP < 0){
                                     $strQty = $strQty - $modelRL->quantity ;
                                     $QLP = $modelRL->quantity;                                    
                                     $modelRL->quantity = 0;
-                                    $modelRL->save();
+                                    // $modelRL->save();
                                 }  
                                 
                                 $modelOL = new OrderList();
@@ -382,16 +365,22 @@ class CartController extends Controller
                                     $modelOL->unit_price = $unit_price; 
                                     $modelOL->quantity = $QLP;
                                     $modelOL->create_at = $create_at;
-                                    $modelOL->save();
+                                    
                                 
                                 $modelLST = new LogSt();
                                     $modelLST->code = $code;
                                     $modelLST->product_code = $codeProduct;
                                     $modelLST->unit_price = $unit_price; 
                                     $modelLST->receipt_list_id = $modelRL->id; 
-                                    $modelLST->quantity = $QLP;
+                                    $modelLST->quantity = '-'.$QLP;
+                                    $modelLST->note = 'OUT';
                                     $modelLST->create_at = $create_at;
-                                    $modelLST->save();
+                                if($modelLST->save() and $modelOL->save() and $modelRL->save()){
+                                    // Yii::$app->session->setFlash('error', 'ไม่สำเร็จ');
+                                }else{
+                                    Yii::$app->session->setFlash('error', 'ไม่สำเร็จ');
+                                }    
+                                    
                                     
                             }     
                                 

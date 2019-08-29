@@ -62,6 +62,12 @@ class OrderList extends \yii\db\ActiveRecord
         return $model ? $model->product_name:'';
     }
 
+    public function getProductUnitName(){
+        $model = $this->product;
+        $modelUnit = ProductUnit::find()->where(['id' => $model->unit])->one();
+        return $modelUnit ? $modelUnit->name_unit:'';
+    }
+
     public function getProductImg(){
         $model = $this->product;
         return $model ? $model->img:'';

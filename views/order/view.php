@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										</td>
                     <td><?=$model_list->getProductName()?></td>
                     <td><?=$model_list->unit_price?></td>
-                    <td><?=$model_list->quantity?></td>
+                    <td><?=$model_list->quantity?> <?=$model_list->getProductUnitName()?></td>
                   <?php ?>
                     <td>
                     <?php

@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 //  use yii\grid\GridView;
-use app\models\Product;
+use app\model\Product;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
 use yii\helpers\BaseFileHelper;
@@ -45,32 +45,32 @@ $this->params['breadcrumbs'][] = $this->title;
                 	</tr>
                 </thead>
                 <tbody>
-				<?php foreach ($models as $models): ?>
+				<?php foreach ($models as $model): ?>
 						            <tr>
-						                <td><?=$models['id']?></td>
+						                <td><?=$model['id']?></td>
 						                <td>
 											<div class="project-members">
 												<a href="javascript:void(0)">
-												<?php if(!empty($models['img'])){
-													echo Html::img('@web/uploads/product/img/'.$models['img'], ['alt' => 'My pic','class'=>'offline','height'=>'50px']); 
+												<?php if(!empty($model['img'])){
+													echo Html::img('@web/uploads/product/img/'.$model['img'], ['alt' => 'My pic','class'=>'offline act-view','height'=>'50px','data-id'=> $model->code]); 
 												}else{
-													echo Html::img('@web/img/avatars/male.png', ['alt' => 'My pic','class'=>'offline', 'height'=>'50px']); 
+													echo Html::img('@web/img/avatars/male.png', ['alt' => 'My pic','class'=>'offline act-view', 'height'=>'50px', 'data-id'=> $model->code]); 
 												}?>
 												</a>
 											</div>
 										</td>
-										<td><?=$models->code?> 
-											<!-- <a href= "index.php?r=product/gencode&id=<?=$models['id']?>" class="btn btn-warning btn-xs" data-id=<?=$models['id']?>><i class="fa fa-pencil-square-o"></i> GenCode</a> -->
+										<td><?=$model->code?> 
+											<!-- <a href= "index.php?r=product/gencode&id=<?=$model['id']?>" class="btn btn-warning btn-xs" data-id=<?=$model['id']?>><i class="fa fa-pencil-square-o"></i> GenCode</a> -->
 										</td>
-								        <td><?=$models['product_name']?></td>
-								        <td><?=$models->getCatalogtName()?></td>
-										<td><?=$models->create_at?></td>
-								        <td><?=$models['instoke']?> <?=$models->getUnitName()?></td>
+								        <td><?=$model['product_name']?></td>
+								        <td><?=$model->getCatalogtName()?></td>
+										<td><?=$model->create_at?></td>
+								        <td><?=$model['instoke']?> <?=$model->getUnitName()?></td>
 								        <td>
-											<a herf= "#" class="btn btn-warning act-update" data-id=<?=$models['id']?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
-											<!-- <a herf= "#" class="btn btn-warning act-view" data-id=<?=$models->id?>><i class="fa fa-pencil-square-o"></i> ดู</a> -->
+											<a herf= "#" class="btn btn-warning act-update" data-id=<?=$model['id']?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
+											<!-- <a herf= "#" class="btn btn-warning act-view" data-id=<?=$model->id?>><i class="fa fa-pencil-square-o"></i> ดู</a> -->
 											<?php
-											// echo Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $models->id],
+											// echo Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $model->id],
 											// 		[
 											// 			'class' => 'btn btn-danger act-update',
 											// 			'data-confirm' => 'Are you sure to delete this item?',
@@ -124,11 +124,10 @@ $script = <<< JS
     	});
 
 	var url_view = "index.php?r=product/view";		
-    	$(".act-view").click(function(e) {	
-				
+    	$(".act-view").click(function(e) {					
                 var fID = $(this).data("id");
-				alert(fID);
-                $.get(url_view,{id: fID},function (data){
+				// alert(fID);
+                $.get(url_view,{codeProduct: fID},function (data){
                         $("#activity-modal").find(".modal-body").html(data);
                         $(".modal-body").html(data);
                         $(".modal-title").html("ข้อมูล");
@@ -145,9 +144,9 @@ $('#product-index').DataTable({
 	"order": [[ 0, "asc" ]]
 });
 
-	$('#activity-modal').on('hidden.bs.modal', function () {
- 		location.reload();
-	})
+	// $('#activity-modal').on('hidden.bs.modal', function () {
+ 	// 	location.reload();
+	// })
 
 			
 

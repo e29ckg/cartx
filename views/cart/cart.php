@@ -1,6 +1,7 @@
 <?php
 use app\models\ReceiptList;
 use app\models\Product;
+use yii\helpers\Url;
 //  echo var_dump($_SESSION['inLine']);
 ?>
 
@@ -42,7 +43,7 @@ use app\models\Product;
 						?>
 							<tr>
 								<td class="cart_product">
-									<a href=""><img src="<?= $model->img ? 'uploads/product/img/'.$model->img : 'img/no_image.png'?>" height="110" alt=""></td>
+									<a href=""><img src="<?= $model->img ? Url::to(['uploads/product/img/'.$model->img]) : Url::to(['img/no_image.png'])?>" height="110" alt=""></td>
 								</td>
 								<td class="cart_description">
 									<h4><a href=""><?=$model->product_name?></a></h4>
@@ -50,20 +51,20 @@ use app\models\Product;
 								</td>
 
 								<td class="cart_description">
-									<h4><a href=""><?=$model->instoke?></a></h4>
+									<h4>มี <?=$model->instoke.' '.$model->getUnitName()?></h4>
 								</td>
 								
 								<td class="cart_quantity">
 									<div class="cart_quantity_button">
-										<a data-id="<?=$i?>" class="cart_quantity_up qty_up" href="#"> + </a>
+										<!-- <a data-id="<?=$i?>" class="cart_quantity_up qty_up" href="#"> + </a> -->
 										<input data-id="<?=$i?>" class="cart_quantity_input quantity-input" type="number" name="quantity" value="<?=$_SESSION['strQty'][$i]?>" autocomplete="off" size="2">
-										<a data-id="<?=$i?>" class="cart_quantity_down qty_down" href="#"> - </a>
+										<!-- <a data-id="<?=$i?>" class="cart_quantity_down qty_down" href="#"> - </a> -->
 									</div>
 								</td>
 								
 								<!-- <td class="cart_quantity"> -->
 								<td class="cart_delete">
-									<a class="cart_quantity_delete" data-id="<?=$i?>" href="index.php?r=cart/delete&id=<?=$i?>"><i class="fa fa-times"></i></a>
+									<a class="cart_quantity_delete" data-id="<?=$i?>" href="<?=Url::to(['cart/delete','id' => $i])?>"><i class="fa fa-times"></i></a>
 								</td>
 							</tr>						
 
@@ -85,7 +86,7 @@ use app\models\Product;
 									<tr>
 										<td></td>
 										<td>
-											<?= $sumTotal <> 0 ? '<a class="btn btn-warning" href="index.php?r=cart/checkout"><i class="fa fa-crosshairs"></i> Checkout</a>' : "" ?>
+											<?= $sumTotal <> 0 ? '<a class="btn btn-warning" href="'.Url::to(['cart/checkout']).'"><i class="fa fa-crosshairs"></i> Checkout</a>' : "" ?>
 										</td>
 									</tr>
 								</tbody>
@@ -102,7 +103,7 @@ use app\models\Product;
 		$(document).ready(function() {
 			
 			$(".quantity-input").change(function() {    
-    			var url = "index.php?r=cart/qty_change";
+    			var url = "qty_change";
 				id= $(this).data("id");
 				val= $(this).val();
 				// alert(val);
@@ -113,7 +114,7 @@ use app\models\Product;
 			});
 
 			$(".qty_up").click(function() {    
-    			var url = "index.php?r=cart/qty_up";
+    			var url = "qty_up";
 				id= $(this).data("id");
 				// alert(val);
         		$.get(url,{id:id},function (data){
@@ -123,7 +124,7 @@ use app\models\Product;
 			});
 
 			$(".qty_down").click(function() {    
-    			var url = "index.php?r=cart/qty_down";
+    			var url = "qty_down";
 				id= $(this).data("id");
 				// alert(val);
         		$.get(url,{id:id},function (data){

@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				        <?php foreach ($model_lists as $model_list): ?>
                     <tr>
                         <td><?=$model_list->id?></td>
-                        <td><?=$model_list->receipt_code?></td>
+                        <td><?=$model_list->code?></td>
                         <td><?=$model_list->product_code?></td>
                         <td><?=$model_list->getProductName()?></td>
                         <td><?=$model_list->unit_price?></td>

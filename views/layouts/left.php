@@ -35,21 +35,24 @@
                     [
                         'label' => 'รับเข้าสต๊อก', 
                         'icon' => 'file-code-o', 
-                        'url' => ['#'],
+                        'url' => '#',
                         'items' => [
                             ['label' => 'ใบรับสินค้าทั้งหมด', 'icon' => 'file-code-o', 'url' => ['/receipt'],],
                             ['label' => 'เพิ่มสินค้าเข้าสต๊อก', 'icon' => 'file-code-o', 'url' => ['/receipt/add'],],
                         ]
                     ],
                     [
-                        'label' => 'Product', 
+                        'label' => 'product', 
                         'icon' => 'file-code-o', 
-                        'url' => ['#'],
+                        'url' => '#',
                         'items' => [
-                            ['label' => 'Product ทั้งหมด', 'icon' => 'file-code-o', 'url' => ['/product'],],
-                            ['label' => 'เพิ่มชื่อสินค้า', 'icon' => 'file-code-o', 'url' => ['/product/create'],],
+                            ['label' => 'Product-All', 'icon' => 'file-code-o', 'url' => ['/product'],],
+                            ['label' => 'Product-Stock-Down', 'icon' => 'file-code-o', 'url' => ['/product/stock_down'],],
                         ]
                     ],
+                    
+                    
+                     
 
                     // ['label' => 'Product', 'icon' => 'file-code-o', 'url' => ['/product']],
                     // ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
@@ -87,6 +90,28 @@
                         'url' => ['/log_st'],
                         'template'=>'<a href="{url}">{icon} {label}<span class="pull-right-container"><small class="label pull-right bg-yellow">123</small></span></a>'
                     ],
+                    [
+                        'label' => 'รายงาน', 
+                        'icon' => 'file-code-o', 
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'Report', 'icon' => 'file-code-o', 'url' => ['/report/index'],],
+                            ['label' => 'Report/view', 'icon' => 'file-code-o', 'url' => ['/report/view'],],
+                        ]
+                    ],
+                    [
+                        'label' => 'Setting', 
+                        'icon' => 'file-code-o', 
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'index', 'icon' => 'file-code-o', 'url' => ['/setting/index'],],
+                            ['label' => 'ปรับ Logst->receipt_list_id', 'icon' => 'file-code-o', 'url' => ['/log_st/up_receipt_list_id'],],
+                            ['label' => 'ปรับ instoke', 'icon' => 'file-code-o', 'url' => ['/product/upstoke'],],
+                            ['label' => 'ปรับ ReceiptList->LogSt', 'icon' => 'file-code-o', 'url' => ['/setting/up_receipt_to_logst'],],
+                            
+                        ]
+                    ],
+                    
                 ],
             ]
         ) ?>
