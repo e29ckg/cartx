@@ -7,7 +7,6 @@ use yii\helpers\ArrayHelper;
 use app\models\Product;
 use app\models\ProductUnit;
 
-
 /* @var $this yii\web\View */
 /* @var $model app\models\Order */
 /* @var $form yii\widgets\ActiveForm */

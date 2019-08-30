@@ -38,7 +38,7 @@ class m181030_070804_product_catalog extends Migration
     public function safeDown()
     {
         echo "m181030_070804_product_catalog cannot be reverted.\n";
-
+        $this->dropTable('product_catalog');
         return false;
     }
 

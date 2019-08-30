@@ -40,9 +40,37 @@ use yii\helpers\Html;
         <?php $i = 1;
                 $total = 0;
                 $totalSum = 0;
+                $product_old = '';
+            $productUP_old = 0;
+            $productQTY_old = 0;
+            $A = '';
                 ?>
         <?php foreach ($model_lists as $model_list): ?>
-            <tr>
+        <?php     
+        if($product_old == ''){
+            $product_old = $model_list->product_code;
+            $productUP_old = $model_list->unit_price;
+            $productQTY_old = $model_list->$model_list->quantity;
+        }else{
+            if($product_old == $model_list->product_code){
+                if($productUP_old == $model_list->unit_price){
+                    $productUP = $model_list->unit_price ;
+                    $productQTY = $productQTY_old + $model_list->quantity;                    
+                }else{
+                    $A = 'P';
+                }
+            } else{
+                $A = 'P';
+            }
+
+        }       
+        $product_old = $model_list->product_code;
+        $productUP_old = $model_list->unit_price;        
+            
+            if($A == 'P'){
+        ?>
+            
+                <tr>
                 <td><?=$i?><?='-'.$model_list->product_code?></td>
                 <td>
                     <?=$model_list->getProductName()?>
@@ -50,10 +78,16 @@ use yii\helpers\Html;
                 <td><?=$model_list->unit_price?></td>
                 <td><?=$model_list->quantity?> <?=$model_list->getProductUnitName()?></td>
                 <td>
-                <?=$total = $model_list->unit_price * $model_list->quantity?>
+                <?=$total = $productUP * $productQTY?>
                 </td>
             </tr>
-            <?php $totalSum = $totalSum + $total;
+
+            <?php
+            }
+        ?>
+            
+            <?php 
+            $totalSum = $totalSum + $total;
             $i++;
             ?>
         <?php  endforeach; ?>    

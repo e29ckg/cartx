@@ -104,8 +104,6 @@ class ProductController extends Controller
 
         $modelsLST = LogSt::find()
                         ->where(['product_code'=> $codeProduct])
-                        ->orderBy(['create_at' => SORT_ASC])
-                        // ->limit(10)
                         ->all();
 
         if(Yii::$app->request->isAjax){
