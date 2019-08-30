@@ -103,7 +103,7 @@ if (Yii::$app->user->identity) {
 							<ul class="nav navbar-nav">
 								<li>
 								<?php if(Yii::$app->user->identity->role == '9'){
-									echo '<li><a href="index.php?r=site/dashboard"><i class="fa fa-lock"></i> blankEnd</a></li>';
+									echo '<li><a href="'.Url::to(['site/dashboard']).'"><i class="fa fa-lock"></i> blankEnd</a></li>';
 								}
 								?>
 								<li><a href="<?=Url::to(['cart/account'])?>"><i class="fa fa-user"></i><font color="green"><?= $fullname?></font></a></li>

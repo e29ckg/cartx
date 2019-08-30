@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\Modal;
 use kartik\select2\Select2;
 /* @var $this \yii\web\View */
@@ -16,17 +17,8 @@ if (Yii::$app->controller->action->id === 'login') {
         ['content' => $content]
     );
 } else {
-
-    if (class_exists('backend\assets\AppAsset')) {
-        backend\assets\AppAsset::register($this);
-    } else {
-        app\assets\AppAsset::register($this);
-    }
-
-    dmstr\web\AdminLteAsset::register($this);
-
-    $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte');
-    ?>
+    $directoryAsset = Url::to(['@web']);
+?>
     <?php $this->beginPage() ?>
     <!DOCTYPE html>
     <html lang="<?= Yii::$app->language ?>">
@@ -37,8 +29,22 @@ if (Yii::$app->controller->action->id === 'login') {
         <title><?= Html::encode($this->title) ?></title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
         
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link href="<?=Url::to(['adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css'])?>" rel="stylesheet">
+        <link href="<?=Url::to(['adminlte/dist/css/AdminLTE.min.css'])?>" rel="stylesheet">
+        <link rel="stylesheet" href="<?=Url::to(['adminlte/bower_components/font-awesome/css/font-awesome.min.css']);?>">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="<?=Url::to(['adminlte/bower_components/Ionicons/css/ionicons.min.css']);?>">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="<?=Url::to(['adminlte/dist/css/AdminLTE.min.css']);?>">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+            folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="<?=Url::to(['adminlte/dist/css/skins/_all-skins.min.css']);?>">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js']);"></script>
 	    <?php $this->head() ?>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
     </head>   
 
     <body class="hold-transition sidebar-mini <?= \dmstr\helpers\AdminLteHelper::skinClass() ?>">
@@ -65,6 +71,24 @@ if (Yii::$app->controller->action->id === 'login') {
     </div>
 
     <?php $this->endBody() ?>
+    <!-- jQuery 3 -->
+<script src="<?=Url::to(['bower_components/jquery/dist/jquery.min.js'])?>"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="<?=Url::to(['adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js'])?>"></script>
+<!-- SlimScroll -->
+<script src="<?=Url::to(['adminlte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js'])?>"></script>
+<!-- FastClick -->
+<script src="<?=Url::to(['adminlte/bower_components/fastclick/lib/fastclick.js'])?>"></script>
+<!-- AdminLTE App -->
+<script src="<?=Url::to(['adminlte/dist/js/adminlte.min.js'])?>"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="<?=Url::to(['adminlte/dist/js/demo.js'])?>"></script>
+<script>
+  $(document).ready(function () {
+    $('.sidebar-menu').tree()
+  })
+</script>
+    <script src="<?=Url::to(['@web/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js'])?>"></script>
     </body>
     </html>
     <?php $this->endPage() ?>

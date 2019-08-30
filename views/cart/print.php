@@ -50,7 +50,7 @@ use yii\helpers\Html;
         if($product_old == ''){
             $product_old = $model_list->product_code;
             $productUP_old = $model_list->unit_price;
-            $productQTY_old = $model_list->$model_list->quantity;
+            $productQTY_old = $model_list->quantity;
         }else{
             if($product_old == $model_list->product_code){
                 if($productUP_old == $model_list->unit_price){
@@ -78,7 +78,7 @@ use yii\helpers\Html;
                 <td><?=$model_list->unit_price?></td>
                 <td><?=$model_list->quantity?> <?=$model_list->getProductUnitName()?></td>
                 <td>
-                <?=$total = $productUP * $productQTY?>
+                <?php//=$total = $productUP * $productQTY?>
                 </td>
             </tr>
 
