@@ -22,6 +22,7 @@ class m181211_155915_log_st extends Migration
             'code' => $this->string(32)->notNull(),
             'product_code' => $this->string(32),
             'receipt_list_id' => $this->string(32),
+            'ym'=> $this->string(),
             'unit_price' => $this->string(),
             'quantity' => $this->integer(),
             'note' => $this->string(),

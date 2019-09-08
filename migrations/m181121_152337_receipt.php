@@ -22,6 +22,7 @@ class m181121_152337_receipt extends Migration
             'receipt_code' => $this->string(32)->notNull(),
             'user_id' => $this->integer(),
             'receipt_from' => $this->string(),
+            'ym'=> $this->string(),
             'sumtotal'=> $this->string(),
             'status' => $this->integer(),
             'create_at' => $this->dateTime(),

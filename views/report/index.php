@@ -25,12 +25,14 @@ $this->params['breadcrumbs'][] = $this->title;
               <h3 class="box-title"><?=$this->title?></h3>
 			  <div class="box-tools">
                 
-					<a href= "index.php?r=report/report_add" id="act-create" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> สร้างรายงาน</a>
+					<a href= "<?=Url::to(['report/report_add'])?>" id="act-create" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> สร้างรายงาน</a>
 
               </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+
+
             <table id="product-index" class="table table-bordered table-hover">
                 <thead>
                 	<tr>
@@ -40,24 +42,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 	</tr>
                 </thead>
               <tbody>
-							<?php foreach ($models as $model): ?>
-						      <tr>    
-										<td></td>
-										<td></td>
-								    <td></td>
-									</tr>
-							<?php  endforeach; ?>
+              <?php foreach ($ReportM as $model): ?>
+                <tr>
+                  <td></td>
+                  <td><?=$model->month?></td>
+                  <td><a href="<?=Url::to(['report/view2','m' =>$model->month])?>"><?=$model->month?></a></td>
+                </tr>
+              
+              <?php endforeach; ?>
 				
 				</tbody>
-                <!-- <tfoot>
+                <tfoot>
                 <tr>
-                  <th>Rendering engine</th>
-                  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>Engine version</th>
-                  <th>CSS grade</th>
+                  <th><?=$start?></th>
+                  <th><?=$end?></th>
+                  <th><?=$month?></th>
+                  <th><?=$monthB?></th>
                 </tr>
-                </tfoot> -->
+                </tfoot>
               </table>
             </div>
             <!-- /.box-body -->
@@ -69,7 +71,37 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- /.row -->
 </section>
 <!-- /.content -->
+<?php
+              // $product_c = null;
+              // $quantity = null;
+              ?>
 
+<?php // foreach ($Log as $model): ?>
+                <?php //
+
+                  // if(isset($product_c) && $model->product->product_name <> $product_c){
+                  //   echo '<tr>    
+                  //   <td>'.$model->code.'</td>
+                  //   <td>'.$product_c.'</td>
+                  //   <td>'.$quantity.'</td>
+                  //   <td></td>
+                  // </tr>';
+                //   }
+
+                // if($model->product->product_name == $product_c){
+                //   // $product_c = $model->product->product_name;
+                //   $quantity = $quantity + $model->quantity ;
+                // }else{                 
+                  
+                // $product_c = $model->product->product_name;
+                // $quantity = $model->quantity;
+
+                // } 
+
+                
+              ?>
+						      
+							<?php // endforeach; ?>
 
 
 

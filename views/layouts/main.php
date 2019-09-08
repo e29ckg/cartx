@@ -20,6 +20,7 @@ if (Yii::$app->controller->action->id === 'login') {
     $directoryAsset = Url::to('@web/adminlte');
 ?>
     <?php $this->beginPage() ?>
+
     <!DOCTYPE html>
     <html lang="<?= Yii::$app->language ?>">
     <head>
@@ -32,24 +33,35 @@ if (Yii::$app->controller->action->id === 'login') {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link href="<?=Url::to(['adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css'])?>" rel="stylesheet">
-        <link href="<?=Url::to(['adminlte/dist/css/AdminLTE.min.css'])?>" rel="stylesheet">
-        <link rel="stylesheet" href="<?=Url::to(['adminlte/bower_components/font-awesome/css/font-awesome.min.css']);?>">
+        <link href="<?=Url::to('@web/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css')?>" rel="stylesheet">
+        <link href="<?=Url::to('@web/adminlte/dist/css/AdminLTE.min.css')?>" rel="stylesheet">
+        <link rel="stylesheet" href="<?=Url::to('@web/adminlte/bower_components/font-awesome/css/font-awesome.min.css');?>">
         <!-- Ionicons -->
-        <link rel="stylesheet" href="<?=Url::to(['adminlte/bower_components/Ionicons/css/ionicons.min.css']);?>">
+        <link rel="stylesheet" href="<?=Url::to('@web/adminlte/bower_components/Ionicons/css/ionicons.min.css');?>">
         <!-- Theme style -->
-        <link rel="stylesheet" href="<?=Url::to(['adminlte/dist/css/AdminLTE.min.css']);?>">
+        <link rel="stylesheet" href="<?=Url::to('@web/adminlte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')?>">
+        <link rel="stylesheet" href="<?=Url::to('@web/adminlte/dist/css/AdminLTE.min.css');?>">
         <!-- AdminLTE Skins. Choose a skin from the css/skins
             folder instead of downloading all of them to reduce the load. -->
-        <link rel="stylesheet" href="<?=Url::to(['adminlte/dist/css/skins/_all-skins.min.css']);?>">
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js']);"></script>
+        <link rel="stylesheet" href="<?=Url::to('@web/adminlte/dist/css/skins/_all-skins.min.css');?>">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	    <?php $this->head() ?>
         <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
     </head>   
 
     <body class="hold-transition sidebar-mini <?= \dmstr\helpers\AdminLteHelper::skinClass() ?>">
     <?php $this->beginBody() ?>
-    
+    <?php
+		Modal::begin([
+  			'id' => 'activity-modal',
+   			'header' => '<h4 class="modal-title"></h4>',
+               'size' => 'modal-lg',
+               'options' => ['tabindex' => ''],
+   			// 'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal">ปิด</a>',
+		]);
+		echo "<div id='modalContent'></div>";
+		Modal::end();
+	?>
     <div class="wrapper">
 
         <?= $this->render(
@@ -72,34 +84,29 @@ if (Yii::$app->controller->action->id === 'login') {
 
     <?php $this->endBody() ?>
     <!-- jQuery 3 -->
-<script src="<?=Url::to(['adminlte/bower_components/jquery/dist/jquery.min.js'])?>"></script>
+<script src="<?=Url::to('@web/adminlte/bower_components/jquery/dist/jquery.min.js')?>"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="<?=Url::to(['adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js'])?>"></script>
+<script src="<?=Url::to('@web/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js')?>"></script>
+<script src="<?=Url::to('@web/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js')?>"></script>
+<script src="<?=Url::to('@web/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')?>"></script>
 <!-- SlimScroll -->
-<script src="<?=Url::to(['adminlte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js'])?>"></script>
+<script src="<?=Url::to('@web/adminlte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')?>"></script>
 <!-- FastClick -->
-<script src="<?=Url::to(['adminlte/bower_components/fastclick/lib/fastclick.js'])?>"></script>
+<script src="<?=Url::to('@web/adminlte/bower_components/fastclick/lib/fastclick.js')?>"></script>
 <!-- AdminLTE App -->
-<script src="<?=Url::to(['adminlte/dist/js/adminlte.min.js'])?>"></script>
+<script src="<?=Url::to('@web/adminlte/dist/js/adminlte.min.js')?>"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="<?=Url::to(['adminlte/dist/js/demo.js'])?>"></script>
+<script src="<?=Url::to('@web/adminlte/dist/js/demo.js')?>"></script>
+
+
 <script>
   $(document).ready(function () {
     $('.sidebar-menu').tree()
   })
 </script>
+
      </body>
     </html>
     <?php $this->endPage() ?>
 <?php } ?>
-<?php
-		Modal::begin([
-  			'id' => 'activity-modal',
-   			'header' => '<h4 class="modal-title"></h4>',
-               'size' => 'modal-lg',
-               'options' => ['tabindex' => ''],
-   			// 'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal">ปิด</a>',
-		]);
-		echo "<div id='modalContent'></div>";
-		Modal::end();
-	?>
+

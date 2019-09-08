@@ -31,14 +31,14 @@
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
-                    ['label' => 'ใบเบิก', 'icon' => 'file-code-o', 'url' => ['/order']],
+                    ['label' => 'ใบเบิก', 'icon' => 'file-code-o', 'url' => ['order/index']],
                     [
                         'label' => 'รับเข้าสต๊อก', 
                         'icon' => 'file-code-o', 
                         'url' => '#',
                         'items' => [
-                            ['label' => 'ใบรับสินค้าทั้งหมด', 'icon' => 'file-code-o', 'url' => ['/receipt'],],
-                            ['label' => 'เพิ่มสินค้าเข้าสต๊อก', 'icon' => 'file-code-o', 'url' => ['/receipt/add'],],
+                            ['label' => 'ใบรับสินค้าทั้งหมด', 'icon' => 'file-code-o', 'url' => ['receipt/index'],],
+                            ['label' => 'เพิ่มสินค้าเข้าสต๊อก', 'icon' => 'file-code-o', 'url' => ['receipt/add'],],
                         ]
                     ],
                     [
@@ -46,8 +46,8 @@
                         'icon' => 'file-code-o', 
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Product-All', 'icon' => 'file-code-o', 'url' => ['/product'],],
-                            ['label' => 'Product-Stock-Down', 'icon' => 'file-code-o', 'url' => ['/product/stock_down'],],
+                            ['label' => 'Product-All', 'icon' => 'file-code-o', 'url' => ['product/index'],],
+                            ['label' => 'Product-Stock-Down', 'icon' => 'file-code-o', 'url' => ['product/stock_down'],],
                         ]
                     ],
                     
@@ -87,7 +87,7 @@
                     [
                         'label' => 'Log-In-Out',
                         'icon' => 'envelope-o',
-                        'url' => ['/log_st'],
+                        'url' => ['log_st/index'],
                         'template'=>'<a href="{url}">{icon} {label}<span class="pull-right-container"><small class="label pull-right bg-yellow">123</small></span></a>'
                     ],
                     [
@@ -95,22 +95,22 @@
                         'icon' => 'file-code-o', 
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Report', 'icon' => 'file-code-o', 'url' => ['/report/index'],],
-                            ['label' => 'Report/view', 'icon' => 'file-code-o', 'url' => ['/report/view'],],
+                            ['label' => 'Report', 'icon' => 'file-code-o', 'url' => ['report/index'],],
+                            ['label' => 'Report/view', 'icon' => 'file-code-o', 'url' => ['report/view'],],
                         ]
                     ],
-                    [
-                        'label' => 'Setting', 
-                        'icon' => 'file-code-o', 
-                        'url' => '#',
-                        'items' => [
-                            ['label' => 'index', 'icon' => 'file-code-o', 'url' => ['/setting/index'],],
-                            ['label' => 'ปรับ Logst->receipt_list_id', 'icon' => 'file-code-o', 'url' => ['/log_st/up_receipt_list_id'],],
-                            ['label' => 'ปรับ instoke', 'icon' => 'file-code-o', 'url' => ['/product/upstoke'],],
-                            ['label' => 'ปรับ ReceiptList->LogSt', 'icon' => 'file-code-o', 'url' => ['/setting/up_receipt_to_logst'],],
+                    // [
+                    //     'label' => 'Setting', 
+                    //     'icon' => 'file-code-o', 
+                    //     'url' => '#',
+                    //     'items' => [
+                    //         ['label' => 'index', 'icon' => 'file-code-o', 'url' => ['/setting/index'],],
+                    //         ['label' => 'ปรับ Logst->receipt_list_id', 'icon' => 'file-code-o', 'url' => ['/log_st/up_receipt_list_id'],],
+                    //         ['label' => 'ปรับ instoke', 'icon' => 'file-code-o', 'url' => ['/product/upstoke'],],
+                    //         ['label' => 'ปรับ ReceiptList->LogSt', 'icon' => 'file-code-o', 'url' => ['/setting/up_receipt_to_logst'],],
                             
-                        ]
-                    ],
+                    //     ]
+                    // ],
                     
                 ],
             ]

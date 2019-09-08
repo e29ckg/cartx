@@ -6,6 +6,7 @@ use Yii;
 use app\models\Receipt;
 use app\models\ReceiptList;
 use app\models\OrderList;
+use app\models\Order;
 use app\models\Product;
 use app\models\LogSt;
 use yii\data\ActiveDataProvider;
@@ -113,5 +114,54 @@ class SettingController extends Controller
             'modelRLs' => $modelRLs,
             'modelLogs' =>$modelLogs ,
         ]); 
+    }
+
+    public function actionUp_order()
+    {
+        $models = Order::find()->all();
+        foreach ($models as $model):            
+            $model->ym = date('Y-m', strtotime($model->create_at));
+            $model->save();
+        endforeach; 
+         echo 'end.';
+    }
+
+    public function actionUp_order_list()
+    {
+        $models = OrderList::find()->all();
+        foreach ($models as $model):            
+            $model->ym = date('Y-m', strtotime($model->create_at));
+            $model->save();
+        endforeach; 
+         echo 'orden_list_end.';
+    }
+
+    public function actionUp_receipt_list()
+    {
+        $models = ReceiptList::find()->all();
+        foreach ($models as $model):            
+            $model->ym = date('Y-m', strtotime($model->create_at));
+            $model->save();
+        endforeach; 
+         echo 'Receipt_list_end.';
+    }
+
+    public function actionUp_receipt()
+    {
+        $models = Receipt::find()->all();
+        foreach ($models as $model):            
+            $model->ym = date('Y-m', strtotime($model->create_at));
+            $model->save();
+        endforeach; 
+         echo 'Receipt_end.';
+    }
+    public function actionUp_logst()
+    {
+        $models = LogSt::find()->all();
+        foreach ($models as $model):            
+            $model->ym = date('Y-m', strtotime($model->create_at));
+            $model->save();
+        endforeach; 
+         echo 'LogSt_end.';
     }
 }

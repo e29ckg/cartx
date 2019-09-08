@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
@@ -42,9 +43,9 @@ $this->params['breadcrumbs'][] = $this->title;
                   	<td><?=$model->sumtotal?></td>
 					          <td><?=$model->status?></td>
                   	<td><?=$model->create_at?></td>
-                    <td><a href="index.php?r=receipt/print&id=<?=$model->id?>" target="_blank">พิมพ์ใบนำเข้า</a>
-                    <a href= "index.php?r=receipt/update&id=<?=$model->id?>" class="btn btn-warning "><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
-                    <a href= "index.php?r=receipt/update_list_cancel&id=<?=$model->id?>" class="btn btn-warning " onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-pencil-square-o"></i> ยกเลิก</a>
+                    <td><a href="<?=Url::to(['receipt/print','id'=>$model->id])?>" target="_blank">พิมพ์ใบนำเข้า</a>
+                    <a href= "<?=Url::to(['receipt/update','id'=>$model->id])?>" class="btn btn-warning "><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
+                    <a href= "<?=Url::to(['receipt/update_list_cancel','id'=>$model->id])?>" class="btn btn-warning " onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-pencil-square-o"></i> ยกเลิก</a>
 											</td>
                   	<!-- <td><a herf= "#" class="btn btn-warning act-update" data-id=<?=$model->id?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
 						<?php 
@@ -85,7 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 $script = <<< JS
 
-	var url_update = "index.php?r=order/update";
+	var url_update = "update";
     	$(".act-update").click(function(e) {            
 			var fID = $(this).data("id");
 			// alert(fID);
@@ -97,7 +98,7 @@ $script = <<< JS
         	});
     	});
 
-	var url_view = "index.php?r=receipt/view";		
+	var url_view = "view";		
     	$(".act-view").click(function(e) {			
                 var fID = $(this).data("id");
                 $.get(url_view,{id: fID},function (data){
@@ -120,7 +121,7 @@ $(document).ready(function() {
 	// })
 	
 $( "#act-create" ).click(function() {    
-    var url_create = "index.php?r=order/create";
+    var url_create = "create";
         $.get(url_create,function (data){
             $("#activity-modal").find(".modal-body").html(data);
             $(".modal-body").html(data);

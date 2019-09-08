@@ -73,7 +73,7 @@ use yii\helpers\Url;
 				</table>
 			</div>
 			<div class="header-bottom text-center">
-				<a class="btn btn-default check_out" href="index.php?r=cart/save_order">ยืนยันการเบิกวัสดุ</a>
+				<a class="btn btn-default check_out" href="<?=Url::to(['cart/save_order'])?>">ยืนยันการเบิกวัสดุ</a>
 			</div>
 					
 		</div>

@@ -46,40 +46,40 @@ $this->params['breadcrumbs'][] = $this->title;
                 </thead>
                 <tbody>
 				<?php foreach ($models as $model): ?>
-						            <tr>
-						                <td><?=$model['id']?></td>
-						                <td>
-											<div class="project-members">
-												<a href="javascript:void(0)">
-												<?php if(!empty($model['img'])){
-													echo Html::img('@web/uploads/product/img/'.$model['img'], ['alt' => 'My pic','class'=>'offline act-view','height'=>'50px','data-id'=> $model->code]); 
-												}else{
-													echo Html::img('@web/img/avatars/male.png', ['alt' => 'My pic','class'=>'offline act-view', 'height'=>'50px', 'data-id'=> $model->code]); 
-												}?>
-												</a>
-											</div>
-										</td>
-										<td><?=$model->code?> 
-											<!-- <a href= "index.php?r=product/gencode&id=<?=$model['id']?>" class="btn btn-warning btn-xs" data-id=<?=$model['id']?>><i class="fa fa-pencil-square-o"></i> GenCode</a> -->
-										</td>
-								        <td><?=$model['product_name']?></td>
-								        <td><?=$model->getCatalogtName()?></td>
-										<td><?=$model->create_at?></td>
-								        <td><?=$model['instoke']?> <?=$model->getUnitName()?></td>
-								        <td>
-											<a herf= "#" class="btn btn-warning act-update" data-id=<?=$model['id']?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
-											<!-- <a herf= "#" class="btn btn-warning act-view" data-id=<?=$model->id?>><i class="fa fa-pencil-square-o"></i> ดู</a> -->
-											<?php
-											// echo Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $model->id],
-											// 		[
-											// 			'class' => 'btn btn-danger act-update',
-											// 			'data-confirm' => 'Are you sure to delete this item?',
-                                    		// 			'data-method' => 'post',
-											// 		]);
-											?>
-										</td>
-									</tr>
-									<?php  endforeach; ?>
+					<tr>
+						<td><?=$model['id']?></td>
+						<td>
+							<div class="project-members">
+								<a href="javascript:void(0)">
+								<?php if(!empty($model['img'])){
+									echo Html::img('@web/uploads/product/img/'.$model['img'], ['alt' => 'My pic','class'=>'offline act-view','height'=>'50px','data-id'=> $model->code]); 
+								}else{
+									echo Html::img('@web/img/avatars/male.png', ['alt' => 'My pic','class'=>'offline act-view', 'height'=>'50px', 'data-id'=> $model->code]); 
+								}?>
+								</a>
+							</div>
+						</td>
+						<td><?=$model->code?> 
+							<!-- <a href= "index.php?r=product/gencode&id=<?=$model['id']?>" class="btn btn-warning btn-xs" data-id=<?=$model['id']?>><i class="fa fa-pencil-square-o"></i> GenCode</a> -->
+						</td>
+						<td><?=$model['product_name']?></td>
+						<td><?=$model->getCatalogtName()?></td>
+						<td><?=$model->create_at?></td>
+						<td><?=$model['instoke']?> <?=$model->getUnitName()?></td>
+						<td>
+							<a herf= "#" class="btn btn-warning act-update" data-id=<?=$model['id']?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
+							<!-- <a herf= "#" class="btn btn-warning act-view" data-id=<?=$model->id?>><i class="fa fa-pencil-square-o"></i> ดู</a> -->
+							<?php
+							// echo Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $model->id],
+							// 		[
+							// 			'class' => 'btn btn-danger act-update',
+							// 			'data-confirm' => 'Are you sure to delete this item?',
+							// 			'data-method' => 'post',
+							// 		]);
+							?>
+						</td>
+					</tr>
+					<?php  endforeach; ?>
 				
 				</tbody>
                 <!-- <tfoot>
@@ -111,7 +111,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $script = <<< JS
 
 
-	var url_update = "index.php?r=product/update";
+	var url_update = "update";
     	$(".act-update").click(function(e) {            
 			var fID = $(this).data("id");
 			// alert(fID);
@@ -123,7 +123,7 @@ $script = <<< JS
         	});
     	});
 
-	var url_view = "index.php?r=product/view";		
+	var url_view = "view";		
     	$(".act-view").click(function(e) {					
                 var fID = $(this).data("id");
 				// alert(fID);
@@ -134,7 +134,19 @@ $script = <<< JS
                         $("#activity-modal").modal("show");
                     }
                 );
-            });   
+            });  
+			   
+    var url_create = "create";
+	$( "#act-create" ).click(function() { 
+        $.get(url_create,function (data){
+            $("#activity-modal").find(".modal-body").html(data);
+            $(".modal-body").html(data);
+            $(".modal-title").html("เพิ่มข้อมูล");
+            // $(".modal-footer").html(footer);
+            $("#activity-modal").modal("show");
+            //   $("#myModal").modal('toggle');
+        });     
+	}); 
     
      
 $(document).ready(function() {	
@@ -150,17 +162,7 @@ $('#product-index').DataTable({
 
 			
 
-$( "#act-create" ).click(function() {    
-    var url_create = "index.php?r=product/create";
-        $.get(url_create,function (data){
-            $("#activity-modal").find(".modal-body").html(data);
-            $(".modal-body").html(data);
-            $(".modal-title").html("เพิ่มข้อมูล");
-            // $(".modal-footer").html(footer);
-            $("#activity-modal").modal("show");
-            //   $("#myModal").modal('toggle');
-        });     
-	}); 
+ 
 		
 });
 JS;

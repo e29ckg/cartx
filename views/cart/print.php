@@ -78,7 +78,7 @@ use yii\helpers\Html;
                 <td><?=$model_list->unit_price?></td>
                 <td><?=$model_list->quantity?> <?=$model_list->getProductUnitName()?></td>
                 <td>
-                <?php//=$total = $productUP * $productQTY?>
+                <?=$total = $productUP * $productQTY?>
                 </td>
             </tr>
 

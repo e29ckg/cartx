@@ -53,6 +53,7 @@ class Order extends \yii\db\ActiveRecord
         ];
     }
 
+    
     public function getProfile()
     {
         return $this->hasOne(Profile::className(), ['user_id' => 'id_user']);

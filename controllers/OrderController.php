@@ -41,6 +41,7 @@ class OrderController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'cancle' => ['POST'],
                 ],
             ],
         ];
@@ -52,9 +53,9 @@ class OrderController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Order::find(),
-        ]);
+        // $dataProvider = new ActiveDataProvider([
+        //     'query' => Order::find(),
+        // ]);
         $model = Order::find()->orderBy([
             'create_at'=>SORT_ASC,
             'id' => SORT_DESC,
@@ -65,7 +66,7 @@ class OrderController extends Controller
         return $this->render('index',[
             'models' => $model,
             'countAll' => $countAll,
-            'dataProvider' => $dataProvider,
+            // 'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -170,7 +171,7 @@ class OrderController extends Controller
 
     public function actionPrint($id = null)
     {
-        $this->layout = 'cart_shop';   
+        // $this->layout = 'cart_shop';   
         $user_id = Yii::$app->user->id;
         $model = $this->findModel($id);
         $user_id = Yii::$app->user->id;

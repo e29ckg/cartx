@@ -37,13 +37,13 @@ if (Yii::$app->user->identity) {
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Shop | E-Shopper</title>
-    <link href="<?=Url::to(['css/bootstrap.min.css'])?>" rel="stylesheet">
-    <link href="<?=Url::to(['css/font-awesome.min.css'])?>" rel="stylesheet">
-    <link href="<?=Url::to(['css/prettyPhoto.css'])?>" rel="stylesheet">
-    <link href="<?=Url::to(['css/price-range.css'])?>" rel="stylesheet">
-    <link href="<?=Url::to(['css/animate.css'])?>" rel="stylesheet">
-	<link href="<?=Url::to(['css/main.css'])?>" rel="stylesheet">
-	<link href="<?=Url::to(['css/responsive.css'])?>" rel="stylesheet">
+    <link href="<?=Url::to('@web/css/bootstrap.min.css')?>" rel="stylesheet">
+    <link href="<?=Url::to('@web/css/font-awesome.min.css')?>" rel="stylesheet">
+    <link href="<?=Url::to('@web/css/prettyPhoto.css')?>" rel="stylesheet">
+    <link href="<?=Url::to('@web/css/price-range.css')?>" rel="stylesheet">
+    <link href="<?=Url::to('@web/css/animate.css')?>" rel="stylesheet">
+	<link href="<?=Url::to('@web/css/main.css')?>" rel="stylesheet">
+	<link href="<?=Url::to('@web/css/responsive.css')?>" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -194,12 +194,12 @@ if (Yii::$app->user->identity) {
 		
 	</footer><!--/Footer-->
   
-    <script src="<?=Url::to(['js/jquery.js'])?>"></script>
-	<script src="<?=Url::to(['js/price-range.js'])?>"></script>
-    <script src="<?=Url::to(['js/jquery.scrollUp.min.js'])?>"></script>
-	<script src="<?=Url::to(['js/bootstrap.min.js'])?>"></script>
-    <script src="<?=Url::to(['js/jquery.prettyPhoto.js'])?>"></script>
-    <script src="<?=Url::to(['js/main.js'])?>"></script>
+    <script src="<?=Url::to('@web/js/jquery.js')?>"></script>
+	<script src="<?=Url::to('@web/js/price-range.js')?>"></script>
+    <script src="<?=Url::to('@web/js/jquery.scrollUp.min.js')?>"></script>
+	<script src="<?=Url::to('@web/js/bootstrap.min.js')?>"></script>
+    <script src="<?=Url::to('@web/js/jquery.prettyPhoto.js')?>"></script>
+    <script src="<?=Url::to('@web/js/main.js')?>"></script>
 	<script >
 		$(document).ready(function() {
 			// add-to-cart						
