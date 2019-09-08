@@ -17,7 +17,7 @@ if (Yii::$app->controller->action->id === 'login') {
         ['content' => $content]
     );
 } else {
-    $directoryAsset = Url::to(['@web']);
+    $directoryAsset = Url::to('@web/adminlte');
 ?>
     <?php $this->beginPage() ?>
     <!DOCTYPE html>
@@ -72,7 +72,7 @@ if (Yii::$app->controller->action->id === 'login') {
 
     <?php $this->endBody() ?>
     <!-- jQuery 3 -->
-<script src="<?=Url::to(['bower_components/jquery/dist/jquery.min.js'])?>"></script>
+<script src="<?=Url::to(['adminlte/bower_components/jquery/dist/jquery.min.js'])?>"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="<?=Url::to(['adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js'])?>"></script>
 <!-- SlimScroll -->
@@ -88,8 +88,7 @@ if (Yii::$app->controller->action->id === 'login') {
     $('.sidebar-menu').tree()
   })
 </script>
-    <script src="<?=Url::to(['@web/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js'])?>"></script>
-    </body>
+     </body>
     </html>
     <?php $this->endPage() ?>
 <?php } ?>
