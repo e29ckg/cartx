@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?=$k = $modelRMLs->kb + $modelRMLs->r - $modelRMLs->o?></td>
                     <td><?=$modelRMLs->unit_price?></td>
                     <td><?=$K_price = $k * $modelRMLs->unit_price?></td>
-                    <td></td>
+                    <td><?=$modelRMLs->detail?></td>
 									</tr>
               <?php  
               $K_price_sum = $K_price_sum + $K_price;
@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
                  <tr>
                   <th></th>
                   <th><?=$start .' - '.$end?></th>
-                  <th></th>
+                  <th><?=$start + $end?></th>
                   <th></th>
                   <th></th>
                   <th></th>

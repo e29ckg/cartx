@@ -164,4 +164,15 @@ class SettingController extends Controller
         endforeach; 
          echo 'LogSt_end.';
     }
+
+    public function actionUp()
+    {
+        $this->actionUp_order();
+        $this->actionUp_order_list();
+        $this->actionUp_receipt_list();
+        $this->actionUp_receipt();
+        $this->actionUp_logst();
+         echo 'Up_Ok.';
+    }
+
 }
