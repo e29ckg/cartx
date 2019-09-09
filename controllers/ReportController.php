@@ -262,7 +262,7 @@ class ReportController extends Controller
             endforeach;
 
         return $this->render('view',[
-            'month' => $month,
+            'month' => ReportML::DateThai_full($month),
             'start' => $start,
             'end' => $end,
             'rRMLs' => $rRMLs, 
@@ -289,7 +289,7 @@ class ReportController extends Controller
         // $end = "2019-04-30";        
         $month = date('Y-m', strtotime($m));
         // $monthB = "2019-03";
-        $monthB = date('Y-m', strtotime('last month', strtotime( $month)));
+        // $monthB = date('Y-m', strtotime('last month', strtotime( $month)));
 
         $create_at = date("Y-m-d H:i:s");
 
@@ -300,29 +300,29 @@ class ReportController extends Controller
             $ModelRPM->save();
         }
 
-        $rRMLs = ReportML::find()->where(['month' => $month])->all(); 
-        foreach ($rRMLs as $rRML):
-            $rRML->delete();
-        endforeach;
+        // $rRMLs = ReportML::find()->where(['month' => $month])->all(); 
+        // foreach ($rRMLs as $rRML):
+        //     $rRML->delete();
+        // endforeach;
+ReportML::DeleteAll();
 
-
-        $mPs = Product::find()->where(['status' => 1])
-            ->orderBy([
-                'category' => SORT_ASC,
-                'product_name' => SORT_ASC
-                ])
-            ->all();
+        // $mPs = Product::find()->where(['status' => 1])
+        //     ->orderBy([
+        //         'category' => SORT_ASC,
+        //         'product_name' => SORT_ASC
+        //         ])
+        //     ->all();
 
         // $modelLSts = LogSt::find()->where(['between','create_at',"2018-10-01" ,$end])->all();
-        foreach ($mPs as $mP):
+        // foreach ($mPs as $mP):
 
             /*----------------หายอดยกมา-------------------*/
-            $modelRLS = ReceiptList::find()
-                // ->where(['ym' => $month])
-                ->where(['product_code' => $mP->code])
-                ->andWhere(['<','ym',$month])
-                ->all();
-            foreach ($modelRLS as $model):  
+            // $modelRLS = ReceiptList::find()
+            //     // ->where(['ym' => $month])
+            //     ->where(['product_code' => $mP->code])
+            //     ->andWhere(['<','ym',$month])
+            //     ->all();
+            // foreach ($modelRLS as $model):  
 
                 // $mRML = ReportML::find()
                 //     ->where(['month' => $month,'product_code'=>$mP->code,'unit_price'=> $mRL->unit_price])
@@ -342,20 +342,32 @@ class ReportController extends Controller
                 //             $mML->save();  
                 //     }
 
-            endforeach;
+        //     endforeach;
 
 
-        endforeach;
+        // endforeach;
 
-            $rRMLs = ReportML::find()
+            // $rRMLs = ReportML::find()
             // ->where(['month' => $month])
-            ->all();
+            // ->all();
             // foreach ($rRMLs as $rRML):
             //     $rRML->k = $rRML->kb + $rRML->r - $rRML->o;
             //     $rRML->save();
             // endforeach;
 
-            $product_code = 'P20181217225643';
+            // $product_code = 'P20181217225643';
+
+        /*-------------------------------------------------------------------*/
+            // $RL = LogSt::find()
+            // ->where(['product_code' => $product_code,])
+            // // ->andWhere(['>','quantity',0])
+            // ->andWhere(['<','ym',$month])
+            // ->all();                                    //รับที่ผ่านมา
+
+            // $AAA = null;
+            // foreach ($RL as $model):
+            //     $AAA = $AAA + $model->quantity;                
+            // endforeach;
 
         /*-------------------------------------------------------------------*/
             // $RL = LogSt::find()
@@ -374,6 +386,7 @@ class ReportController extends Controller
             // ->where(['product_code' => $product_code])
             // ->andWhere(['<','quantity',0])
             // ->andWhere(['<','ym',$month])
+            // // ->groupBy(['unit_price'])
             // ->all();                                    //จ่ายที่ผ่านมาทั้งหมด
 
             // $BBB = null;
@@ -383,36 +396,102 @@ class ReportController extends Controller
 
         /*---------------------------------------------------------------------*/    
 
-        $RL = LogSt::find()
-        ->where(['product_code' => $product_code,])
-        ->andWhere(['>','quantity',0])
-        ->andWhere(['ym'=> $month])
-        ->all();                                    //รับเดือนนี้
+        // $RL = LogSt::find()
+        // ->where(['product_code' => $product_code,])
+        // ->andWhere(['>','quantity',0])
+        // ->andWhere(['ym'=> $month])
+        // ->all();                                    //รับเดือนนี้
 
-        $AAA = null;
-        foreach ($RL as $model):
-            $AAA = $AAA + $model->quantity;                
-        endforeach;
+        // $AAA = null;
+        // foreach ($RL as $model):
+        //     $AAA = $AAA + $model->quantity;                
+        // endforeach;
     /*---------------------------------------------------------------------*/
 
-        $RL = LogSt::find()
-            ->where(['product_code' => $product_code])
-            ->andWhere(['<','quantity',0])
-            ->andWhere(['ym' => $month])
-            ->all();                                    //จ่ายที่เดือนนี้ 
+        // $RL = LogSt::find()
+        //     ->where(['product_code' => $product_code])
+        //     ->andWhere(['<','quantity',0])
+        //     ->andWhere(['ym' => $month])
+        //     ->count();                                    //จ่ายที่เดือนนี้ 
 
-            $BBB = null;
-            foreach ($RL as $model):
-                $BBB = $BBB + $model->quantity;                
-            endforeach;
+        //     $BBB = null;
+        //     foreach ($RL as $model):
+        //         $BBB = $BBB + $model->quantity;                
+        //     endforeach;
 
     /*---------------------------------------------------------------------*/    
+                        //   unit_price โปรดักแต่ละราคา
+    $MP = Product::find()->where(['status'=>'1'])->all();
+    foreach ($MP as $modelP):
 
+        $RL = LogSt::find()
+            // ->select(['unit_price','product_code','unit_price',])
+            ->where(['product_code' => $modelP->code])
+            // ->andWhere(['<','quantity',0])
+            // ->andWhere(['<','ym',$month])
+            ->groupBy(['unit_price']) 
+            ->all();
+                
+
+        // if(isset($RL)){
+            foreach ($RL as $model):
+                $ModelRPM = new ReportML();
+                $ModelRPM->month = $month;
+                $ModelRPM->product_code = $modelP->code;
+                $ModelRPM->product_unit = $modelP->unit;
+
+                $kb = null;
+                $o= null;
+                $r= null;
+                $modelKB = LogSt::find()
+                    ->where(['<=','ym',$month])
+                    ->andWhere([
+                        'unit_price'=>$model->unit_price,
+                        'product_code'=> $model->product_code
+                        ])
+                    ->all();
+
+                foreach ($modelKB as $modelK):
+                    if($modelK->ym < $month){
+                        $kb = $kb + $modelK->quantity;
+                    }
+                    if($modelK->ym == $month && $modelK->quantity > 0 ){
+                        $r = $r + $modelK->quantity;
+                    }
+                    if($modelK->ym == $month  && $modelK->quantity < 0){
+                        $o = $o + $modelK->quantity;
+                    }
+                endforeach;
+
+                $ModelRPM->kb = $kb; 
+                $ModelRPM->r = $r;
+                $ModelRPM->o = $o;
+                $ModelRPM->k = $ModelRPM->kb + $ModelRPM->r + $ModelRPM->o;               
+                $ModelRPM->unit_price = $model->unit_price;
+                $ModelRPM->save();   
+    
+            endforeach;
+        // }
+        
+    endforeach;
+    /*-------------------------------------------------------------------------*/
+
+    // $RL = LogSt::find()->where(['<','ym',$month])->all();      //ss
+
+    // // $AAA = null;
+    // foreach ($RL as $model):
+    //     $AAA = $AAA + $model->quantity;  
+        
+        
+    // endforeach;
+
+    $rRMLs = ReportML::find()->where(['month' => $month])->all(); 
         return $this->render('view',[
-            'month' => $month,
-            'start' => $AAA,
-            'end' => $BBB,
+            'month' => ReportML::DateThai_full($month),
+            'start' => 1,
+            'end' => 1,
             'rRMLs' => $rRMLs, 
+            'RL' => $RL,
         ]);
     }
 }

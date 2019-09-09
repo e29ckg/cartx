@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 //  use yii\grid\GridView;
-use app\model\Product;
+use app\model\ReportML;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
 use yii\helpers\BaseFileHelper;
@@ -11,9 +11,10 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'ตารางสรุปการรับ-จ่ายวัสดุ ประจำเดือน '.$month;
+$this->title = 'ตารางสรุปการรับ-จ่ายวัสดุ ประจำเดือน '. $month;
 $this->params['breadcrumbs'][] = $this->title;
 // var_dump();
+
 ?>
 
 <!-- Main content -->
@@ -22,10 +23,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title"><?=$this->title?> : <?=$month?></h3>
+              <h3 class="box-title"> : <?=$month?></h3>
 			  <div class="box-tools">
-          ระหว่างวันที่ <?=$start .' - '.$end?>
-					<!-- <a href= "#" id="act-create" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> สร้างรายงาน</a> -->
+         	<!-- <a href= "#" id="act-create" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> สร้างรายงาน</a> -->
 
         </div>
       </div>
@@ -52,21 +52,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 $i = 1 ;
                 $K_price = 0 ;
                 $K_price_sum = 0;
-              foreach ($rRMLs as $modelRMLs): ?>
+              foreach ($rRMLs as $modelRMLs): 
+              if($modelRMLs->kb <> 0 || $modelRMLs->r <> 0 || $modelRMLs->o <> 0){?>
+
 						      <tr>    
 										<td><?=$i?></td>
 										<!-- <td><?=$modelRMLs->month?></td> -->
                     <td><?=$modelRMLs->getProductName()?></td>
-                    <td><?=$modelRMLs->product_unit?></td>
+                    <td><?=$modelRMLs->productUnit->name_unit?></td>
 								    <td><?=$modelRMLs->kb ? $modelRMLs->kb : '0' ?></td>
                     <td><?=$modelRMLs->r ? $modelRMLs->r : '0' ?></td>
                     <td><?=$modelRMLs->o ? $modelRMLs->o : '0'  ?></td>
-                    <td><?=$k = $modelRMLs->kb + $modelRMLs->r - $modelRMLs->o?></td>
+                    <td><?=$modelRMLs->k ? $modelRMLs->k : '0'?></td>
                     <td><?=$modelRMLs->unit_price?></td>
-                    <td><?=$K_price = $k * $modelRMLs->unit_price?></td>
+                    <td><?=$K_price = $modelRMLs->k * $modelRMLs->unit_price?></td>
                     <td><?=$modelRMLs->detail?></td>
 									</tr>
               <?php  
+              }
               $K_price_sum = $K_price_sum + $K_price;
                 $i++;
                 endforeach; ?>
@@ -75,8 +78,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tfoot>
                  <tr>
                   <th></th>
-                  <th><?=$start .' - '.$end?></th>
-                  <th><?=$start + $end?></th>
+                  <th>ประจำเดือน : <?=$month?></th>
+                  <th></th>
                   <th></th>
                   <th></th>
                   <th></th>
@@ -85,6 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   <th><?=$K_price_sum?></th>
                   <th></th>
                 </tr>
+                
                 </tfoot>  
               </table>
             </div>
@@ -97,6 +101,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- /.row -->
 </section>
 <!-- /.content -->
+
+<?php//var_dump($RL)?>
 
 
 
