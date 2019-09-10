@@ -20,6 +20,7 @@ use yii\helpers\Url;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 use yii\data\Pagination;
+use yii\db\Transaction;
 use kartik\mpdf\Pdf;
 
 /**
@@ -219,6 +220,7 @@ class CartController extends Controller
     }
 
     public function actionAdd_to_cart($code = null) {
+
         $this->layout = 'cart_shop'; 
         $models = Product::find()->where(['code', $code]);
 
@@ -314,6 +316,7 @@ class CartController extends Controller
         $code = 'A'.date("YmdHis");
         $create_at = date("Y-m-d H:i:s");
         
+        $transaction = Yii::$app->db->beginTransaction();
         try {
             
             $Total = 0 ;
@@ -362,16 +365,17 @@ class CartController extends Controller
                                     $modelOL->order_code = $code;
                                     $modelOL->product_code = $codeProduct;
                                     $modelOL->receipt_list_id = $modelRL->id;
+                                    $modelOL->ym = date('Y-m', strtotime($create_at)); 
                                     $modelOL->unit_price = $unit_price; 
                                     $modelOL->quantity = $QLP;
-                                    $modelOL->create_at = $create_at;
-                                    
+                                    $modelOL->create_at = $create_at;                                    
                                 
                                 $modelLST = new LogSt();
                                     $modelLST->code = $code;
                                     $modelLST->product_code = $codeProduct;
                                     $modelLST->unit_price = $unit_price; 
                                     $modelLST->receipt_list_id = $modelRL->id; 
+                                    $modelLST->ym = date('Y-m', strtotime($create_at)); 
                                     $modelLST->quantity = '-'.$QLP;
                                     $modelLST->note = 'OUT';
                                     $modelLST->create_at = $create_at;
@@ -379,47 +383,45 @@ class CartController extends Controller
                                     // Yii::$app->session->setFlash('error', 'ไม่สำเร็จ');
                                 }else{
                                     Yii::$app->session->setFlash('error', 'ไม่สำเร็จ');
-                                }    
-                                    
-                                    
-                            }     
-                                
+                                }   
+                            }                                     
                                 $Total = $modelRL->unit_price * $QLP;
                                 $sumTotal = $sumTotal + $Total;
                                 $x++;  
                         endforeach;                         
                     }
                 }
+
                 $modelO = new Order();
-                            $modelO->order_code = $code;
-                            $modelO->id_user = Yii::$app->user->identity->id;
-                            $modelO->status = 1;
-                            $modelO->sumtotal = $sumTotal;
-                            $modelO->create_at = $create_at;
-                            if($modelO->save()){
-                                // echo '<script type="text/javascript">alert("ok!");</script>';
-                                
-                                $message = 'มีเบิกของเลขที่ '.$code.' โดย '.Yii::$app->user->identity->username;
-                                // $res = $this->notify_message($message);
-                                Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');       
-                                // return $this->redirect(['index', 'ses' => $res]);
-                            }else{
-                                // echo '<script type="text/javascript">alert("no save");</script>';
-                                Yii::$app->session->setFlash('error', 'ไม่สำเร็จ');
-                            }
+                $modelO->order_code = $code;
+                $modelO->id_user = Yii::$app->user->identity->id;
+                $modelO->status = 1;
+                $modelO->ym = date('Y-m', strtotime($create_at)); 
+                $modelO->sumtotal = $sumTotal;
+                $modelO->create_at = $create_at;
+                if($modelO->save()){
+                    // echo '<script type="text/javascript">alert("ok!");</script>';
+                    
+                    $message = 'มีเบิกของเลขที่ '.$code.' โดย '.Yii::$app->user->identity->username;
+                    // $res = $this->notify_message($message);
+                    Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');       
+                    // return $this->redirect(['index', 'ses' => $res]);
+                }else{
+                    // echo '<script type="text/javascript">alert("no save");</script>';
+                    Yii::$app->session->setFlash('error', 'ไม่สำเร็จ');
+                }
             }      
 
             unset($_SESSION['inLine']);	
             unset($_SESSION['strProductCode']);	
             unset($_SESSION['strQty']);
 
+            $transaction->commit();
+
 		} catch(\Exception $e) {
             $transaction->rollBack();
             throw $e;
-        } catch(\Throwable $e) {
-            $transaction->rollBack();
-            throw $e;
-        }			
+        }		
 
         return $this->redirect(['account']); 
     //     return $this->redirect(['checkout']);
@@ -431,7 +433,7 @@ class CartController extends Controller
         $model = Order::find()->where(['id_user'=> $user_id])->orderBy(['create_at' => SORT_DESC])->all();
         return $this->render('account',[
             'models' => $model,
-    ]); 
+        ]); 
     }
 
     public function actionPrint() {
@@ -446,7 +448,6 @@ class CartController extends Controller
     public function actionPdf($id = null)
     {
         $this->layout = 'cart_shop';   
-        $user_id = Yii::$app->user->id;
         $model = $this->findModel($id);
         $user_id = Yii::$app->user->id;
         $model_lists = OrderList::find()->where(['order_code'=> $model->order_code])->all();
@@ -454,7 +455,7 @@ class CartController extends Controller
         Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
     $pdf = new Pdf([
         'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
-        'content' => $this->renderPartial('print',['model' => $model,'model_lists' =>$model_lists]),
+        'content' => $this->renderPartial('pdf',['model' => $model,'model_lists' =>$model_lists]),
         'cssFile' => 'css/pdf.css',
         'options' => [
             // any mpdf options you wish to set

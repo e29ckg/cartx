@@ -124,11 +124,11 @@ class ReceiptController extends Controller
             $_SESSION['strProductUnitPriceR'][$id] = ""; 
             $_SESSION['strQtyR'][$id] = "";
         // return $this->render('add'); 
-        if(Yii::$app->request->isAjax){
-            return $this->renderAjax('add');
-        }else{
-            return $this->render('add'); 
-        }
+        // if(Yii::$app->request->isAjax){
+        //     return $this->renderAjax('add');
+        // }else{
+            return $this->redirect(['add']); 
+        // }
     }
 
     public function actionAdd_conform() {
@@ -155,6 +155,7 @@ class ReceiptController extends Controller
                             'receipt_code' => $code,
                             'product_code' => $codeProduct,
                             'unit_price' => $UnitPrice,
+                            'ym' => date('Y-m', strtotime(date("Y-m-d"))), 
                             'quantity' => $strQtyR,
                             'create_at' => $create_at,
                         ])->execute();
@@ -168,6 +169,7 @@ class ReceiptController extends Controller
                             'product_code' => $codeProduct,
                             'receipt_list_id' => $modelRL->id,
                             'unit_price' => $UnitPrice,
+                            'ym' => date('Y-m', strtotime(date("Y-m-d"))), 
                             'quantity' => $strQtyR,
                             'note' => 'IN',
                             'create_at' => $create_at,
@@ -183,6 +185,7 @@ class ReceiptController extends Controller
                 Yii::$app->db->createCommand()->insert('receipt', [
                     'receipt_code' => $code,
                     'user_id' => Yii::$app->user->identity->id,
+                    'ym' => date('Y-m', strtotime(date("Y-m-d"))),
                     'sumtotal' => $sumTotal,
                     'status' => 1,
                     'create_at' => $create_at,
@@ -242,6 +245,7 @@ class ReceiptController extends Controller
         $model = new Order();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->ym = date('Y-m', strtotime(date("Y-m-d"))); 
             $model->create_at = date("Y-m-d H:i:s");
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
@@ -310,6 +314,7 @@ class ReceiptController extends Controller
                 $modelLST->product_code = $modelRL->product_code;
                 $modelLST->unit_price = $modelRL->unit_price; 
                 $modelLST->receipt_list_id = $modelRL->id; 
+                $modelLST->ym = date('Y-m', strtotime(date("Y-m-d"))); 
                 $modelLST->quantity = '-'.$modelRL->quantity;
                 $modelLST->note = 'OUT';
                 $modelLST->create_at = $create_at;
@@ -317,6 +322,7 @@ class ReceiptController extends Controller
                 $modelRL->product_code = $modelRL->product_code;
                 $modelRL->unit_price = 0;
                 $modelRL->quantity = 0;
+                $modelRL->ym = date('Y-m', strtotime(date("Y-m-d"))); 
                 $modelRL->create_at = $create_at;
 
                 if($modelRL->save() and $modelLST->save() and $modelP->save()){
@@ -326,6 +332,7 @@ class ReceiptController extends Controller
             endforeach;
             $models->status = 4;
             $models->sumtotal = 0;
+            $models->ym = date('Y-m', strtotime(date("Y-m-d"))); 
             $models->create_at = $create_at;
             $models->save();
         }

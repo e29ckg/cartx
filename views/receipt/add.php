@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\grid\GridView;
 use app\models\Product;
 
@@ -58,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							<td class=""><?=$_SESSION['strQtyR'][$i]?></td>	
 							<td class=""><?=$Total?></td>				
 							<td class="cart_delete">
-								<a class="btn btn-warning"  data-id="<?=$i?>" href="index.php?r=receipt/delete_list&id=<?=$i?>"><i class="fa fa-times"></i> ลบ</a>
+								<a class="btn btn-warning"  data-id="<?=$i?>" href="<?=Url::to(['receipt/delete_list','id'=>$i])?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-times"></i> ลบ</a>
 							</td>
 						</tr>						
 
@@ -81,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
         	<!-- /.box -->
 			<div>
 				<?php if($sumTotal <> 0){?>
-					<a data-id="" href="index.php?r=receipt/add_conform" class="btn btn-success"><i class="fa fa-times"></i>ยืนยัน</a>
+					<a data-id="" href="<?=Url::to(['receipt/add_conform'])?>" class="btn btn-success"><i class="fa fa-times"></i>ยืนยัน</a>
 				<?php } ?>				
 			</div>
 
@@ -100,7 +101,7 @@ $(document).ready(function() {
 
 $( "#act-create" ).click(function() {    
 	// alert(123);
-    var url_create = "index.php?r=receipt/add_list";
+    var url_create = "add_list";
         $.get(url_create,function (data){
             $("#activity-modal").find(".modal-body").html(data);
             $(".modal-body").html(data);

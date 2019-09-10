@@ -104,6 +104,7 @@ class OrderController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->create_at = date("Y-m-d H:i:s");
+            $model->ym = date('Y-m', strtotime(date("Y-m-d"))); 
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -221,6 +222,7 @@ class OrderController extends Controller
                 if($QTY <> 0){
                     $model_receipt_lists = $this->findModel_rl($model_order_list->receipt_list_id);
                     $model_receipt_lists->quantity = $model_receipt_lists->quantity + $QTY;
+                    $model_receipt_lists->ym = date('Y-m', strtotime(date("Y-m-d"))); 
                     $model_receipt_lists->create_at = date("Y-m-d H:i:s");
                   
                     $modelP = Product::find()->where(['code'=> $model_order_list->product_code])->one();
@@ -234,6 +236,7 @@ class OrderController extends Controller
                         $modelLST->product_code = $model_order_list->product_code;
                         $modelLST->unit_price = $model_order_list->unit_price; 
                         $modelLST->receipt_list_id = $model_order_list->receipt_list_id; 
+                        $modelLST->ym = date('Y-m', strtotime(date("Y-m-d"))); 
                         $modelLST->quantity = $QTY;
                         $modelLST->note = 'ยกเลิก Order';
                         $modelLST->create_at = date("Y-m-d H:i:s");

@@ -380,17 +380,20 @@ class ProductController extends Controller
         $modelsRL = ReceiptList::find()->where(['product_code' => $modelsProduct->code])->All();
         foreach ($modelsRL as $modelRL): 
             $modelRL->product_code = $code;
+            $modelRL->ym = date('Y-m', strtotime(date("Y-m-d"))); 
             $modelRL->save();
         endforeach; 
         $modelsOL = OrderList::find()->where(['product_code' => $modelsProduct->code])->All();
         foreach ($modelsOL as $modelOL): 
             $modelOL->product_code = $code;
+            $modelOL->ym = date('Y-m', strtotime(date("Y-m-d"))); 
             $modelOL->save();
         endforeach;
 
         $modelsGSt = LogSt::find()->where(['product_code' => $modelsProduct->code])->All();
         foreach ($modelsGSt as $modelGSt): 
             $modelGSt->product_code = $code;
+            $modelGST->ym = date('Y-m', strtotime(date("Y-m-d"))); 
             $modelGSt->save();
         endforeach;
         

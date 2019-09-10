@@ -1,7 +1,8 @@
 <?php
 
 namespace app\models;
-
+use yii\helpers\Html;
+use yii\helpers\Url;
 use Yii;
 
 /**
@@ -9,38 +10,34 @@ use Yii;
  *
  * @property int $id
  * @property string $user_id
- * @property string $id_card
- * @property string $fullname
+ * @property string $fname
  * @property string $name
  * @property string $sname
- * @property string $img
+ * @property string $photo
  * @property string $birthday
- * @property string $bloodtype
  * @property int $idc
  * @property string $dep
  * @property string $address
- * @property string $postcode
- * @property string $phone
- * @property string $create_at
- * @property string $updated_at
- * @property int $st
+ * @property string $tel
+ * @property int $created_at
+ * @property int $updated_at
  */
 class Profile extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
-        return 'profile';
-    }
+    public $nopic ='/adminlte2/dist/img/user2-160x160.jpg';
+    public $upload ='/uploads/user/';
 
-    /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
     public static function getDb()
     {
         return Yii::$app->get('db2');
+    }
+    
+    public static function tableName()
+    {
+        return 'profile';
     }
 
     /**
@@ -49,13 +46,13 @@ class Profile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'fullname', 'name'], 'required'],
-            [['birthday', 'create_at', 'updated_at'], 'safe'],
-            [['idc', 'st'], 'integer'],
-            [['user_id', 'id_card', 'fullname', 'img', 'dep', 'address', 'phone'], 'string', 'max' => 255],
-            [['name', 'sname', 'bloodtype'], 'string', 'max' => 50],
-            [['postcode'], 'string', 'max' => 5],
-            [['user_id'], 'unique'],
+            [['fname','name','sname'], 'required'],
+            // [['birthday'], 'safe'],
+            // // [['created_at', 'updated_at'], 'integer'],
+            // [['img', 'dep', 'address', 'phone'], 'string', 'max' => 255],
+            // [['fname'], 'string', 'max' => 25],
+            // [['name', 'sname'], 'string', 'max' => 50],
+            // [['name','id_card'], 'unique'],
         ];
     }
 
@@ -67,21 +64,65 @@ class Profile extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'id_card' => 'Id Card',
-            'fullname' => 'Fullname',
-            'name' => 'Name',
-            'sname' => 'Sname',
-            'img' => 'Img',
-            'birthday' => 'Birthday',
-            'bloodtype' => 'Bloodtype',
-            'idc' => 'Idc',
-            'dep' => 'Dep',
-            'address' => 'Address',
-            'postcode' => 'Postcode',
-            'phone' => 'Phone',
-            'create_at' => 'Create At',
+            'fname' => 'คำนำหน้าชื่อ',
+            'name' => 'ชื่อ',
+            'sname' => 'นามสกุล',
+            'img' => 'รูปภาพ',
+            'birthday' => 'วันเกิด',
+            'id_card' => 'เลขบัตรประชาชน',
+            'dep' => 'ตำแหน่ง',
+            'address' => 'ที่อยู่',
+            'phone' => 'เบอร์โทรศัพท์',
+            'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-            'st' => 'St',
         ];
     }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'id']);
+    }
+
+    public function getProfileActive(){
+        if(isset(Yii::$app->user->identity->id)){
+            $model = Profile::findOne(Yii::$app->user->identity->id);
+            $dir = Url::to('@webroot/uploads/user/');
+        
+            if(isset($model->img) && is_file($dir.$model->img)){
+                $model->img = Url::to('@web/uploads/user/').$model->img;
+            }else{
+                $model->img = Url::to('@web/img/nopic.png'); 
+            }
+
+            return [
+                'fullname' => $model->fname.$model->name.' '.$model->sname,
+                'dep' => $model->dep,
+                'img'   => $model->img
+            ]; 
+        } 
+        return [
+            'fullname' => 'Guest',
+            'dep' => '-',
+            'img'   => Yii::getAlias('@web').'/img/nopic.png'
+        ];        
+    }
+
+    public function getProfileImg($img){        
+        
+        $dir = Url::to('@webroot/uploads/user/');
+        
+        if(isset($img) && is_file($dir.$img)){
+            return  Url::to('@web/uploads/user/').$img;
+        }
+        return Url::to('@web/img/nopic.png') ;
+        // return Yii::getAlias('@web').(!empty($model->img)  ? '/uploads/user/'.$model->img : '/img/nopic.png');
+    }
+
+    public function getProfileNameById($id){        
+        
+        $model = Profile::findOne($id);
+        
+        return !empty($model->id)  ? $model->fname.$model->name .' ' .$model->sname : '';
+    }
+        
 }

@@ -35,7 +35,7 @@ class ReceiptList extends \yii\db\ActiveRecord
         return [
             [['quantity', 'unit_price','product_code'], 'required'],
             [['quantity'], 'integer'],
-            // [['unit_price'], 'number'],
+            [['unit_price'], 'number'],
             [['create_at'], 'safe'],
             [['receipt_code'], 'string', 'max' => 32],
             [['product_code'], 'string', 'max' => 255],
