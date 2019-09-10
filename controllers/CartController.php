@@ -453,24 +453,26 @@ class CartController extends Controller
         $model_lists = OrderList::find()->where(['order_code'=> $model->order_code])->all();
     
         Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
-    $pdf = new Pdf([
-        'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
-        'content' => $this->renderPartial('pdf',['model' => $model,'model_lists' =>$model_lists]),
-        'cssFile' => 'css/pdf.css',
-        'options' => [
-            // any mpdf options you wish to set
-        ],
-        'methods' => [
-            // 'SetTitle' => 'Privacy Policy - Krajee.com',
-            // 'SetSubject' => 'Generating PDF files via yii2-mpdf extension has never been easy',
-            // 'SetHeader' => ['Krajee Privacy Policy||Generated On: ' . date("r")],
-            // 'SetFooter' => ['|Page {PAGENO}|'],
-            // 'SetAuthor' => 'Kartik Visweswaran',
-            // 'SetCreator' => 'Kartik Visweswaran',
-            // 'SetKeywords' => 'Krajee, Yii2, Export, PDF, MPDF, Output, Privacy, Policy, yii2-mpdf',
-        ]
-    ]);
-    return $pdf->render();
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+            'content' => $this->renderPartial('print',['model' => $model,'model_lists' =>$model_lists]),
+            'cssFile' => 'css/pdf.css',
+            'options' => [
+                // any mpdf options you wish to set
+            ],
+            'methods' => [
+                // 'SetTitle' => 'Privacy Policy - Krajee.com',
+                // 'SetSubject' => 'Generating PDF files via yii2-mpdf extension has never been easy',
+                // 'SetHeader' => ['Krajee Privacy Policy||Generated On: ' . date("r")],
+                // 'SetFooter' => ['|Page {PAGENO}|'],
+                // 'SetAuthor' => 'Kartik Visweswaran',
+                // 'SetCreator' => 'Kartik Visweswaran',
+                // 'SetKeywords' => 'Krajee, Yii2, Export, PDF, MPDF, Output, Privacy, Policy, yii2-mpdf',
+            ]
+        ]);
+        return $pdf->render();
+
+        // return $this->render('print',['model' => $model,'model_lists' =>$model_lists]);
     }
 
     protected function findModel($id)

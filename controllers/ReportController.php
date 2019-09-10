@@ -304,7 +304,7 @@ class ReportController extends Controller
         // foreach ($rRMLs as $rRML):
         //     $rRML->delete();
         // endforeach;
-ReportML::DeleteAll();
+ReportML::DeleteAll(['month' => $month]);
 
         // $mPs = Product::find()->where(['status' => 1])
         //     ->orderBy([

@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 ?>
 
 <table width="100%">
@@ -7,7 +8,11 @@ use yii\helpers\Html;
         <td width="100%" style="text-align: right">
             <h4>รหัสใบเบิก <?= $model->order_code ?></h4>            
         </td>
-        
+        <?php
+$qr = 'https://programmerthailand.com';
+?>
+<barcode code="<?=$qr?>" type="QR" size="0.3" error="M" disableborder = "1"/>
+
     </tr>
     <tr>
     <td width="100%" style="text-align: right">
@@ -29,80 +34,39 @@ use yii\helpers\Html;
 <table class="table_bordered" width="100%" border="0" cellpadding="2" cellspacing="0">
     <thead>
 		<tr class="cart_menu">
-	    	<th class="image">ลำดับ<br>no.</th>
-			<th class="description">รายการ</th>
-			<th class="price">ราคาต่อหน่วย</th>
-			<th class="quantity">จำนวน</th>
-			<th class="total">ราคารวม<br>Total</th>
+            <th width="5%" class="image">ลำดับ<br>no.</th>
+	    	<th width="5%" class="image">ภาพ</th>
+			<th width="55%" class="description">รายการ</th>
+			<th width="10%"class="price">ราคาต่อหน่วย</th>
+			<th width="10%" class="quantity">จำนวน</th>
+			<th width="10%" class="total">ราคารวม<br>Total</th>
 		</tr>
 	</thead>
     <tbody>
         <?php $i = 1;
-                $total = 0;
-                $totalSum = 0;
-                $product_old = '';
-            $productUP_old = 0;
+            $quantity = 0;
+            $unit = 0;
+            $product = '';
+            $product_code = null;
             $productQTY_old = 0;
             $A = '';
                 ?>
-        <?php foreach ($model_lists as $model_list): ?>
-        <?php     
-        if($product_old == ''){
-            $product_old = $model_list->product_code;
-            $productUP_old = $model_list->unit_price;
-            $productQTY_old = $model_list->quantity;
-        }else{
-            if($product_old == $model_list->product_code){
-                if($productUP_old == $model_list->unit_price){
-                    $productUP = $model_list->unit_price ;
-                    $productQTY = $productQTY_old + $model_list->quantity;                    
-                }else{
-                    $A = 'P';
-                }
-            } else{
-                $A = 'P';
-            }
-
-        }       
-        $product_old = $model_list->product_code;
-        $productUP_old = $model_list->unit_price;        
-            
-            if($A == 'P'){
-        ?>
-            
-                <tr>
-                <td><?=$i?><?='-'.$model_list->product_code?></td>
-                <td>
-                    <?=$model_list->getProductName()?>
-                </td>
-                <td><?=$model_list->unit_price?></td>
-                <td><?=$model_list->quantity?> <?=$model_list->getProductUnitName()?></td>
-                <td>
-                <?=$total = $productUP * $productQTY?>
-                </td>
-            </tr>
-
-            <?php
-            }
-        ?>
-            
-            <?php 
-            $totalSum = $totalSum + $total;
-            $i++;
-            ?>
-        <?php  endforeach; ?>    
-    </tbody>
-    <tbody>
-        <?php for($i;$i<=10;$i++){ ?>         
+        <?php foreach ($model_lists as $model): ?>
             <tr>
-                <td><?=$i?></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td style="text-align:center"><?=$i?></td>
+                <td><img src="<?=Url::to('@web/uploads/product/img/'.$model->getProductImg())?>" height="32" width="32"></td>
+                <td><?=$model->getProductName()?></td>
+                <td style="text-align:center"><?=$model->unit_price?></td>
+                <td style="text-align:center"><?=$model->quantity?></td>
+                <td style="text-align:right"><?= number_format($model->unit_price * $model->quantity, 2); ?></td>
             </tr>
-        <?php  } ?>    
+        <?php  
+            ++$i;
+            $quantity = $quantity + $model->unit_price * $model->quantity;
+            endforeach; 
+            ?>    
     </tbody>
+    
 </table>
 <table cellspacing="0" cellpadding="2" border="0" width="100%">
     <tr>
@@ -114,8 +78,8 @@ use yii\helpers\Html;
                         <u>ราคารวม :</u><br />
                         Total
                     </td>
-                    <td colspan="2" width="50%">
-                        <h3><?=$totalSum?></h3>
+                    <td colspan="2" width="50%" style="text-align:right">
+                        <h3><?=number_format($quantity, 2);?></h3>
                     </td>
                 </tr>                
             </table>
