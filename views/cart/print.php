@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-use yii\helpers\Url;
+
 ?>
 
 <table width="100%">
@@ -8,10 +8,6 @@ use yii\helpers\Url;
         <td width="100%" style="text-align: right">
             <h4>รหัสใบเบิก <?= $model->order_code ?></h4>            
         </td>
-        <?php
-$qr = 'https://programmerthailand.com';
-?>
-<barcode code="<?=$qr?>" type="QR" size="0.3" error="M" disableborder = "1"/>
 
     </tr>
     <tr>
@@ -54,7 +50,7 @@ $qr = 'https://programmerthailand.com';
         <?php foreach ($model_lists as $model): ?>
             <tr>
                 <td style="text-align:center"><?=$i?></td>
-                <td><img src="<?=Url::to('@web/uploads/product/img/'.$model->getProductImg())?>" height="32" width="32"></td>
+                <td><img src="<?=$model->getProductImg()?>" height="32" width="32"></td>
                 <td><?=$model->getProductName()?></td>
                 <td style="text-align:center"><?=$model->unit_price?></td>
                 <td style="text-align:center"><?=$model->quantity?></td>

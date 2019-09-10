@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "order_list".
@@ -68,9 +69,18 @@ class OrderList extends \yii\db\ActiveRecord
         return $modelUnit ? $modelUnit->name_unit:'';
     }
 
+    // public function getProductImg(){
+    //     $model = $this->product;
+    //     return $model ? $model->img:'';
+    // }
+
     public function getProductImg(){
         $model = $this->product;
-        return $model ? $model->img:'';
+        $source = Url::to('@webroot/uploads/product/img/'.$model->img);
+        if(is_file($source)){
+            return Url::to('@web/uploads/product/img/'.$model->img);
+        }
+        return  Url::to('@web/img/none.png'); 
     }
 
     public function getReceiptList()
