@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				  <th>ผู้เบิก</th>
 				  <td>ราคารวม</td>
                   <th>สถานะ(s)</th>
-                  <th>วัน-เวลา</th>
+                  <!-- <th>วัน-เวลา</th> -->
                   <th>เครื่องมือ</th>
                 </tr>
                 </thead>
@@ -37,11 +37,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>                  
 				<?php foreach ($models as $model): ?>
 				<td><?=$model->id?></td>
-					<td><a href= "#" class="act-view" data-id='<?=$model->id?>'><?=$model->order_code?></a></td>
+					<td>
+            <a href= "#" class="act-view" data-id='<?=$model->id?>'><?=$model->order_code?></a>
+            <br><?=$model->DateThai_full($model->create_at)?>
+          </td>
                   	<td><?=$model->getProfileName()?></td>
-                  	<td><?=$model->sumtotal?></td>
-					          <td><label class="label <?= $model->status == 4 ? 'label-danger' : 'label-info'?>"><?=$model->getStatus()[$model->status]?></label></td>
-                  	<td><?=$model->create_at?></td>
+                  	<td style="text-align:right"><?=number_format($model->sumtotal, 2)?></td>
+					          <td>
+                      <label class="label <?= $model->status == 4 ? 'label-danger' : 'label-info'?>">
+                        <?= isset($model->status) ? $model->getStatus()[$model->status] : '';?>
+                      </label>
+                    </td>
+                  	<!-- <td><?=$model->create_at?></td> -->
                   	<td>
 					  	<a href="<?=Url::to(['order/print','id'=>$model->id])?>" class ="btn btn-info btn-xs" target="_blank">พิมพ์ใบเบิก</a>
 						<?php

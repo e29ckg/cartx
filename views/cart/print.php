@@ -41,7 +41,7 @@ use yii\helpers\Html;
         <?php foreach ($model_lists as $model): ?>
         <tr>
             <td style="text-align:center"><?=$i?></td>
-            <td><img src="<?=$model->getProductImg()?>" height="32" width="32"></td>
+            <td style="text-align:center"><img src="<?=$model->getProductImg()?>" height="32" ></td>
             <td><?=$model->getProductName()?></td>
             <td style="text-align:center"><?=$model->unit_price?></td>
             <td style="text-align:center"><?=$model->quantity?> <?=$model->getProductUnitName()?></td>

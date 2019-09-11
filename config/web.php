@@ -49,7 +49,8 @@ $config = [
             'useCookies' => true,
        ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            // 'errorAction' => 'site/error',
+            'errorAction' => 'cart/index',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
