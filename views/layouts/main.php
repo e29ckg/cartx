@@ -98,7 +98,7 @@ $profileActive = Profile::getProfileActive();
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <?= Yii::$app->user->isGuest ? '' : Html::a('Profile', Url::to(['/user/profile'], true),['class'=>'btn btn-default btn-flat']) ?>
+                  <!-- <?= Yii::$app->user->isGuest ? '' : Html::a('Profile', Url::to(['/user/profile'], true),['class'=>'btn btn-default btn-flat']) ?> -->
                 </div>
                 
                 <div class="pull-right">

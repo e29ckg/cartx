@@ -6,6 +6,7 @@ $db2 = require __DIR__ . '/db2.php';
 
 $config = [
     'id' => 'basic',
+    'name' => 'E - sTock',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'defaultRoute' => '/cart/index',

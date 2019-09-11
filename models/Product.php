@@ -10,7 +10,7 @@ use yii\web\UploadedFile;
 
 use yii\helpers\BaseFileHelper;
 use yii\helpers\Json;
-
+use yii\helpers\Url;
 /**
  * This is the model class for table "product".
  *
@@ -106,6 +106,15 @@ class Product extends \yii\db\ActiveRecord
     public function getUnitList(){
         $model = ProductUnit::find()->select('id, name_unit')->orderBy('id')->all();
         return ArrayHelper::map($model,'id','name_unit');
+    }
+
+    public function getProductImg($img){
+        // $model = $this->product;
+        $source = Url::to('@webroot/uploads/product/img/'.$img);
+        if(is_file($source)){
+            return Url::to('@web/uploads/product/img/'.$img);
+        }
+        return  Url::to('@web/img/none.png'); 
     }
 
     public function getCountAll()

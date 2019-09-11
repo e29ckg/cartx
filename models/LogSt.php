@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-
+use yii\helpers\Url;
 /**
  * This is the model class for table "log_st".
  *
@@ -84,6 +84,15 @@ class LogSt extends \yii\db\ActiveRecord
         }
 
         return $model ? $model->user_id:'-';
+    }
+
+    public function getProductImg(){
+        $model = $this->product;
+        $source = Url::to('@webroot/uploads/product/img/'.$model->img);
+        if(is_file($source)){
+            return Url::to('@web/uploads/product/img/'.$model->img);
+        }
+        return  Url::to('@web/img/none.png'); 
     }
     
 }

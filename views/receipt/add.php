@@ -27,14 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
             	<div class="box-body">
               	<table id="receipt-index" class="table table-bordered table-hover">
                 	<thead>
-                		<tr>
-                  			<th>ID</th>
-				  			<th>CodeProduct</th>
-							<th>Product</th>
-				  			<th>ราคาต่อหน่วย</th>
-                  			<th>จำนวน</th>
-							  <th>ราคา</th>
-                  			<th>เครื่องมือ</th>
+                		<tr >
+                  			<th class="text-center">ID</th>
+				  			<th class="text-center">Img</th>
+							<th class="text-center">Product</th>
+				  			<th class="text-center">ราคาต่อหน่วย</th>
+                  			<th class="text-center">จำนวน</th>
+							<th class="text-center">ราคา</th>
                 		</tr>
                 	</thead>
                 	<tbody>
@@ -52,28 +51,25 @@ $this->params['breadcrumbs'][] = $this->title;
 								$sumTotal = $sumTotal + $Total;
 					?>
 						<tr>
-							<td class=""><?=$i?></td>				
-							<td class=""><?=$_SESSION['strProductCodeR'][$i]?></td>
-							<th><?=$model->product_name;?></th>
-							<td class=""><?=$_SESSION['strProductUnitPriceR'][$i]?></td>
-							<td class=""><?=$_SESSION['strQtyR'][$i]?></td>	
-							<td class=""><?=$Total?></td>				
+							<td class="text-center"><?=$i?></td>				
+							<!-- <td class=""><?=$_SESSION['strProductCodeR'][$i]?></td> -->
+							<td class="text-center"><img src="<?=$model->getProductImg($model->img);?>" alt="img-product" width="42px"></td>
+							<td><?=$model->product_name;?></td>
+							<td class="text-center"><?=number_format($_SESSION['strProductUnitPriceR'][$i],2)?></td>
+							<td class="text-center"><?=$_SESSION['strQtyR'][$i].' '.$model->getUnitName()?></td>	
+							<td class="text-right"><?=number_format($Total, 2)?></td>				
 							<td class="cart_delete">
-								<a class="btn btn-warning"  data-id="<?=$i?>" href="<?=Url::to(['receipt/delete_list','id'=>$i])?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-times"></i> ลบ</a>
+								<a class="btn btn-warning "  data-id="<?=$i?>" href="<?=Url::to(['receipt/delete_list','id'=>$i])?>" data-confirm = "Are you sure you want to delete this item?"><i class="fa fa-times"></i> ลบ</a>
 							</td>
 						</tr>						
 
 					<?php }	} } ?>	
 
 					</tbody> 
-					<tfoot> 
-							<th></th>
-				  			<th></th>
-							<th></th>
-				  			<th></th>
-                  			<th>ราคารวม</th>
-							  <th><?=$sumTotal?></th>
-                  			<th></th>
+					<tfoot> 							
+						<th colspan="5" class="text-right">ราคารวม : </th>
+						<th class="text-right success"><?=number_format($sumTotal, 2)?></th>
+						
 					</tfoot>
               	</table>
             	</div>

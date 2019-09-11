@@ -12,7 +12,7 @@ use yii\helpers\ArrayHelper;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'ตารางสรุปการรับ-จ่ายวัสดุ ประจำเดือน '. $month;
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $month;
 // var_dump();
 
 ?>
@@ -23,18 +23,20 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title"> <?=$this->title?></h3>
-			  <div class="box-tools">
-         	<!-- <a href= "#" id="act-create" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> สร้างรายงาน</a> -->
+              <div class="box-tools">
+                <!-- <a href= "#" id="act-create" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> สร้างรายงาน</a> -->
 
-        </div>
-      </div>
+              </div>
+            </div>
             <!-- /.box-header -->
             <div class="box-body">
             <table id="product-index" class="table table-bordered table-hover">
                 <thead>
+                  <tr>
+                    <th colspan="10" class="text-center"><b><?=$this->title?></b></th>
+                  </tr>
                 	<tr>
-										<th style="text-align:center" data-class="expand">Id</th>
+										<th style="text-align:center" data-class="expand">#</th>
                     <!-- <th>เดือน</th> -->
                     <th width="50%" style="text-align:center">name</th>
                     <th style="text-align:center">หน่วยนับ</th>
@@ -78,13 +80,11 @@ $this->params['breadcrumbs'][] = $this->title;
 				</tbody>
                 <tfoot>
                  <tr>
-                  <th></th>
-                  <th colspan="4">ประจำเดือน : <?=$month?></th>
+                  <th colspan="5">ประจำเดือน : <?=$month?></th>
                   
-                  <th></th>
                   <!-- <th></th> -->
-                  <th colspan="2">ราคารวม</th>
-                  <th><?=number_format($K_price_sum, 2);?></th>
+                  <th colspan="2" class="text-right">รวม : </th>
+                  <th colspan="2" class="text-right success"><?=number_format($K_price_sum, 2);?></th>
                   <th></th>
                 </tr>
                 

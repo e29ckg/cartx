@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								<?php if(!empty($model['img'])){
 									echo Html::img('@web/uploads/product/img/'.$model['img'], ['alt' => 'My pic','class'=>'offline act-view','height'=>'50px','data-id'=> $model->code]); 
 								}else{
-									echo Html::img('@web/img/avatars/male.png', ['alt' => 'My pic','class'=>'offline act-view', 'height'=>'50px', 'data-id'=> $model->code]); 
+									echo Html::img('@web/img/none.png', ['alt' => 'My pic','class'=>'offline act-view', 'height'=>'50px', 'data-id'=> $model->code]); 
 								}?>
 								</a>
 							</div>

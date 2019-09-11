@@ -13,53 +13,45 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <!-- Main content -->
 <section class="content">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title"><?=$this->title?></h3>			  
-            </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title"><?=$this->title?></h3>			  
+        </div>
             <!-- /.box-header -->
-            <div class="box-body">
-              <table id="receipt-index" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>ID</th>
-				          <th>Code</th>
-				          <th>ผู้นำเข้าระบบ</th>
-				          <th>ราคารวม</th>
-                  <th>สถานะ(s)</th>
-                  <th>วัน-เวลา</th>
-                  <th>เครื่องมือ</th>
-                </tr>
-                </thead>
-                <tbody>
-                                  
-				<?php foreach ($models as $model): ?>
-				<tr>
-				<td><?=$model->id?></td>
-					<td><a href= "#" class="act-view" data-id='<?=$model->id?>'><?=$model->receipt_code?></a></td>
-                  	<td><?=$model->getProfileName()?></td>
-                  	<td><?=$model->sumtotal?></td>
-                    <td><label class="label <?= $model->status == 4 ? 'label-danger' : 'label-info'?>"><?=$model->getStatus()[$model->status]?></label></td>
-                  	<td><?=$model->create_at?></td>
-                    <td><a href="<?=Url::to(['receipt/print','id'=>$model->id])?>" target="_blank">พิมพ์ใบนำเข้า</a>
-                    <!-- <a href= "<?=Url::to(['receipt/update','id'=>$model->id])?>" class="btn btn-success btn-xs"><i class="fa fa-pencil-square-o"></i> แก้ไข</a> -->
-                    <a href= "<?=Url::to(['receipt/update_list_cancel','id'=>$model->id])?>" class="btn btn-warning  btn-xs" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-pencil-square-o"></i> ยกเลิก</a>
-											</td>
-                  	<!-- <td><a herf= "#" class="btn btn-warning act-update" data-id=<?=$model->id?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
-						<?php 
-							// echo Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $model->id],
-							// [
-							// 	'class' => 'btn btn-danger act-update',
-							// 	'data-confirm' => 'Are you sure to delete this item?',
-                        	// 	'data-method' => 'post',
-							// ]);
-						?>
-					</td> -->
-				</tr>
-				<?php  endforeach; ?>
-				</tbody>
+        <div class="box-body">
+          <table id="receipt-index" class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Code</th>
+                <th>ผู้นำเข้าระบบ</th>
+                <th>ราคารวม</th>
+                <th>สถานะ(s)</th>
+                <!-- <th>วัน-เวลา</th> -->
+                <th>เครื่องมือ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($models as $model): ?>
+              <tr>
+                <td style="text-align:center"><?=$model->id?></td>
+                <td>
+                  <a href= "#" class="act-view" data-id='<?=$model->id?>'><?=$model->receipt_code?></a>
+                  <br><?=$model->DateThai_full($model->create_at)?>
+                </td>
+                <td><?=$model->getProfileName()?></td>
+                <td style="text-align:right"><?=number_format($model->sumtotal, 2)?></td>
+                <td><label class="label <?= $model->status == 4 ? 'label-danger' : 'label-info'?>"><?=$model->getStatus()[$model->status]?></label></td>
+                <!-- <td><?=$model->create_at?></td> -->
+                <td><a href="<?=Url::to(['receipt/print','id'=>$model->id])?>" target="_blank">พิมพ์ใบนำเข้า</a>
+                  <!-- <a href= "<?=Url::to(['receipt/update','id'=>$model->id])?>" class="btn btn-success btn-xs"><i class="fa fa-pencil-square-o"></i> แก้ไข</a> -->
+                  <a href= "<?=Url::to(['receipt/update_list_cancel','id'=>$model->id])?>" class="btn btn-warning  btn-xs" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-pencil-square-o"></i> ยกเลิก</a>
+                </td>	       
+              </tr>
+              <?php  endforeach; ?>
+              </tbody>
                 <!-- <tfoot>
                 <tr>
                   <th>Rendering engine</th>
@@ -69,14 +61,14 @@ $this->params['breadcrumbs'][] = $this->title;
                   <th>CSS grade</th>
                 </tr>
                 </tfoot> -->
-              </table>
-            </div>
-            <!-- /.box-body -->
+            </table>
           </div>
-          <!-- /.box -->
+            <!-- /.box-body -->
         </div>
+          <!-- /.box -->
+      </div>
         <!-- /.col -->
-    </div>
+  </div>
     <!-- /.row -->
 </section>
 <!-- /.content -->

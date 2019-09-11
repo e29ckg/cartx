@@ -13,6 +13,10 @@ use yii\helpers\Url;
 				  <li class="active">Shopping Cart</li>
 				</ol>
 			</div> -->
+			<div id="features_items" class="col-sm-12 padding-right">
+					<div  class="features_items"><!--features_items-->
+						<h2 class="title text-center">ตะกร้า</h2>
+
 			<div class="table-responsive cart_info">
 				<table class="table table-condensed">
 					<thead>
@@ -64,38 +68,26 @@ use yii\helpers\Url;
 								
 								<!-- <td class="cart_quantity"> -->
 								<td class="cart_delete">
-									<a class="cart_quantity_delete" data-id="<?=$i?>" href="<?=Url::to(['cart/delete','id' => $i])?>"><i class="fa fa-times"></i></a>
+									<a class="cart_quantity_delete" data-id="<?=$i?>" href="<?=Url::to(['cart/delete','id' => $i])?>"><i class="fa fa-times"></i> ลบ</a>
 								</td>
 							</tr>						
 
 					<?php }	} } ?>		
 						
-								<table class="table table-condensed total-result">
-									<tbody><tr>
-										<!-- <td>Cart Sub Total</td>
-										<td>$59</td> -->
-									</tr>
-									<tr>
-										<!-- <td>Exo Tax</td>
-										<td>$2</td> -->
-									</tr>
-									<tr class="shipping-cost">
-										<!-- <td>Shipping Cost</td>
-										<td>Free</td>-->
-									</tr>
-									<tr>
-										<td></td>
-										<td>
-											<?= $sumTotal <> 0 ? '<a class="btn btn-warning" href="'.Url::to(['cart/checkout']).'"><i class="fa fa-crosshairs"></i> Checkout</a>' : "" ?>
+								
+									<tr >
+										
+										<td colspan="5" class="text-center">
+											<?= $sumTotal <> 0 ? '<a class="btn btn-success" href="'.Url::to(['cart/checkout']).'"><i class="fa fa-crosshairs"></i> Checkout</a>' : "" ?>
 										</td>
 									</tr>
-								</tbody>
-								</table>
-							
 					</tbody>
 				</table>
-				
+				</div>
+			
+			</div>	
 			</div>
+
 		</div>
 	</section> <!--/#cart_items-->
 

@@ -61,7 +61,7 @@ use yii\helpers\Html;
         <td width="50%">
             <table cellspacing="0" cellpadding="0" class="table_bordered" width="100%">
                 <tr>
-                    <td colspan="2" width="50%">
+                    <td colspan="2" style="text-align:right" width="50%">
                         <u>ราคารวม :</u><br />
                         Total
                     </td>

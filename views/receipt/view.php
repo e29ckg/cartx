@@ -26,13 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
               <table id="receipt-index" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>ID</th>
-				          <th>Code</th>
-				          <th>ProductCode</th>
-                  <th>Product</th>
-                  <th>ราคาต่อหน่วย</th>
-                  <th>จำนวน</th>
-                  <th>เครื่องมือ</th>
+                  <th class="text-center">ID</th>
+				          <th class="text-center">ProductCode</th>
+                  <th class="text-center">Product</th>
+                  <th class="text-center">ราคาต่อหน่วย</th>
+                  <th class="text-center">จำนวน</th>
+                  <th class="text-center">จำนวนเงิน</th>
                 </tr>
                 </thead>
                 <tbody>   
@@ -40,39 +39,29 @@ $this->params['breadcrumbs'][] = $this->title;
                     $Total = 0 ;
                     $sumTotal = 0;
                 ?>               
-				        <?php foreach ($model_lists as $model_list): ?>
+				          <?php foreach ($model_lists as $model_list): ?>
                     <tr>
-                        <td><?=$model_list->id?></td>
-                        <td><?=$model_list->code?></td>
-                        <td><?=$model_list->product_code?></td>
+                        <td class="text-center"><?=$model_list->id?></td>
+                        <td class="text-center">
+                          <img src="<?=$model_list->getProductImg();?>" alt="img-product" width="42px">
+                        </td>
                         <td><?=$model_list->getProductName()?></td>
-                        <td><?=$model_list->unit_price?></td>
-                        <td><?=$model_list->quantity?></td>                        
-                  	    <td>
-                            
+                        <td class="text-center"><?=number_format($model_list->unit_price,2)?></td>
+                        <td class="text-center"><?=$model_list->quantity .' '. $model_list->product->getUnitName()?></td>                        
+                  	    <td class="text-right">                            
                           <?php
                               $Total = $model_list->quantity * $model_list->unit_price;
-                              echo $Total;
-                              $sumTotal = $sumTotal + $Total;
-                          // echo Html::a('<i class="fa fa-remove"></i> ลบ',['receipt/delete','id' => $model->id],
-							            //   [ 'class' => 'btn btn-danger act-update',
-								          //     'data-confirm' => 'Are you sure to delete this item?',
-                        	// 	  'data-method' => 'post',
-                          //   ]);
+                              echo number_format($Total,2);
+                              $sumTotal = $sumTotal + $Total;                          
                             ?>
 					              </td>
 				              </tr>
-				<?php  endforeach; ?>
-				</tbody>
+				          <?php  endforeach; ?>
+				        </tbody>
                 <tfoot>
-                <tr>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th>รวม </th>   
-                  <th><?= $sumTotal?></th>                                 
+                <tr>                  
+                  <th colspan="5" class="text-right">รวม : </th>   
+                  <th class="text-right success"><?= number_format($sumTotal,2)?></th>                                 
                 </tr>
                 </tfoot>
               </table>

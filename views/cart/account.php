@@ -4,7 +4,11 @@ use yii\helpers\Url;
 	<section>
 		<div class="container">
 			<div class="row">
-			<div class="widget-body no-padding">
+			<div id="features_items" class="col-sm-12 padding-right">
+					<div  class="features_items"><!--features_items-->
+						<h2 class="title text-center">ประวัติการเบิก</h2>
+
+						<div class="widget-body no-padding">
 							<table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
 								<thead>
 									<tr>
@@ -28,6 +32,7 @@ use yii\helpers\Url;
 								</tbody>	
 							</table>
 						</div>
+					</div></div>
 			</div>
 		</div>
 	</section>

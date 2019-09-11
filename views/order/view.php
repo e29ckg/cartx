@@ -27,12 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <thead>
                   <tr>                    
 				            <!-- <th>Code</th> -->
-				            <th>ProductCode</th>
-                    <th>Product</th>
-                    <th>Product</th>
-                    <th>ราคาต่อหน่วย</th>
-                    <th>จำนวน(s)</th>
-                    <th></th>
+				            <!-- <th>ProductCode</th> -->
+                    <th class="text-center">Product</th>
+                    <th class="text-center">Product</th>
+                    <th class="text-center">ราคาต่อหน่วย</th>
+                    <th class="text-center">จำนวน(s)</th>
+                    <th>จำนวนเงิน</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -43,26 +43,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 ?>                  
 				<?php foreach ($model_lists as $model_list): ?>				            
 					          <!-- <td><?php //echo $model_list->order_code?></td> -->
-                    <td><?=$model_list->product_code?></td>
-                    <td>
-											<div class="project-members">
-												<a href="javascript:void(0)">
+                    <!-- <td><?=$model_list->product_code?></td> -->
+                    <td class="text-center">
 												<?php if(!empty($model_list->getProductImg())){
 													echo Html::img($model_list->getProductImg(), ['alt' => 'My pic','class'=>'offline','height'=>'50px']); 
 												}else{
 													echo Html::img('@web/img/avatars/male.png', ['alt' => 'My pic','class'=>'offline', 'height'=>'50px']); 
 												}?>
-												</a>
-											</div>
+												
 										</td>
                     <td><?=$model_list->getProductName()?></td>
-                    <td><?=$model_list->unit_price?></td>
-                    <td><?=$model_list->quantity?> <?=$model_list->getProductUnitName()?></td>
+                    <td class="text-center"><?=number_format($model_list->unit_price,2)?></td>
+                    <td class="text-center"><?=$model_list->quantity?> <?=$model_list->getProductUnitName()?></td>
                   <?php ?>
-                    <td>
+                    <td class="text-right">
                     <?php
                      $Total = $model_list->quantity * $model_list->unit_price;
-                     echo $Total;
+                     echo number_format($Total,2);
                      $sumTotal = $sumTotal + $Total;
                     // echo Html::a('<i class="fa fa-remove"></i> ลบ',['order-/delete','id' => $model_list->id],
                     //         [
@@ -75,15 +72,11 @@ $this->params['breadcrumbs'][] = $this->title;
 	                </tr>
 				<?php endforeach; ?>
 				        </tbody> 
-                <tfoot>
-                <tr>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th>รวม </th>   
-                  <th><?= $sumTotal?></th>                                 
-                </tr>
+                <tfoot>                
+                  <tr>                  
+                    <th colspan="4" class="text-right">รวม : </th>   
+                    <th colspan="2" class="text-right success"><?= number_format($sumTotal,2)?></th>                                 
+                  </tr>
                 </tfoot>               
               </table>
             </div>

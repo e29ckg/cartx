@@ -13,57 +13,57 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <!-- Main content -->
 <section class="content">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title"><?=$this->title?></h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <table id="example" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>ID</th>
-				  <th>Code</th>
-				  <th>ผู้เบิก</th>
-				  <td>ราคารวม</td>
-                  <th>สถานะ(s)</th>
-                  <!-- <th>วัน-เวลา</th> -->
-                  <th>เครื่องมือ</th>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title"><?=$this->title?></h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table id="example" class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Code</th>
+                <th>ผู้เบิก</th>
+                <td>ราคารวม</td>
+                <th>สถานะ(s)</th>
+                <!-- <th>วัน-เวลา</th> -->
+                <th>เครื่องมือ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($models as $model): ?>
+                <tr> 
+                  <td><?=$model->id?></td>
+                  <td>
+                    <a href= "#" class="act-view" data-id='<?=$model->id?>'><?=$model->order_code?></a>
+                    <br><?=$model->DateThai_full($model->create_at)?>
+                  </td>
+                  <td><?=$model->getProfileName()?></td>
+                  <td style="text-align:right"><?=number_format($model->sumtotal, 2)?></td>
+                  <td>
+                    <label class="label <?= $model->status == 4 ? 'label-danger' : 'label-info'?>">
+                      <?= isset($model->status) ? $model->getStatus()[$model->status] : '';?>
+                    </label>
+                  </td>
+                  <!-- <td><?=$model->create_at?></td> -->
+                  <td>
+                    <a href="<?=Url::to(['order/print','id'=>$model->id])?>" class ="btn btn-info btn-xs" target="_blank">พิมพ์ใบเบิก</a>
+                    <?php
+                      echo Html::a('<i class="fa fa-remove "></i> ยกเลิกใบเบิก',[
+                        'order/cancel','id' => $model->id],
+                        [
+                          'class' => 'btn btn-danger  btn-xs',									
+                          'data-confirm' => 'Are you sure to ยกเลิก this item?',
+                                      // 'data-method' => 'post',
+                        ]);
+                    ?>
+                  </td>
                 </tr>
-                </thead>
-                <tbody>
-                <tr>                  
-				<?php foreach ($models as $model): ?>
-				<td><?=$model->id?></td>
-					<td>
-            <a href= "#" class="act-view" data-id='<?=$model->id?>'><?=$model->order_code?></a>
-            <br><?=$model->DateThai_full($model->create_at)?>
-          </td>
-                  	<td><?=$model->getProfileName()?></td>
-                  	<td style="text-align:right"><?=number_format($model->sumtotal, 2)?></td>
-					          <td>
-                      <label class="label <?= $model->status == 4 ? 'label-danger' : 'label-info'?>">
-                        <?= isset($model->status) ? $model->getStatus()[$model->status] : '';?>
-                      </label>
-                    </td>
-                  	<!-- <td><?=$model->create_at?></td> -->
-                  	<td>
-					  	<a href="<?=Url::to(['order/print','id'=>$model->id])?>" class ="btn btn-info btn-xs" target="_blank">พิมพ์ใบเบิก</a>
-						<?php
-							echo Html::a('<i class="fa fa-remove "></i> ยกเลิกใบเบิก',[
-								'order/cancel','id' => $model->id],
-								[
-									'class' => 'btn btn-danger  btn-xs',									
-									'data-confirm' => 'Are you sure to ยกเลิก this item?',
-                        			// 'data-method' => 'post',
-								]);
-						?>
-								</td>
-				</tr>
-				<?php  endforeach; ?>
-				</tbody>
+				      <?php  endforeach; ?>
+				    </tbody>
                 <!-- <tfoot>
                 <tr>
                   <th>Rendering engine</th>
@@ -73,16 +73,17 @@ $this->params['breadcrumbs'][] = $this->title;
                   <th>CSS grade</th>
                 </tr>
                 </tfoot> -->
-              </table>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
+          </table>
         </div>
-        <!-- /.col -->
+            <!-- /.box-body -->
       </div>
+          <!-- /.box -->
+    </div>
+        <!-- /.col -->
+  </div>
       <!-- /.row -->
-    </section>
+     
+</section>
     <!-- /.content -->
  
 

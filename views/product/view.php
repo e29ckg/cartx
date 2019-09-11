@@ -30,14 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 <thead>
                 	<tr>
 						<!-- <th data-class="expand">Id</th> -->
-						<th data-hide="phone">DateTime</th>
-						<th data-hide="phone">รับจาก / จ่ายให้</th>
-						<th data-hide="phone">เลขที่เอกสาร</th>
-            <th data-hide="phone,tablet">ราคาต่อหน่วย</th>
-            <th data-hide="phone,tablet">จำนวนรับ</th>
-            <th data-hide="phone,tablet">จำนวนจ่าย</th>
-            <th data-hide="phone,tablet">คงเหลือ</th>
-						<th data-hide="phone">หมายเหตุ</th>
+                    <th class="text-center" >DateTime</th>
+                    <th class="text-center" >รับจาก / จ่ายให้</th>
+                    <th class="text-center" >เลขที่เอกสาร</th>
+                    <th class="text-center" >ราคาต่อหน่วย</th>
+                    <th class="text-center" >จำนวนรับ</th>
+                    <th class="text-center" >จำนวนจ่าย</th>
+                    <th class="text-center" >คงเหลือ</th>
+                    <th class="text-center" >หมายเหตุ</th>
 						      </tr>
                 </thead>
                 <tbody>
@@ -51,17 +51,17 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
 						<tr>
 						    <!-- <td><?=$model['id']?></td> -->
-                <td><?=$model->create_at?></td>
-                <td><?=$model->getUserName()?></td>
-                <td><?=$model->code?> </td>						
-							<td><?=$model->unit_price?></td>
-              <td><?=$model->quantity > 0 ? $model->quantity : '';?></td>
-              <td><?=$model->quantity < 0 ? $model->quantity : '';?></td>
+              <td><?=$model->create_at?></td>
+              <td><?=$model->getUserName()?></td>
+              <td class="text-center"><?=$model->code?> </td>						
+							<td class="text-center"><?=number_format($model->unit_price,2)?></td>
+              <td class="text-center"><?=$model->quantity > 0 ? $model->quantity : '';?></td>
+              <td class="text-center"><?=$model->quantity < 0 ? $model->quantity : '';?></td>
               <?php  
                   $total = $model->quantity;
                   $sumtotal =$sumtotal + $total;
               ?>
-							<td><?=$sumtotal;?></td>	
+							<td class="text-center"><?=$sumtotal;?></td>	
               <td><?php //$model->receipt_list_id?></td>						
 						</tr>
                         <?php 
@@ -72,15 +72,15 @@ $this->params['breadcrumbs'][] = $this->title;
 				
 				</tbody>
                 <tfoot>
-                <tr>
-                  <th></th>
-                  <th></th>
-                  <th><?=$modelsP['instoke']?></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th><?=$sumtotal?></th>
-                </tr>
+                  <tr>
+                    <!-- <th></th>
+                    <th></th>
+                    <th><?=$modelsP['instoke']?></th>
+                    <th></th>
+                    <th></th> -->
+                    <th colspan="6"></th>
+                    <th class="text-center success"><?=$sumtotal?></th>
+                  </tr>
                 </tfoot>
               </table>
             </div>
