@@ -75,9 +75,33 @@ class Order extends \yii\db\ActiveRecord
             1 => 'นาย',
             2 => 'นางสาว',
             3 => 'นาง',
-            4 => 'ยกเลิก'
-          
+            4 => 'ยกเลิก'          
           
       ];
+    }
+
+    public function DateThai_full($strDate)
+	{
+        if($strDate == ''){
+            return "-";
+        }
+		$strYear = date("Y",strtotime($strDate))+543;
+		$strMonth= date("n",strtotime($strDate));
+		$strDay= date("j",strtotime($strDate));
+		$strHour= date("H",strtotime($strDate));
+		$strMinute= date("i",strtotime($strDate));
+		$strSeconds= date("s",strtotime($strDate));
+		$strMonthCut = Array("","มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม",
+                            "สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม");
+		$strMonthThai=$strMonthCut[$strMonth];
+		return "$strDay $strMonthThai $strYear";
+    }
+
+    public function getStatus()
+    {
+        return [
+            '1' => 'ปกติ',
+            '4' => 'ยกเลิก',
+        ];
     }
 }

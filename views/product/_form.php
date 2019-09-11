@@ -48,7 +48,7 @@ use kartik\select2\Select2;
 
 <?= $form->field($model, 'location')->label();?>
 
-<?= $form->field($model, 'status')->dropDownList(['1' => '1'],['prompt'=> $model->getAttributeLabel('status')])->label();?>
+<?= $form->field($model, 'status')->dropDownList(['1' => 'ใช้งาน','4' => 'ไม่ใช้งาน'])->label();?>
 
 <?= $form->field($model, 'lower')->label();?>
     

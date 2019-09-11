@@ -5,7 +5,7 @@ use yii\helpers\Html;
 <table class="table_bordered" width="100%" cellpadding="2" cellspacing="1">
     <tr>
         <td width="100%" style="text-align: center" >
-            <h4>รหัสใบนำเข้า <?= $model->receipt_code ?></h4>            
+            <h3>รหัสใบนำเข้า <?= $model->receipt_code ?></h3>            
         </td>
         
     </tr>
@@ -14,11 +14,11 @@ use yii\helpers\Html;
 <table class="table_bordered" width="100%" border="0" cellpadding="2" cellspacing="0">
     <thead>
 		<tr class="cart_menu">
-	    	<th class="image">ลำดับ<br>no.</th>
-			<th class="description">รายการ</th>
-			<th class="price">ราคาต่อหน่วย</th>
-			<th class="quantity">จำนวน</th>
-			<th class="total">ราคารวม<br>Total</th>
+	    	<th width="5%" class="image">ลำดับ<br>no.</th>
+			<th width="50%" class="description">รายการ</th>
+			<th width="10%" class="price">ราคาต่อหน่วย</th>
+			<th width="10%" class="quantity">จำนวน</th>
+			<th width="10%" class="total">ราคารวม<br>Total</th>
 		</tr>
 	</thead>
     <tbody>
@@ -28,14 +28,17 @@ use yii\helpers\Html;
                 ?>
         <?php foreach ($model_lists as $model_list): ?>
             <tr>
-                <td><?=$i?><?='-'.$model_list->product_code?></td>
-                <td>
+                <td style="text-align: center"><?=$i?></td>
+                <td >
                     <?=$model_list->getProductName()?>
                 </td>
-                <td><?=$model_list->unit_price?></td>
-                <td><?=$model_list->quantity?></td>
-                <td>
-                <?=$total = $model_list->unit_price * $model_list->quantity?>
+                <td style="text-align: center"><?=$model_list->unit_price?></td>
+                <td style="text-align: center"><?=$model_list->quantity?></td>
+                <td style="text-align: right">
+                <?php 
+                    $total = $model_list->unit_price * $model_list->quantity;
+                    echo number_format($total, 2);
+                ?>
                 </td>
             </tr>
             <?php $totalSum = $totalSum + $total;
@@ -46,7 +49,7 @@ use yii\helpers\Html;
     <tbody>
         <?php for($i;$i<=10;$i++){ ?>         
             <tr>
-                <td><?=$i?></td>
+                <td style="text-align: center"><?=$i?></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -65,8 +68,8 @@ use yii\helpers\Html;
                         <u>ราคารวม :</u><br />
                         Total
                     </td>
-                    <td colspan="2" width="50%">
-                        <h3><?=$totalSum?></h3>
+                    <td colspan="2" width="50%" style="text-align: right">
+                        <h3><?=number_format($totalSum, 2)?></h3>
                     </td>
                 </tr>                
             </table>
@@ -83,7 +86,7 @@ use yii\helpers\Html;
     </tr>
     <tr>       
         <td colspan="2" width="80%">
-        วันที่นำเข้า : <?= $model->create_at ?>
+        วันที่นำเข้า : <?= $model->DateThai_full($model->create_at) ?>
         </td>
     </tr>
 </table>

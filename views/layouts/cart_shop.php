@@ -106,12 +106,12 @@ if (Yii::$app->user->identity) {
 									echo '<li><a href="'.Url::to(['site/dashboard']).'"><i class="fa fa-lock"></i> blankEnd</a></li>';
 								}
 								?>
-								<li><a href="<?=Url::to(['cart/account'])?>"><i class="fa fa-user"></i><font color="green"><?= $fullname?></font></a></li>
+								<li><a href="<?=Url::to(['cart/account'])?>" ><i class="fa fa-user"></i><font color="green"><?= $fullname?></font></a></li>
 								<li><a href="<?=Url::to(['cart/account'])?>"><i class="fa fa-bookmark"></i><font color="red"> ประวัติการเบิก</font></a></li>
 								<!-- <li><a href="print"><i class="fa fa-crosshairs"></i> Checkout</a></li> -->
 								<li><a href="<?=Url::to(['cart/cart'])?>"><i class="fa fa-shopping-cart"></i> Cart <span id="badge_cart" class="badge"><?=$bCart<>0 ? $bCart : ''?></span></a></li>
 								<?php if(Yii::$app->user->identity){
-									echo '<li><a href="'.Url::to(['site/logout']).'"><i class="fa fa-lock"></i> Logout</a></li>';
+									echo '<li><a href="'.Url::to(['site/logout']).'" onclick=\'return confirm("ต้องการ ออกจากระบบ ?")\' ><i class="fa fa-lock"></i> Logout</a></li>';
 								}else{
 									echo '<li><a href="'.Url::to(['site/login']).'"><i class="fa fa-lock"></i> Login</a></li>';
 								}  ?>

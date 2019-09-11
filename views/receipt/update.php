@@ -1,11 +1,12 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Order */
 
-$this->title = 'Update Order: ' . $models['id'];
+$this->title = 'Update Reciept: ' . $models['id'];
 $this->params['breadcrumbs'][] = ['label' => 'Orders', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $models->id, 'url' => ['view', 'id' => $models->id]];
 $this->params['breadcrumbs'][] = 'Update';
@@ -61,7 +62,7 @@ $this->params['breadcrumbs'][] = 'Update';
                             ?>
 					    </td>
                         <td>
-                        <a href= "index.php?r=receipt/update_list_cancel&id=<?=$modelRL->id?>" class="btn btn-warning "><i class="fa fa-pencil-square-o"></i> ยกเลิก</a>
+                        <a href= "<?=Url::to(['receipt/update_list_cancel','id' => $modelRL->id])?>" class="btn btn-warning "><i class="fa fa-pencil-square-o"></i> ยกเลิก</a>
                         </td>
 				    </tr>
 				<?php  endforeach; ?>

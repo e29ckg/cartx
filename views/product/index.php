@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 	<tr>
 						<th data-class="expand">Id</th>
 						<th>Image</th>
-						<th data-hide="phone">Code</th>
+						<!-- <th data-hide="phone">Code</th> -->
 						<th data-hide="phone">ชื่อวัสดุ</th>
 						<th data-hide="phone">ประเภท</th>
 						<th data-hide="phone">ประเภท</th>
@@ -59,10 +59,13 @@ $this->params['breadcrumbs'][] = $this->title;
 								</a>
 							</div>
 						</td>
-						<td><?=$model->code?> 
+						<!-- <td><?=$model->code?>  -->
 							<!-- <a href= "index.php?r=product/gencode&id=<?=$model['id']?>" class="btn btn-warning btn-xs" data-id=<?=$model['id']?>><i class="fa fa-pencil-square-o"></i> GenCode</a> -->
 						</td>
-						<td><?=$model['product_name']?></td>
+						<td>
+							<?=$model['product_name']?>
+							<label class="label <?= $model->status == 4 ? 'label-danger' : 'label-info'?>"><?=$model->getStatus()[$model->status]?></label>
+						</td>
 						<td><?=$model->getCatalogtName()?></td>
 						<td><?=$model->create_at?></td>
 						<td><?=$model['instoke']?> <?=$model->getUnitName()?></td>
@@ -153,7 +156,7 @@ $(document).ready(function() {
 /* BASIC ;*/	
 $('#product-index').DataTable({
 	// lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-	"order": [[ 0, "asc" ]]
+	"order": [[ 0, "desc" ]]
 });
 
 	// $('#activity-modal').on('hidden.bs.modal', function () {

@@ -302,6 +302,7 @@ class ReceiptController extends Controller
 
         if($x){
             Yii::$app->session->setFlash('error', 'ไม่สามารยกเลิกได้ เนื่องจากมีการเบิก'.$y);
+            return $this->redirect(['index']);
         }else{
             foreach ($modelRLs as $modelRL):
                 if($modelRL->quantity <> 0){

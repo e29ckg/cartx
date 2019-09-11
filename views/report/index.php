@@ -36,28 +36,26 @@ $this->params['breadcrumbs'][] = $this->title;
             <table id="product-index" class="table table-bordered table-hover">
                 <thead>
                 	<tr>
-										<th data-class="expand">Id</th>
+                    <th>#</th>
 										<th>รายงานประจำเดือน</th>
-					    			<th>เครื่องมือ</th>
+					    			<th>Tools</th>
                 	</tr>
                 </thead>
               <tbody>
               <?php foreach ($ReportM as $model): ?>
                 <tr>
-                  <td></td>
                   <td><?=$model->month?></td>
-                  <td><a href="<?=Url::to(['report/view2','m' =>$model->month])?>"><?=$model->month?></a></td>
+                  <td><a href="<?=Url::to(['report/view2','m' =>$model->month])?>"><?=$model->DateThai_full($model->month)?></a></td>
+                  <td><a href="<?=Url::to(['report/del','id' =>$model->id])?>" class="btn btn-danger btn-xs">ลบ</a></td>
                 </tr>
               
               <?php endforeach; ?>
 				
 				</tbody>
-                <tfoot>
+        <tfoot>
                 <tr>
-                  <th><?=$start?></th>
-                  <th><?=$end?></th>
-                  <th><?=$month?></th>
-                  <th><?=$monthB?></th>
+                  <th></th>
+                  <th></th>
                 </tr>
                 </tfoot>
               </table>
@@ -70,38 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <!-- /.row -->
 </section>
-<!-- /.content -->
-<?php
-              // $product_c = null;
-              // $quantity = null;
-              ?>
 
-<?php // foreach ($Log as $model): ?>
-                <?php //
-
-                  // if(isset($product_c) && $model->product->product_name <> $product_c){
-                  //   echo '<tr>    
-                  //   <td>'.$model->code.'</td>
-                  //   <td>'.$product_c.'</td>
-                  //   <td>'.$quantity.'</td>
-                  //   <td></td>
-                  // </tr>';
-                //   }
-
-                // if($model->product->product_name == $product_c){
-                //   // $product_c = $model->product->product_name;
-                //   $quantity = $quantity + $model->quantity ;
-                // }else{                 
-                  
-                // $product_c = $model->product->product_name;
-                // $quantity = $model->quantity;
-
-                // } 
-
-                
-              ?>
-						      
-							<?php // endforeach; ?>
 
 
 

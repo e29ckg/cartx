@@ -112,5 +112,13 @@ class Product extends \yii\db\ActiveRecord
     {        
         return Product::find()->count();           
     }
+
+    public function getStatus()
+    {
+        return [
+            '1' => 'ปกติ',
+            '4' => 'ยกเลิก',
+        ];
+    }
  
 }

@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 	<tr>
 						<th data-class="expand">Id</th>
 						<th>Image</th>
-						<th data-hide="phone">Code</th>
+						<!-- <th data-hide="phone">Code</th> -->
 						<th data-hide="phone">ชื่อวัสดุ</th>
 						<th data-hide="phone">ประเภท</th>
 						<th data-hide="phone">ประเภท</th>
@@ -46,33 +46,33 @@ $this->params['breadcrumbs'][] = $this->title;
                 </thead>
                 <tbody>
 				<?php foreach ($models as $model): ?>
-						<?php if($model->lower >= $model->instoke){?>
-						            <tr>
-						                <td><?=$model['id']?></td>
-						                <td>
-											<div class="project-members">
-												<a href="javascript:void(0)">
-												<?php if(!empty($model['img'])){
-													echo Html::img('@web/uploads/product/img/'.$model['img'], ['alt' => 'My pic','class'=>'offline act-view','height'=>'50px','data-id'=> $model->code]); 
-												}else{
-													echo Html::img('@web/img/avatars/male.png', ['alt' => 'My pic','class'=>'offline act-view', 'height'=>'50px', 'data-id'=> $model->code]); 
-												}?>
-												</a>
-											</div>
-										</td>
-										<td><?=$model->code?> 
-											<!-- <a href= "index.php?r=product/gencode&id=<?=$model['id']?>" class="btn btn-warning btn-xs" data-id=<?=$model['id']?>><i class="fa fa-pencil-square-o"></i> GenCode</a> -->
-										</td>
-								        <td><a herf= "#" class="act-update" data-id=<?=$model['id']?>><?=$model['product_name']?></a>
-											</td>
-								        <td><?=$model->getCatalogtName()?></td>
-										<td><?=$model->create_at?></td>
-								        <td><?=$model['instoke']?> <?=$model->getUnitName()?></td>
-								       
-									</tr>
-									<?php } ?>
-									<?php  endforeach; ?>
-				
+					<?php if($model->lower >= $model->instoke){?>
+						<tr>
+							<td><?=$model['id']?></td>
+							<td>
+								<div class="project-members">
+									<a href="javascript:void(0)">
+									<?php if(!empty($model['img'])){
+										echo Html::img('@web/uploads/product/img/'.$model['img'], ['alt' => 'My pic','class'=>'offline act-view','height'=>'50px','data-id'=> $model->code]); 
+									}else{
+										echo Html::img('@web/img/avatars/male.png', ['alt' => 'My pic','class'=>'offline act-view', 'height'=>'50px', 'data-id'=> $model->code]); 
+									}?>
+									</a>
+								</div>
+							</td>
+							<!-- <td><?=$model->code?>  -->
+								<!-- <a href= "index.php?r=product/gencode&id=<?=$model['id']?>" class="btn btn-warning btn-xs" data-id=<?=$model['id']?>><i class="fa fa-pencil-square-o"></i> GenCode</a> -->
+							</td>
+							<td><a herf= "#" class="act-update" data-id=<?=$model['id']?>><?=$model['product_name']?></a>
+								</td>
+							<td><?=$model->getCatalogtName()?></td>
+							<td><?=$model->create_at?></td>
+							<td><?=$model['instoke']?> <?=$model->getUnitName()?></td>
+							
+						</tr>
+						<?php } ?>
+					<?php  endforeach; ?>
+	
 				</tbody>
                 <!-- <tfoot>
                 <tr>
@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $script = <<< JS
 
 
-	var url_update = "index.php?r=product/update_stock_down";
+	var url_update = "update_stock_down";
     	$(".act-update").click(function(e) {            
 			var fID = $(this).data("id");
 			// alert(fID);
@@ -115,7 +115,7 @@ $script = <<< JS
         	});
     	});
 
-	var url_view = "index.php?r=product/view";		
+	var url_view = "view";		
     	$(".act-view").click(function(e) {					
                 var fID = $(this).data("id");
 				// alert(fID);

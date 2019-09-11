@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Hover Data Table</h3>
+              <h3 class="box-title"><?=$this->title?></h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -40,21 +40,20 @@ $this->params['breadcrumbs'][] = $this->title;
 					<td><a href= "#" class="act-view" data-id='<?=$model->id?>'><?=$model->order_code?></a></td>
                   	<td><?=$model->getProfileName()?></td>
                   	<td><?=$model->sumtotal?></td>
-					<td><?=$model->status?></td>
+					          <td><label class="label <?= $model->status == 4 ? 'label-danger' : 'label-info'?>"><?=$model->getStatus()[$model->status]?></label></td>
                   	<td><?=$model->create_at?></td>
                   	<td>
-					  	<a href="<?=Url::to(['order/print','id'=>$model->id])?>" class ="btn btn-success" target="_blank">พิมพ์ใบเบิก</a>
+					  	<a href="<?=Url::to(['order/print','id'=>$model->id])?>" class ="btn btn-info btn-xs" target="_blank">พิมพ์ใบเบิก</a>
 						<?php
-							echo Html::a('<i class="fa fa-remove"></i> ยกเลิกใบเบิก',[
+							echo Html::a('<i class="fa fa-remove "></i> ยกเลิกใบเบิก',[
 								'order/cancel','id' => $model->id],
 								[
-									'class' => 'btn btn-danger',									
+									'class' => 'btn btn-danger  btn-xs',									
 									'data-confirm' => 'Are you sure to ยกเลิก this item?',
                         			// 'data-method' => 'post',
 								]);
 						?>
-								<a href="<?=Url::to(['order/cancel','id'=>$model->id])?>" onclick="return confirm('Are you sure you want to delete this item?');">ยกเลิก</a>
-					</td>
+								</td>
 				</tr>
 				<?php  endforeach; ?>
 				</tbody>
@@ -122,7 +121,9 @@ $('#eg8').click(function() {
      
 $(document).ready(function() {	
 /* BASIC ;*/	
-// $('#example').DataTable();
+$('#example').DataTable({
+    "order": [[ 0, 'desc' ]]
+});
 
 	// $('#activity-modal').on('hidden.bs.modal', function () {
  	// 	location.reload();

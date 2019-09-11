@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title"> : <?=$month?></h3>
+              <h3 class="box-title"> <?=$this->title?></h3>
 			  <div class="box-tools">
          	<!-- <a href= "#" id="act-create" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> สร้างรายงาน</a> -->
 
@@ -34,17 +34,17 @@ $this->params['breadcrumbs'][] = $this->title;
             <table id="product-index" class="table table-bordered table-hover">
                 <thead>
                 	<tr>
-										<th data-class="expand">Id</th>
+										<th style="text-align:center" data-class="expand">Id</th>
                     <!-- <th>เดือน</th> -->
-                    <th>name</th>
-                    <th>หน่วยนับ</th>
-                    <th>ยกมา</th>
-                    <th>รับ</th>
-                    <th>จ่าย</th>
-					    			<th>คงเหลือ</th>
-                    <th>ราคาต่อหน่วย</th>
-                    <th>จำนวนเงิน</th>
-					    			<th>หมายเหตุ</th>
+                    <th width="50%" style="text-align:center">name</th>
+                    <th style="text-align:center">หน่วยนับ</th>
+                    <th style="text-align:center">ยกมา</th>
+                    <th style="text-align:center">รับ</th>
+                    <th style="text-align:center">จ่าย</th>
+					    			<th style="text-align:center">คงเหลือ</th>
+                    <th style="text-align:center">ราคาต่อหน่วย</th>
+                    <th style="text-align:center">จำนวนเงิน</th>
+					    			<th style="text-align:center">หมายเหตุ</th>
                 	</tr>
                 </thead>
               <tbody>
@@ -56,16 +56,17 @@ $this->params['breadcrumbs'][] = $this->title;
               if($modelRMLs->kb <> 0 || $modelRMLs->r <> 0 || $modelRMLs->o <> 0){?>
 
 						      <tr>    
-										<td><?=$i?></td>
+										<td style="text-align:center"><?=$i?></td>
 										<!-- <td><?=$modelRMLs->month?></td> -->
                     <td><?=$modelRMLs->getProductName()?></td>
-                    <td><?=$modelRMLs->productUnit->name_unit?></td>
-								    <td><?=$modelRMLs->kb ? $modelRMLs->kb : '0' ?></td>
-                    <td><?=$modelRMLs->r ? $modelRMLs->r : '0' ?></td>
-                    <td><?=$modelRMLs->o ? $modelRMLs->o : '0'  ?></td>
-                    <td><?=$modelRMLs->k ? $modelRMLs->k : '0'?></td>
-                    <td><?=$modelRMLs->unit_price?></td>
-                    <td><?=$K_price = $modelRMLs->k * $modelRMLs->unit_price?></td>
+                    <td style="text-align:center"><?=$modelRMLs->productUnit->name_unit?></td>
+								    <td style="text-align:center"><?=$modelRMLs->kb ? $modelRMLs->kb : '0' ?></td>
+                    <td style="text-align:center"><?=$modelRMLs->r ? $modelRMLs->r : '0' ?></td>
+                    <td style="text-align:center"><?=$modelRMLs->o ? $modelRMLs->o : '0'  ?></td>
+                    <td style="text-align:center"><?=$modelRMLs->k ? $modelRMLs->k : '0'?></td>
+                    <td style="text-align:right"><?=$modelRMLs->unit_price?></td>
+                    <?php $K_price = $modelRMLs->k * $modelRMLs->unit_price?>
+                    <td style="text-align:right" ><?=number_format($K_price, 2);?></td>
                     <td><?=$modelRMLs->detail?></td>
 									</tr>
               <?php  
@@ -78,14 +79,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tfoot>
                  <tr>
                   <th></th>
-                  <th>ประจำเดือน : <?=$month?></th>
+                  <th colspan="4">ประจำเดือน : <?=$month?></th>
+                  
                   <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th>ราคารวม</th>
-                  <th><?=$K_price_sum?></th>
+                  <!-- <th></th> -->
+                  <th colspan="2">ราคารวม</th>
+                  <th><?=number_format($K_price_sum, 2);?></th>
                   <th></th>
                 </tr>
                 

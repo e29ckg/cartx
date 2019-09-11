@@ -96,7 +96,7 @@
                         'url' => '#',
                         'items' => [
                             ['label' => 'Report', 'icon' => 'file-code-o', 'url' => ['report/index'],],
-                            ['label' => 'Report/view', 'icon' => 'file-code-o', 'url' => ['report/view'],],
+                            ['label' => 'Report/view', 'icon' => 'file-code-o', 'url' => ['report/view2'],],
                         ]
                     ],
                     // [

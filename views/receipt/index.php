@@ -41,11 +41,11 @@ $this->params['breadcrumbs'][] = $this->title;
 					<td><a href= "#" class="act-view" data-id='<?=$model->id?>'><?=$model->receipt_code?></a></td>
                   	<td><?=$model->getProfileName()?></td>
                   	<td><?=$model->sumtotal?></td>
-					          <td><?=$model->status?></td>
+                    <td><label class="label <?= $model->status == 4 ? 'label-danger' : 'label-info'?>"><?=$model->getStatus()[$model->status]?></label></td>
                   	<td><?=$model->create_at?></td>
                     <td><a href="<?=Url::to(['receipt/print','id'=>$model->id])?>" target="_blank">พิมพ์ใบนำเข้า</a>
-                    <a href= "<?=Url::to(['receipt/update','id'=>$model->id])?>" class="btn btn-warning "><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
-                    <a href= "<?=Url::to(['receipt/update_list_cancel','id'=>$model->id])?>" class="btn btn-warning " onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-pencil-square-o"></i> ยกเลิก</a>
+                    <!-- <a href= "<?=Url::to(['receipt/update','id'=>$model->id])?>" class="btn btn-success btn-xs"><i class="fa fa-pencil-square-o"></i> แก้ไข</a> -->
+                    <a href= "<?=Url::to(['receipt/update_list_cancel','id'=>$model->id])?>" class="btn btn-warning  btn-xs" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-pencil-square-o"></i> ยกเลิก</a>
 											</td>
                   	<!-- <td><a herf= "#" class="btn btn-warning act-update" data-id=<?=$model->id?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
 						<?php 
