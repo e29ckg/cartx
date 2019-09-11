@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
 											<div class="project-members">
 												<a href="javascript:void(0)">
 												<?php if(!empty($model_list->getProductImg())){
-													echo Html::img('@web/uploads/product/img/'.$model_list->getProductImg(), ['alt' => 'My pic','class'=>'offline','height'=>'50px']); 
+													echo Html::img($model_list->getProductImg(), ['alt' => 'My pic','class'=>'offline','height'=>'50px']); 
 												}else{
 													echo Html::img('@web/img/avatars/male.png', ['alt' => 'My pic','class'=>'offline', 'height'=>'50px']); 
 												}?>
