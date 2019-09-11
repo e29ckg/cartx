@@ -107,7 +107,7 @@ $( "#act-create" ).click(function() {
             //   $("#myModal").modal('toggle');
         });     
 	}); 
-		
+
 });
 JS;
 $this->registerJs($script);

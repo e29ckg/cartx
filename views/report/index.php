@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>
                   <td><?=$model->month?></td>
                   <td><a href="<?=Url::to(['report/view2','m' =>$model->month])?>"><?=$model->DateThai_full($model->month)?></a></td>
-                  <td><a href="<?=Url::to(['report/del','id' =>$model->id])?>" class="btn btn-danger btn-xs">ลบ</a></td>
+                  <td><a href="<?=Url::to(['report/del','id' =>$model->id])?>" class="btn btn-danger btn-xs" data-confirm="ต้องการ ลบ ?">ลบ</a></td>
                 </tr>
               
               <?php endforeach; ?>

@@ -12,11 +12,11 @@ $this->title = 'Login';
 
 <div class="login-box">
   <div class="login-logo">
-    <a href="#"><b>Pkkjc </b>WebApp</a>
+    <a href="#"><b>E - </b>s<b>ToCK</b> </a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
+    <p class="login-box-msg">ระบบจัดการงานพัสดุ - เด็กประจวบฯ.</p>
 
       <?php $form = ActiveForm::begin([
           'id' => 'login-form',

@@ -37,13 +37,14 @@ use kartik\select2\Select2;
 <?php 
         echo $form->field($model, 'category', ['options' => ['class' => '']])->widget(Select2::classname(), ['data' => $model->getCatalogList(), 'options' => ['placeholder' => 'select ...'], 'pluginOptions' => ['allowClear' => true]]);
     ?>
-<a href= "index.php?r=product_catalog/create" class=" act-update"><i class="fa fa-pencil-square-o"></i> เพิ่มประเภทสินค้า(กรณีค้นหาไม่พบ)</a>
+
+<label id="create-c" for="cc" class="btn btn-success btn-xs"><i class="fa fa-pencil-square-o"></i> เพิ่มประเภทสินค้า(กรณีค้นหาไม่พบ)</label>
 
  <?php 
         echo $form->field($model, 'unit', ['options' => ['class' => '']])->widget(Select2::classname(), ['data' => $model->getUnitList(), 'options' => ['placeholder' => 'select ...'], 'pluginOptions' => ['allowClear' => true]]);
     ?>
-<a href= "index.php?r=product_unit/create" class="act-update"><i class="fa fa-pencil-square-o"></i> เพิ่มหน่วยนับ(กรณีค้นหาไม่พบ)</a>
-    
+<label id="create-u" for="cc" class="btn btn-success btn-xs"><i class="fa fa-pencil-square-o"></i> เพิ่มประเภทสินค้า(กรณีค้นหาไม่พบ)</label>
+  
 <?= $form->field($model, 'Description')->label();?>
 
 <?= $form->field($model, 'location')->label();?>
@@ -76,3 +77,40 @@ if (!empty($model->img)){
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<?php
+$script = <<< JS
+
+	
+			   
+    var url_create = "../product_catalog/create";
+	$( "#create-c" ).click(function() { 
+        $.get(url_create,function (data){
+            $("#activity-modal").find(".modal-body").html(data);
+            $(".modal-body").html(data);
+            $(".modal-title").html("เพิ่มข้อมูล");
+            // $(".modal-footer").html(footer);
+            $("#activity-modal").modal("show");
+            //   $("#myModal").modal('toggle');
+        });     
+	}); 
+    
+    var url_create_u = "../product_unit/create";
+	$( "#create-u" ).click(function() { 
+        $.get(url_create_u,function (data){
+            $("#activity-modal").find(".modal-body").html(data);
+            $(".modal-body").html(data);
+            $(".modal-title").html("เพิ่มข้อมูล");
+            // $(".modal-footer").html(footer);
+            $("#activity-modal").modal("show");
+            //   $("#myModal").modal('toggle');
+        });     
+	}); 
+ 
+			
+
+ 
+	
+JS;
+$this->registerJs($script);
+?>

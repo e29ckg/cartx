@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $month;
                     <td style="text-align:center"><?=$modelRMLs->r ? $modelRMLs->r : '0' ?></td>
                     <td style="text-align:center"><?=$modelRMLs->o ? $modelRMLs->o : '0'  ?></td>
                     <td style="text-align:center"><?=$modelRMLs->k ? $modelRMLs->k : '0'?></td>
-                    <td style="text-align:right"><?=$modelRMLs->unit_price?></td>
+                    <td style="text-align:right"><?=number_format($modelRMLs->unit_price,2)?></td>
                     <?php $K_price = $modelRMLs->k * $modelRMLs->unit_price?>
                     <td style="text-align:right" ><?=number_format($K_price, 2);?></td>
                     <td><?=$modelRMLs->detail?></td>

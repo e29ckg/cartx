@@ -62,14 +62,11 @@ class CartController extends Controller
     public function actionIndex()
     {
         $this->layout = 'cart_shop';
-        // $this->layout = 'cart';
-        // $model = Product::find()->all();
         
         $countAll = Product::getCountAll();
 
         $modelCatalogs = ProductCatalog::find()->all();
 
-        // $query = Product::find();
         $models = Product::find()
             ->where(['status' => 1])
             ->orderBy(['id' => SORT_ASC])
@@ -79,7 +76,6 @@ class CartController extends Controller
             'models' => $models,
             'countAll' => $countAll,
             'modelCatalogs' => $modelCatalogs,
-            // 'pagination' => $pagination,
         ]);
     }
 
@@ -91,34 +87,7 @@ class CartController extends Controller
         return $this->render('cart');
     }
 
-    public function actionLogin()
-    {
-        $this->layout = 'cart_shop';
-        // $this->layout = 'cart';
-        $query = Product::find();
-
-        
-        $countAll = Product::getCountAll();
-
-        $modelCatalogs = ProductCatalog::find()->all();
-
-        $pagination = new Pagination([
-            'defaultPageSize' => 100,
-            'totalCount' => $query->count(),
-        ]);
     
-        $models = $query->orderBy(['id' => SORT_DESC])
-            //    ->offset($pagination->offset)
-            //     ->limit($pagination->limit)
-                ->all();
-        
-        return $this->render('login',[
-            'models' => $models,
-            'countAll' => $countAll,
-            'modelCatalogs' => $modelCatalogs,
-            'pagination' => $pagination,
-        ]);
-    }
 
     /**
      * Displays a single Profile model.
@@ -143,50 +112,7 @@ class CartController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() // md5(rand().time("now")
-    {      
-        $model = new Co();
-
-        //Add This For Ajax Email Exist Validation 
-        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-          } 
-     
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            
-            $f = UploadedFile::getInstance($model, 'photo');
-            if(!empty($f)){
-                $dir = Url::to('@webroot/uploads/contact/');
-                if (!is_dir($dir)) {
-                    mkdir($dir, 0777, true);
-                }
-                $fileName = md5($f->baseName . time()) . '.' . $f->extension;
-                if($f->saveAs($dir . $fileName)){
-                    $model->photo = $fileName;
-                }               
-            } 
-            //$model->tel = implode (",",$model->tel);
-            // $model->tel = $model->tel[1];
-            $model->name = $_POST['Co']['name'];
-            $model->created_at = time("now");
-            $model->updated_at = time("now");
-            if($model->save()){
-               return $this->redirect(['index']);
-            }   
-        }
-
-        // $model->tel = explode(',', $model->tel);
-        if(Yii::$app->request->isAjax){
-            return $this->renderAjax('create',[
-                    'model' => $model,                    
-            ]);
-        }else{
-            return $this->render('create',[
-                'model' => $model,                    
-            ]); 
-        }
-    }    
+       
         
     public function actionSearch($q = null,$m = null) {
 
@@ -194,26 +120,24 @@ class CartController extends Controller
 
         if (isset($m)) {
             $models = Product::find()            
-            ->where(['category' => $m])->all();
+            ->where(['category' => $m,'status' => 1])->all();
         }elseif(isset($q)){
             $models = Product::find()
-            ->where(['category' => $m])
+            ->where(['category' => $m,'status' => 1])
             ->where(['LIKE', 'product_name', $q])->all();
         }else{
-            $models = Product::find()->all();
+            $models = Product::find()->where(['status' => 1])->all();
         }
         $modelCatalogs = ProductCatalog::find()->all();              
         if(Yii::$app->request->isAjax){
                 return $this->renderAjax('index',[
                     'models' => $models,  
-                    // 'pagination' => $pagination, 
                     'modelCatalogs' => $modelCatalogs,
                 ]);
         } else {
                 $modelCatalogs = ProductCatalog::find()->all();
                 return $this->render('index',[
                     'models' => $models,   
-                    // 'pagination' => $pagination, 
                     'modelCatalogs' => $modelCatalogs,
                 ]);
         }

@@ -88,7 +88,7 @@ class ReceiptList extends \yii\db\ActiveRecord
     }
 
     public function getProductList(){
-        $model = Product::find()->select('code, product_name')->orderBy(['product_name' => 'ASC'])->all();
+        $model = Product::find()->select('code, product_name')->where(['status' => 1])->orderBy(['product_name' => 'ASC'])->all();
         return ArrayHelper::map($model,'code','product_name');
     }
 

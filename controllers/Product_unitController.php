@@ -70,9 +70,15 @@ class Product_unitController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('create',[
+                    'model' => $model,                    
+            ]);
+        }
+        
+        return $this->render('create',[
+               'model' => $model,                    
+        ]); 
     }
 
     /**

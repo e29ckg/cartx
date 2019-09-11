@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							<div class="product-image-wrapper">
 								<div class="single-products">
 									<div class="productinfo text-center">
-										<img src="<?= $model->img ? Url::to('@web/uploads/product/img/'.$model->img) : Url::to('@web/img/no_image.png')?>"  height="250" width="200" sizes= "50" alt="<?=$model->product_name?>" />
+										<img src="<?= $model->getProductImg($model->img) ?>"  height="250" width="200" sizes= "50" alt="<?=$model->product_name?>" />
 										<h2>  <?=$model->instoke > 0 ? 'มี '.$model->instoke.' '.$model->getUnitName() : 'หมด' ?></h2>
 										<p class="text-short"><?=$model->product_name?></p>
 										<a href="<?=Url::to(['cart/add_to_cart','code'=>$model->code])?>" data-id="<?=$model->code?>" class="btn btn-default add-to-cart <?=$model->instoke > 0 ? '': 'disabled' ;?>"><i class="fa fa-shopping-cart"></i>Add to cart</a>

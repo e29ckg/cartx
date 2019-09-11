@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
@@ -24,7 +25,7 @@ use app\models\ProductUnit;
     <?php 
         echo $form->field($model, 'product_code', ['options' => ['class' => '']])->widget(Select2::classname(), ['data' => $model->getProductList(), 'options' => ['placeholder' => 'select ...'], 'pluginOptions' => ['allowClear' => true]]);
     ?>
-        <a href= "index.php?r=product/create" class="btn btn-warning btn-xs act-update"><i class="fa fa-pencil-square-o"></i> เพิ่มชื่อสินค้าใหม่(กรณีค้นหาไม่พบ)</a>
+    <label id="act-create-product" class="btn btn-warning btn-xs" for="create"><i class="fa fa-pencil-square-o"></i> เพิ่มชื่อสินค้าใหม่(กรณีค้นหาไม่พบ)</label>
     
     <?= $form->field($model, 'unit_price')->textInput(['maxlength' => true]) ?>
 
@@ -39,3 +40,23 @@ use app\models\ProductUnit;
     <?php ActiveForm::end(); ?>
 
 </div>
+<?php
+$script = <<< JS
+$(document).ready(function() {	
+
+	var url_create1 = "../product/create";
+	$( "#act-create-product" ).click(function() { 
+        $.get(url_create1,function (data){
+            $("#activity-modal").find(".modal-body").html(data);
+            $(".modal-body").html(data);
+            $(".modal-title").html("เพิ่มข้อมูล");
+            // $(".modal-footer").html(footer);
+            $("#activity-modal").modal("show");
+            //   $("#myModal").modal('toggle');
+        });     
+	}); 
+		
+});
+JS;
+$this->registerJs($script);
+?>

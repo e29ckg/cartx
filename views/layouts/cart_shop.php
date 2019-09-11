@@ -42,7 +42,7 @@ if (Yii::$app->user->identity) {
     <link href="<?=Url::to('@web/css/prettyPhoto.css')?>" rel="stylesheet">
     <link href="<?=Url::to('@web/css/price-range.css')?>" rel="stylesheet">
     <link href="<?=Url::to('@web/css/animate.css')?>" rel="stylesheet">
-	<link href="<?=Url::to('@web/css/main.css')?>" rel="stylesheet">
+	<link href="<?=Url::to('@web/css/main.css?v.1')?>" rel="stylesheet">
 	<link href="<?=Url::to('@web/css/responsive.css')?>" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -92,7 +92,7 @@ if (Yii::$app->user->identity) {
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="logo pull-left">
-							<a href="<?=Url::to(['cart/index'])?>"><img src="<?=Url::to('@web/images/home/logo.png')?>" alt="" /></a>							
+							<a href="<?=Url::to(['cart/index'])?>"><img src="<?=Url::to('@web/images/home/logo1.png')?>" alt="" /></a>							
 						</div>
 						<div class="btn-group pull-right">
 						
