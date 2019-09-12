@@ -124,7 +124,7 @@ class CartController extends Controller
         }elseif(isset($q)){
             $models = Product::find()
             ->where(['category' => $m,'status' => 1])
-            ->where(['LIKE', 'product_name', $q])->all();
+            ->Where(['LIKE', 'product_name', $q])->all();
         }else{
             $models = Product::find()->where(['status' => 1])->all();
         }

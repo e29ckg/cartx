@@ -48,6 +48,8 @@
                         'items' => [
                             ['label' => 'Product-All', 'icon' => 'file-code-o', 'url' => ['product/index'],],
                             ['label' => 'Product-Stock-Down', 'icon' => 'file-code-o', 'url' => ['product/stock_down'],],
+                            ['label' => 'Product-Catalog', 'icon' => 'file-code-o', 'url' => ['product_catalog/index'],],
+                            ['label' => 'Product-Unit', 'icon' => 'file-code-o', 'url' => ['product_unit/index'],],
                         ]
                     ],
                     
