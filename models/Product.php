@@ -129,5 +129,13 @@ class Product extends \yii\db\ActiveRecord
             '4' => 'ยกเลิก',
         ];
     }
+
+    public function getStatusName($st)
+    {
+        if(!empty($st)){
+            return $this->getStatus()[$st];
+        }        
+        return '----';
+    }
  
 }

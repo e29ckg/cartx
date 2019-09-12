@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						</td>
 						<td>
 							<?=$model['product_name']?>
-							<label class="label <?= $model->status == 4 ? 'label-danger' : 'label-info'?>"><?=$model->getStatus()[$model->status]?></label>
+							<label class="label <?= $model->status == 1 ? 'label-info' : 'label-danger'?>"><?=$model->getStatusName($model->status)?></label>
 						</td>
 						<td><?=$model->getCatalogtName()?></td>
 						<td><?=$model->create_at?></td>
