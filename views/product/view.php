@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   $sumtotal =$sumtotal + $total;
               ?>
 							<td class="text-center"><?=$sumtotal;?></td>	
-              <td><?php //$model->receipt_list_id?></td>						
+              <td><?=$model->note?></td>						
 						</tr>
                         <?php 
                            
