@@ -43,7 +43,7 @@ use yii\helpers\Html;
             <td style="text-align:center"><?=$i?></td>
             <td style="text-align:center"><img src="<?=$model->getProductImg()?>" height="32" ></td>
             <td><?=$model->getProductName()?></td>
-            <td style="text-align:center"><?=$model->unit_price?></td>
+            <td style="text-align:center"><?=number_format($model->unit_price,2)?></td>
             <td style="text-align:center"><?=$model->quantity?> <?=$model->getProductUnitName()?></td>
             <td style="text-align:right"><?= number_format($model->unit_price * $model->quantity, 2); ?></td>
         </tr>

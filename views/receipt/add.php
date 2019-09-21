@@ -1,9 +1,11 @@
 <?php
 
+use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
 use app\models\Product;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -28,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
               	<table id="receipt-index" class="table table-bordered table-hover">
                 	<thead>
                 		<tr >
-                  			<th class="text-center">ID</th>
+                  			<!-- <th class="text-center">ID</th> -->
 				  			<th class="text-center">Img</th>
 							<th class="text-center">Product</th>
 				  			<th class="text-center">ราคาต่อหน่วย</th>
@@ -51,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								$sumTotal = $sumTotal + $Total;
 					?>
 						<tr>
-							<td class="text-center"><?=$i?></td>				
+							<!-- <td class="text-center"><?=$i?></td>				 -->
 							<!-- <td class=""><?=$_SESSION['strProductCodeR'][$i]?></td> -->
 							<td class="text-center"><img src="<?=$model->getProductImg($model->img);?>" alt="img-product" width="42px"></td>
 							<td><?=$model->product_name;?></td>
@@ -67,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 					</tbody> 
 					<tfoot> 							
-						<th colspan="5" class="text-right">ราคารวม : </th>
+						<th colspan="4" class="text-right">ราคารวม : </th>
 						<th class="text-right success"><?=number_format($sumTotal, 2)?></th>
 						
 					</tfoot>
@@ -76,11 +78,28 @@ $this->params['breadcrumbs'][] = $this->title;
            	 	<!-- /.box-body -->
         	</div>
         	<!-- /.box -->
+			<?php if($sumTotal <> 0){?>
 			<div>
-				<?php if($sumTotal <> 0){?>
-					<a data-id="" href="<?=Url::to(['receipt/add_conform'])?>" class="btn btn-success"><i class="fa fa-times"></i>ยืนยัน</a>
-				<?php } ?>				
+				
+					<!-- <a data-id="" href="<?=Url::to(['receipt/add_conform'])?>" class="btn btn-success"> บันทึก</a> -->
+							
 			</div>
+			<div>
+				<?php $form = ActiveForm::begin(['action' => Url::to(['receipt/add_conform'])]); ?>
+				<?php echo $form->field($modelR, 'receipt_from', [
+					'options' => ['class' => '']])
+					->widget(Select2::classname(), [
+						'data' => $modelR->getSellerName(), 
+						'options' => ['placeholder' => 'select ...'], 
+						'pluginOptions' => ['allowClear' => true]
+						]);?>
+						<div class="form-group">
+        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    </div>
+				<?php ActiveForm::end(); ?>
+			</div>
+			<?php } ?>	
+			
 
     	</div>
     	<!-- /.col -->

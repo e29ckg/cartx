@@ -25,14 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div  class="features_items"><!--features_items-->
 		<h2 class="title text-center">Features Items</h2>
 		
-		<?php foreach ($models as $model):
-			//  if($model->instoke >= 1){							  
-		?>
+		<?php foreach ($models as $model):?>
 
-		<div class="col-sm-3">
+		<div class="col-md-3">
 			<div class="product-image-wrapper">
 				<div class="single-products">
-					<div class="productinfo text-center ">
+					<div class="productinfo text-center">
 						<img src="<?= $model->getProductImg($model->img) ?>"  height="250" width="200" sizes= "50" alt="<?=$model->product_name?>" />
 						<h2>  <?=$model->instoke > 0 ? 'มี '.$model->instoke.' '.$model->getUnitName() : 'หมด' ?></h2>
 						<p class="text-short">

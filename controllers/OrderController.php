@@ -231,14 +231,26 @@ class OrderController extends Controller
                     $model_order_list->quantity = 0;
 
                     if($model_receipt_lists->save() and $model_order_list->save() and $modelP->save()){
-                        $modelLST = new LogSt();
-                        $modelLST->code = $modelOD->order_code;
-                        $modelLST->product_code = $model_order_list->product_code;
-                        $modelLST->unit_price = $model_order_list->unit_price; 
-                        $modelLST->receipt_list_id = $model_order_list->receipt_list_id; 
-                        $modelLST->ym = date('Y-m', strtotime(date("Y-m-d"))); 
-                        $modelLST->quantity = $QTY;
-                        $modelLST->note = 'ยกเลิก Order';
+                        // $modelLST = new LogSt();
+                        // $modelLST->code = $modelOD->order_code;
+                        // $modelLST->product_code = $model_order_list->product_code;
+                        // $modelLST->unit_price = $model_order_list->unit_price; 
+                        // $modelLST->receipt_list_id = $model_order_list->receipt_list_id; 
+                        // $modelLST->ym = date('Y-m', strtotime(date("Y-m-d"))); 
+                        // $modelLST->quantity = $QTY;
+                        // $modelLST->note = 'ยกเลิก Order';
+                        // $modelLST->create_at = date("Y-m-d H:i:s");
+                        // $modelLST->save();
+
+                        $modelLST = LogSt::findOne([
+                            'code' => $modelOD->order_code,
+                            'product_code' => $model_order_list->product_code,
+                            'unit_price' => $model_order_list->unit_price,
+                            'receipt_list_id' => $model_order_list->receipt_list_id,
+                            'ym' => $model_order_list->ym,
+                            ]);
+                        $modelLST->quantity = 0;
+                        $modelLST->note = 'ยกเลิกการเบิก';
                         $modelLST->create_at = date("Y-m-d H:i:s");
                         $modelLST->save();
                     }  

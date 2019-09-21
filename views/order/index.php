@@ -7,7 +7,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Orders';
+$this->title = 'ใบเบิก';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -28,8 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 <th>Code</th>
                 <th>ผู้เบิก</th>
                 <td>ราคารวม</td>
-                <th>สถานะ(s)</th>
-                <!-- <th>วัน-เวลา</th> -->
                 <th>เครื่องมือ</th>
               </tr>
             </thead>
@@ -42,37 +40,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     <br><?=$model->DateThai_full($model->create_at)?>
                   </td>
                   <td><?=$model->getProfileName()?></td>
-                  <td style="text-align:right"><?=number_format($model->sumtotal, 2)?></td>
+                  <td style="text-align:right"><?=number_format($model->sumtotal, 2)?></td>                  
                   <td>
-                    <label class="label <?= $model->status == 4 ? 'label-danger' : 'label-info'?>">
-                      <?= isset($model->status) ? $model->getStatus()[$model->status] : '';?>
-                    </label>
-                  </td>
-                  <!-- <td><?=$model->create_at?></td> -->
-                  <td>
-                    <a href="<?=Url::to(['order/print','id'=>$model->id])?>" class ="btn btn-info btn-xs" target="_blank">พิมพ์ใบเบิก</a>
-                    <?php
-                      echo Html::a('<i class="fa fa-remove "></i> ยกเลิกใบเบิก',[
-                        'order/cancel','id' => $model->id],
-                        [
-                          'class' => 'btn btn-danger  btn-xs',									
-                          'data-confirm' => 'Are you sure to ยกเลิก this item?',
-                                      // 'data-method' => 'post',
-                        ]);
-                    ?>
+                    <?= $model->status == 4 ? 
+                      '<label class="label label-danger">ยกเลิก</label>'
+                      :
+                      '<a href="'.Url::to(['order/print','id'=>$model->id]).'" class ="btn btn-info btn-xs" target="_blank">พิมพ์ใบเบิก</a>
+                      '.Html::a('<i class="fa fa-remove "></i> ยกเลิกใบเบิก',['order/cancel','id' => $model->id],
+                          [
+                            'class' => 'btn btn-danger  btn-xs',									
+                            'data-confirm' => 'Are you sure to ยกเลิก this item?',
+                                        // 'data-method' => 'post',
+                          ]);
+                      ?>
                   </td>
                 </tr>
 				      <?php  endforeach; ?>
 				    </tbody>
-                <!-- <tfoot>
-                <tr>
-                  <th>Rendering engine</th>
-                  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>Engine version</th>
-                  <th>CSS grade</th>
-                </tr>
-                </tfoot> -->
+               
           </table>
         </div>
             <!-- /.box-body -->

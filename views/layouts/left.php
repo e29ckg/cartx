@@ -39,6 +39,7 @@
                         'items' => [
                             ['label' => 'ใบรับสินค้าทั้งหมด', 'icon' => 'file-code-o', 'url' => ['receipt/index'],],
                             ['label' => 'เพิ่มสินค้าเข้าสต๊อก', 'icon' => 'file-code-o', 'url' => ['receipt/add'],],
+                            ['label' => 'ข้อมูลบริษัท', 'icon' => 'file-code-o', 'url' => ['seller/index'],],
                         ]
                     ],
                     [
@@ -51,15 +52,7 @@
                             ['label' => 'Product-Catalog', 'icon' => 'file-code-o', 'url' => ['product_catalog/index'],],
                             ['label' => 'Product-Unit', 'icon' => 'file-code-o', 'url' => ['product_unit/index'],],
                         ]
-                    ],
-                    
-                    
-                    [
-                        'label' => 'Log-In-Out',
-                        'icon' => 'envelope-o',
-                        'url' => ['log_st/index'],
-                        'template'=>'<a href="{url}">{icon} {label}<span class="pull-right-container"><small class="label pull-right bg-yellow">123</small></span></a>'
-                    ],
+                    ],                    
                     [
                         'label' => 'รายงาน', 
                         'icon' => 'file-code-o', 
@@ -68,6 +61,12 @@
                             ['label' => 'Report', 'icon' => 'file-code-o', 'url' => ['report/index'],],
                             ['label' => 'Report/view', 'icon' => 'file-code-o', 'url' => ['report/view2'],],
                         ]
+                    ],
+                    [
+                        'label' => 'Log-In-Out',
+                        'icon' => 'envelope-o',
+                        'url' => ['log_st/index'],
+                        'template'=>'<a href="{url}">{icon} {label}<span class="pull-right-container"><small class="label pull-right bg-yellow">123</small></span></a>'
                     ],
                     // [
                     //     'label' => 'Setting', 

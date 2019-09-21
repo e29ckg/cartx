@@ -81,7 +81,6 @@ class CartController extends Controller
 
     public function actionCart()
     {
-        // $this->layout = 'bg';
         $this->layout = 'cart_shop';        
         
         return $this->render('cart');
@@ -123,23 +122,25 @@ class CartController extends Controller
             ->where(['category' => $m,'status' => 1])->all();
         }elseif(isset($q)){
             $models = Product::find()
-            ->where(['category' => $m,'status' => 1])
-            ->Where(['LIKE', 'product_name', $q])->all();
+            ->where(['category' => $m])
+            ->orWhere(['LIKE', 'product_name', $q])
+            ->andWhere(['status' => 1])
+            ->all();
         }else{
             $models = Product::find()->where(['status' => 1])->all();
         }
         $modelCatalogs = ProductCatalog::find()->all();              
         if(Yii::$app->request->isAjax){
-                return $this->renderAjax('index',[
-                    'models' => $models,  
-                    'modelCatalogs' => $modelCatalogs,
-                ]);
+            return $this->renderAjax('index',[
+                'models' => $models,  
+                'modelCatalogs' => $modelCatalogs,
+            ]);
         } else {
-                $modelCatalogs = ProductCatalog::find()->all();
-                return $this->render('index',[
-                    'models' => $models,   
-                    'modelCatalogs' => $modelCatalogs,
-                ]);
+            $modelCatalogs = ProductCatalog::find()->all();
+            return $this->render('index',[
+                'models' => $models,   
+                'modelCatalogs' => $modelCatalogs,
+            ]);
         }
     }
 

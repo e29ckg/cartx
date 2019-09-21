@@ -75,9 +75,9 @@ class ReceiptController extends Controller
         //     ])->limit(200)->all();
         
         //     $countAll = Receipt::getCountAll();
-        
+        $model = new Receipt();
         return $this->render('add',[
-            // 'models' => $model,
+            'modelR' => $model,
             // 'countAll' => $countAll,
             //'dataProvider' => $dataProvider,
         ]);
@@ -134,8 +134,10 @@ class ReceiptController extends Controller
     public function actionAdd_conform() {
 
         // $code = date("YmdHis").Yii::$app->security->generateRandomString(4);
+        // $modelRR = new Receipt();
         $code = 'R'.date("YmdHis");
         $create_at = date("Y-m-d H:i:s");
+        
         try {            
 
             $Total = 0 ;
@@ -182,23 +184,41 @@ class ReceiptController extends Controller
                     }
                 }
 
-                Yii::$app->db->createCommand()->insert('receipt', [
-                    'receipt_code' => $code,
-                    'user_id' => Yii::$app->user->identity->id,
-                    'ym' => date('Y-m', strtotime(date("Y-m-d"))),
-                    'sumtotal' => $sumTotal,
-                    'status' => 1,
-                    'create_at' => $create_at,
-                ])->execute();
+                // Yii::$app->db->createCommand()->insert('receipt', [
+                //     'receipt_code' => $code,
+                //     'receipt_form' => $receipt_from,
+                //     'user_id' => Yii::$app->user->identity->id,
+                //     'ym' => date('Y-m', strtotime(date("Y-m-d"))),
+                //     'sumtotal' => $sumTotal,
+                //     'status' => 1,
+                //     'create_at' => $create_at,
+                // ])->execute();
+                $modelRR = new Receipt();
+                if ($modelRR->load(Yii::$app->request->post())) {
 
+                    if ($modelRR->validate()) {
+        
+                        $modelRR->receipt_code = $code;
+                        $modelRR->receipt_from = $_POST['Receipt']['receipt_from'];
+                        $modelRR->user_id = Yii::$app->user->identity->id;
+                        $modelRR->ym = date('Y-m', strtotime(date("Y-m-d")));
+                        $modelRR->sumtotal = $sumTotal;
+                        $modelRR->status = 1;
+                        $modelRR->create_at = $create_at;
+                        $modelRR->save();
+                        
+                    }
+                }  
+                
+               
             }            
 
             unset($_SESSION['inLineR']);	
             unset($_SESSION['strProductCodeR']);	            
             unset($_SESSION['strProductUnitPriceR']);	
             unset($_SESSION['strQtyR']);
-
-            
+            Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');  
+            return $this->redirect(['index']);            
 
 		} catch(\Exception $e) {
             $transaction->rollBack();
@@ -208,7 +228,6 @@ class ReceiptController extends Controller
             throw $e;
         }			
         return $this->redirect(['index']);
-        // return $this->renderAjax('checkout');
     }
 
     /**
@@ -240,27 +259,7 @@ class ReceiptController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new Order();
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $model->ym = date('Y-m', strtotime(date("Y-m-d"))); 
-            $model->create_at = date("Y-m-d H:i:s");
-            $model->save();
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        if(Yii::$app->request->isAjax){
-            return $this->renderAjax('create',[
-                    'model' => $model,                    
-            ]);
-        }else{
-            return $this->render('create',[
-                'model' => $model,                    
-            ]); 
-        }
-    }
+    
 
     /**
      * Updates an existing Order model.
@@ -281,6 +280,29 @@ class ReceiptController extends Controller
         ]);
     }
 
+    public function actionUpdate_seller($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            
+            $model->save();
+            Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย'); 
+            return $this->redirect(['index']);
+        }
+
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_form_seller',[
+                    'model' => $model,                    
+            ]);
+        }else{
+            return $this->render('_form_seller',[
+                'model' => $model,                    
+            ]); 
+        }
+        
+    }
+
     public function actionUpdate_list_cancel($id)
     {
         $models = $this->findModel($id);
@@ -295,7 +317,7 @@ class ReceiptController extends Controller
             foreach ($modelOLs as $modelOL):
               if($modelOL->quantity <> 0){
                   $x = TRUE;
-                  $y .= $modelOL->order_code.',';
+                  $y .= $modelOL->order_code.'\n';
               }  
             endforeach;        
         endforeach;
@@ -310,15 +332,26 @@ class ReceiptController extends Controller
                 $modelP = Product::find()->where(['code' => $modelRL->product])->one();
                 $modelP->instoke = $modelP->instoke - $modelRL->quantity;
 
-                $modelLST = new LogSt();
-                $modelLST->code = $modelRL->receipt_code;
-                $modelLST->product_code = $modelRL->product_code;
-                $modelLST->unit_price = $modelRL->unit_price; 
-                $modelLST->receipt_list_id = $modelRL->id; 
-                $modelLST->ym = date('Y-m', strtotime(date("Y-m-d"))); 
-                $modelLST->quantity = '-'.$modelRL->quantity;
-                $modelLST->note = 'OUT';
-                $modelLST->create_at = $create_at;
+                // $modelLST = new LogSt();
+                // $modelLST->code = $modelRL->receipt_code;
+                // $modelLST->product_code = $modelRL->product_code;
+                // $modelLST->unit_price = $modelRL->unit_price; 
+                // $modelLST->receipt_list_id = $modelRL->id; 
+                // $modelLST->ym = date('Y-m', strtotime(date("Y-m-d"))); 
+                // $modelLST->quantity = '-'.$modelRL->quantity;
+                // $modelLST->note = 'OUT';
+                // $modelLST->create_at = $create_at;
+                $modelLST = LogSt::findOne([
+                    'code' => $modelRL->receipt_code,
+                    'product_code' => $modelRL->product_code,
+                    'unit_price' => $modelRL->unit_price,
+                    'receipt_list_id' => $modelRL->id,
+                    'ym' => $modelRL->ym,
+                    ]);
+                $modelLST->quantity = 0;
+                $modelLST->note = 'ยกเลิกการนำเข้า';
+                $modelLST->create_at = date("Y-m-d H:i:s");
+                $modelLST->save();
                 
                 $modelRL->product_code = $modelRL->product_code;
                 $modelRL->unit_price = 0;
@@ -336,6 +369,7 @@ class ReceiptController extends Controller
             $models->ym = date('Y-m', strtotime(date("Y-m-d"))); 
             $models->create_at = $create_at;
             $models->save();
+            Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย'); 
         }
         // Yii::$app->session->setFlash('error', $x);
         return $this->redirect(['index']);
