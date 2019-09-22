@@ -35,12 +35,13 @@ class Product_unitController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => ProductUnit::find(),
-        ]);
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
+        $model = ProductUnit::find()->orderBy([
+            'name_unit'=>SORT_ASC,
+            ])->limit(500)->all();
+        
+        
+        return $this->render('index',[
+            'models' => $model,
         ]);
     }
 
@@ -67,7 +68,7 @@ class Product_unitController extends Controller
         $model = new ProductUnit();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         if(Yii::$app->request->isAjax){
@@ -94,6 +95,11 @@ class Product_unitController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
+        }
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('update',[
+                    'model' => $model,                    
+            ]);
         }
 
         return $this->render('update', [

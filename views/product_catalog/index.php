@@ -9,31 +9,23 @@ use yii\grid\GridView;
 $this->title = 'Product Catalogs';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-    <!-- widget grid -->
-	<section id="widget-grid" class="">
-				
-        <!-- row -->
-        <div class="row">
-            
-            <!-- NEW WIDGET START -->
-            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            
-             	<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1">
-					<header>
-						<span class="widget-icon"> <i class="fa fa-table"></i> </span>
-						<h2><?= $this->title;?> </h2>
-						<?= Html::a('Create Product Catalog', ['create'], ['class' => 'btn btn-success']) ?>
-					</header>
-						<!-- widget div-->
-					<div>
-						<!-- widget edit box -->
-						<div class="jarviswidget-editbox">
-							<!-- This area used as dropdown edit box -->
-						</div>
-						<!-- end widget edit box -->
-						<!-- widget content -->
-						<div class="widget-body no-padding">
+
+
+<!-- Main content -->
+<section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title"><?=$this->title?></h3>
+			  <div class="box-tools">
+                
+					<a href= "#" id="act-create" class="btn btn-success"><i class="fa fa-pencil-square-o"></i> เพิ่ม</a>
+
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
 							<table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
 								<thead>
 									<tr>
@@ -49,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								        <td><?=$models['name_catalog']?></td>
 								        <td>
 											<a herf= "#" class="btn btn-warning act-update" data-id=<?=$models['id']?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
-											<a herf= "#" class="btn btn-warning act-view" data-id=<?=$models['id']?>><i class="fa fa-pencil-square-o"></i> ดู</a>
+											<!-- <a herf= "#" class="btn btn-warning act-view" data-id=<?=$models['id']?>><i class="fa fa-pencil-square-o"></i> ดู</a> -->
 											<?= Html::a('<i class="fa fa-remove"></i> ลบ',['product_catalog/delete','id' => $models->id],
 													[
 														'class' => 'btn btn-danger act-update',
@@ -62,12 +54,16 @@ $this->params['breadcrumbs'][] = $this->title;
 									<?php  endforeach; ?>
 								</tbody>	
 							</table>
-						</div>
-					</div>							
-            </article>
+							</div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
         </div>
-	</section>
-
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
 
 
 <?php
@@ -117,12 +113,11 @@ $(document).ready(function() {
  		location.reload();
 	})
 			
-		$('#datatable_fixed_column').DataTable();
-		    
+		$('#datatable_fixed_column').DataTable();		    
 
 
 $( "#act-create" ).click(function() {    
-    var url_create = "index.php?r=product_catalog/create";
+    var url_create = "create";
         $.get(url_create,function (data){
             $("#activity-modal").find(".modal-body").html(data);
             $(".modal-body").html(data);

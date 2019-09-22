@@ -375,7 +375,12 @@ class CartController extends Controller
         $this->layout = 'cart_shop';   
         $model = $this->findModel($id);
         $user_id = Yii::$app->user->id;
-        $model_lists = OrderList::find()->where(['order_code'=> $model->order_code])->all();
+        $model_lists = OrderList::find()->where([
+            'order_code'=> $model->order_code
+            ])
+            ->groupBy(['product_code','unit_price'])
+            ->orderBy(['id' => SORT_ASC])
+            ->all();
     
         Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
         $pdf = new Pdf([

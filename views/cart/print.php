@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use app\models\OrderList;
 ?>
 
 <table width="100%">
@@ -38,18 +39,30 @@ use yii\helpers\Html;
             $productQTY_old = 0;
             $A = '';
         ?>
-        <?php foreach ($model_lists as $model): ?>
+        <?php 
+        foreach ($model_lists as $model): 
+            $model_ls = OrderList::find()->where([
+                'order_code'=> $model->order_code,
+                'product_code' => $model->product_code,
+                'unit_price' => $model->unit_price])->all();
+            $quantity_a = null;
+            foreach ($model_ls as $model_l):
+                $quantity_a = $quantity_a + $model_l->quantity;
+            endforeach; 
+        
+        ?>
         <tr>
             <td style="text-align:center"><?=$i?></td>
             <td style="text-align:center"><img src="<?=$model->getProductImg()?>" height="32" ></td>
             <td><?=$model->getProductName()?></td>
             <td style="text-align:center"><?=number_format($model->unit_price,2)?></td>
-            <td style="text-align:center"><?=$model->quantity?> <?=$model->getProductUnitName()?></td>
-            <td style="text-align:right"><?= number_format($model->unit_price * $model->quantity, 2); ?></td>
+            <!-- <td style="text-align:center"><?=$model->quantity?> <?=$model->getProductUnitName()?></td> -->
+            <td style="text-align:center"><?=$quantity_a?> <?=$model->getProductUnitName()?></td>
+            <td style="text-align:right"><?= number_format($model->unit_price * $quantity_a, 2); ?></td>
         </tr>
             <?php  
                 ++$i;
-                $quantity = $quantity + $model->unit_price * $model->quantity;
+                $quantity = $quantity + $model->unit_price * $quantity_a;
                 endforeach; 
             ?>    
     </tbody>    

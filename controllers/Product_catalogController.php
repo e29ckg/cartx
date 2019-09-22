@@ -45,13 +45,11 @@ class Product_catalogController extends Controller
         $model = ProductCatalog::find()->orderBy([
             'order'=>SORT_ASC,
             // 'order' => SORT_DESC,
-            ])->limit(50)->all();
+            ])->limit(500)->all();
         
-            $countAll = ProductCatalog::getCountAll();
         
         return $this->render('index',[
             'models' => $model,
-            'countAll' => $countAll,
         ]);
     }
 
