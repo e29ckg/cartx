@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   <br><?=$model->DateThai_full($model->create_at)?>
                 </td>
                 <td>
-                  <?= $model->receipt_from ? $model->seller->name : '-'?>
+                  <?= $model->getSellerName()?>
                   <br><a href="#" data-id ="<?=$model->id?>" class="btn btn-warning btn-xs act-update-seller">แก้ไข</a>
                 </td>
                 <td><?=$model->getProfileName()?></td>

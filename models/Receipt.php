@@ -78,6 +78,11 @@ class Receipt extends \yii\db\ActiveRecord
     }
 
     public function getSellerName(){
+        $model = $this->seller;
+        return $model ? $model->name : '-' ;
+    }
+
+    public function getSellerNameList(){
         $model = Seller::find()->select('id, name')->orderBy('name')->all();
         return ArrayHelper::map($model,'id','name');
     }

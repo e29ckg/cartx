@@ -16,7 +16,7 @@ use kartik\select2\Select2;
     <?php echo $form->field($model, 'receipt_from', [
 					'options' => ['class' => '']])
 					->widget(Select2::classname(), [
-						'data' => $model->getSellerName(), 
+						'data' => $model->getSellerNameList(), 
 						'options' => ['placeholder' => 'select ...'], 
 						'pluginOptions' => ['allowClear' => true]
 						]);?>

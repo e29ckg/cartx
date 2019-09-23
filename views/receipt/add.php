@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
               		<h3 class="box-title">ใบรับของ</h3>
 			  		<div class="box-tools">                
 						<!-- <a href= "index.php?r=receipt/add_list" class="btn btn-warning act-update"><i class="fa fa-pencil-square-o"></i> เพิ่ม</a> -->
-						<a href= "#" id="act-create" class="btn btn-warning act-update"><i class="fa fa-pencil-square-o"></i> เพิ่ม</a>
+						<a href= "#" id="act-create" class="btn btn-success "><i class="fa fa-pencil-square-o"></i> เพิ่ม</a>
 					</div>
            	 	</div>
             	<!-- /.box-header -->
@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?php echo $form->field($modelR, 'receipt_from', [
 					'options' => ['class' => '']])
 					->widget(Select2::classname(), [
-						'data' => $modelR->getSellerName(), 
+						'data' => $modelR->getSellerNameList(), 
 						'options' => ['placeholder' => 'select ...'], 
 						'pluginOptions' => ['allowClear' => true]
 						]);?>

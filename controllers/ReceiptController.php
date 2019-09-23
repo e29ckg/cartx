@@ -134,10 +134,10 @@ class ReceiptController extends Controller
     public function actionAdd_conform() {
 
         // $code = date("YmdHis").Yii::$app->security->generateRandomString(4);
-        // $modelRR = new Receipt();
+        $modelRR = new Receipt();
         $code = 'R'.date("YmdHis");
         $create_at = date("Y-m-d H:i:s");
-        
+        if ($modelRR->load(Yii::$app->request->post()) && $modelRR->validate()) {
         try {            
 
             $Total = 0 ;
@@ -193,7 +193,7 @@ class ReceiptController extends Controller
                 //     'status' => 1,
                 //     'create_at' => $create_at,
                 // ])->execute();
-                $modelRR = new Receipt();
+                // $modelRR = new Receipt();
                 if ($modelRR->load(Yii::$app->request->post())) {
 
                     if ($modelRR->validate()) {
@@ -212,22 +212,23 @@ class ReceiptController extends Controller
                 
                
             }            
+        
+                       
 
+            } catch(\Exception $e) {
+                $transaction->rollBack();
+                throw $e;
+            }
             unset($_SESSION['inLineR']);	
             unset($_SESSION['strProductCodeR']);	            
             unset($_SESSION['strProductUnitPriceR']);	
             unset($_SESSION['strQtyR']);
             Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');  
-            return $this->redirect(['index']);            
-
-		} catch(\Exception $e) {
-            $transaction->rollBack();
-            throw $e;
-        } catch(\Throwable $e) {
-            $transaction->rollBack();
-            throw $e;
+            return $this->redirect(['index']); 
         }			
-        return $this->redirect(['index']);
+        return $this->render('add',[
+            'modelR' => $modelRR,
+        ]);
     }
 
     /**
