@@ -32,7 +32,7 @@ use yii\helpers\Html;
                 <td >
                     <?=$model_list->getProductName()?>
                 </td>
-                <td style="text-align: center"><?=$model_list->unit_price?></td>
+                <td style="text-align: center"><?=number_format($model_list->unit_price, 2)?></td>
                 <td style="text-align: center"><?=$model_list->quantity?></td>
                 <td style="text-align: right">
                 <?php 
@@ -81,6 +81,12 @@ use yii\helpers\Html;
     <tr>
         <td colspan="2" width="80%">
             <h3>ผู้นำเข้า : <?= $model->getProfileName() ?></h3>
+        </td>
+        
+    </tr>
+    <tr>
+        <td colspan="2" width="80%">
+            <h3>ร้านค้า/บริษัท : <?= $model->getSellerName() ?></h3>
         </td>
         
     </tr>

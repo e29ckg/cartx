@@ -98,7 +98,7 @@ class ProductController extends Controller
      */
     public function actionView($codeProduct)
     {
-        $modelsP = Product::find()
+        $modelP = Product::find()
                         ->where(['code'=> $codeProduct])
                         ->one();
 
@@ -107,14 +107,14 @@ class ProductController extends Controller
                         ->all();
 
         if(Yii::$app->request->isAjax){
-            return $this->renderAjax('view',[
-                'modelsP' => $modelsP,
+            return $this->renderAjax('view_show',[
+                'modelP' => $modelP,
                 'modelsLST' => $modelsLST                  
             ]);
         }
         
         return $this->render('view', [
-            'modelsP' => $modelsP,
+            'modelP' => $modelP,
             'modelsLST' => $modelsLST
         ]);
     }

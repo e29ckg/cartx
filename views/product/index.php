@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
-            <div class="box-header">
+            <div class="box-header">			
               <h3 class="box-title"><?=$this->title?></h3>
 			  <div class="box-tools">
                 
@@ -70,8 +70,8 @@ $this->params['breadcrumbs'][] = $this->title;
 						<td><?=$model->create_at?></td>
 						<td><?=$model['instoke']?> <?=$model->getUnitName()?></td>
 						<td>
-							<a herf= "#" class="btn btn-warning act-update" data-id=<?=$model['id']?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
-							<!-- <a herf= "#" class="btn btn-warning act-view" data-id=<?=$model->id?>><i class="fa fa-pencil-square-o"></i> ดู</a> -->
+							<a herf= "#" class="btn btn-warning btn-xs act-update" data-id=<?=$model['id']?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
+							<a href= "<?=Url::to(['view','codeProduct'=>$model->code])?>" target="_blank" class="btn btn-info btn-xs" data-id=<?=$model->id?>><i class="fa fa-print"></i> Print </a>
 							<?php
 							// echo Html::a('<i class="fa fa-remove"></i> ลบ',['product/delete','id' => $model->id],
 							// 		[
@@ -112,7 +112,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php
 $script = <<< JS
-
 
 	var url_update = "update";
     	$(".act-update").click(function(e) {            

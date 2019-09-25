@@ -12,7 +12,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-
 <!-- Main content -->
 <section class="content">
       <div class="row">
@@ -26,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								}?>
               <h3 class="box-title"><?=$this->title?></h3>
 			  <div class="box-tools">
-        <button onclick="myFunction()">Print</button>
+        <!-- <button onclick="myFunction()">Print</button> -->
 					<!-- <a href= "#" id="act-create" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> เพิ่ม</a> -->
 
               </div>
@@ -68,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   $sumtotal =$sumtotal + $total;
               ?>
 							<td class="text-center"><?=$sumtotal;?></td>	
-              <td><?php $model->note?></td>						
+              <td><?=$model->note?></td>						
 						</tr>
                         <?php 
                            
@@ -99,16 +98,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- /.row -->
 </section>
 <!-- /.content -->
-</div>
 
-<script type="text/javascript">
-<!--
-         setTimeout('window.print()', 1000);
-//-->
-</script>
 
-<!-- <script>
+<script>
 function myFunction() {
   window.print();
 }
-</script> -->
+</script>
