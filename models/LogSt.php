@@ -75,6 +75,11 @@ class LogSt extends \yii\db\ActiveRecord
         return $model ? $model->product_name:'';
     }
 
+    public function getUnitName(){
+        $model = $this->product;
+        return $model ? $model->getUnitName():'';
+    }
+
     public function getUserName(){
         // $model = $this->receipt;
         $model = $this->order;

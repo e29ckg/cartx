@@ -25,7 +25,8 @@ $this->params['breadcrumbs'][] = $month;
             <div class="box-header">
               <div class="box-tools">
                 <!-- <a href= "#" id="act-create" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> สร้างรายงาน</a> -->
-
+                <button onclick="myFunction()">Print</button>
+				
               </div>
             </div>
             <!-- /.box-header -->
@@ -102,7 +103,11 @@ $this->params['breadcrumbs'][] = $month;
 <!-- /.content -->
 
 <?php//var_dump($RL)?>
-
+<script>
+function myFunction() {
+  window.print();
+}
+</script>
 
 
 

@@ -40,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th class="text-center" >DateTime</th>
                     <th class="text-center" >รับจาก / จ่ายให้ : เลขที่เอกสาร</th>
                     <th class="text-center" >ราคาต่อหน่วย</th>
+                    <th class="text-center" >หน่วยนับ</th>
                     <th class="text-center" >จำนวนรับ</th>
                     <th class="text-center" >จำนวนจ่าย</th>
                     <th class="text-center" >คงเหลือ</th>
@@ -61,6 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
               <td><?= $model->quantity > 0 ? $model->getSellerName() : $model->getUserName();?>
               <br><?=$model->code?> </td>						
 							<td class="text-center"><?=number_format($model->unit_price,2)?></td>
+              <td class="text-center"><?=$model->getUnitName()?></td>
               <td class="text-center"><?=$model->quantity > 0 ? $model->quantity : '';?></td>
               <td class="text-center"><?=$model->quantity < 0 ? $model->quantity : '';?></td>
               <?php  
@@ -84,7 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th><?=$modelP['instoke']?></th>
                     <th></th>
                     <th></th> -->
-                    <th colspan="5"></th>
+                    <th colspan="6"></th>
                     <th class="text-center success"><?=$sumtotal?></th>
                   </tr>
                 </tfoot>
