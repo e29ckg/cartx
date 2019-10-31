@@ -160,29 +160,33 @@ class ReportController extends Controller
     $rRMLs = ReportML::find()->where(['month' => $month])->all(); 
         return $this->render('view',[
             'month' => 'เดือน '.ReportML::DateThai_full($month),
-            'start' => 1,
-            'end' => 1,
+            'start' => $month,
+            'end' => '',
             'rRMLs' => $rRMLs, 
             'RL' => $RL,
         ]);
     }
 
 
-    public function actionV62()
-    {
-        $YM = '2562';
-        $month = date('Y-m', strtotime('2018-10'));
-        $month2 = date('Y-m', strtotime('2019-09'));
+    public function actionV($y=null)
+    { 
+        if($y == null){
+            $y = date('Y') + 543;
+        }
 
+        $YM = $y - 543;
+        
+        $month = date('Y-m', strtotime(($YM-1).'-10'));
+        $month2 = date('Y-m', strtotime($YM.'-09'));
+        
         $create_at = date("Y-m-d H:i:s");
-
-        $ModelRPM = ReportM::findOne(['month'=>$YM]);        
+        $YM = (string)$YM;
+        $ModelRPM = ReportM::findOne(['month'=> $YM]);        
         if(empty($ModelRPM->month)){
             $ModelRPM = new ReportM();
             $ModelRPM->month = $YM;
             $ModelRPM->save();
         }
-
         ReportML::DeleteAll(['month' => $YM]);
         
         $MP = Product::find()->where(['status'=>'1'])->all();
@@ -205,6 +209,7 @@ class ReportController extends Controller
                 $kb = null;
                 $o= null;
                 $r= null;
+                
                 $modelKB = LogSt::find()
                     ->where(['<=','ym',$month2])
                     // ->where(['between','ym',$month,$month2])
@@ -240,94 +245,12 @@ class ReportController extends Controller
 
     $rRMLs = ReportML::find()->where(['month' => $YM])->all(); 
         return $this->render('view',[
-            'month' => 'ปี '.$YM,
-            'start' => 1,
-            'end' => 1,
+            'month' => 'ปี '.($YM + 543),
+            'start' => $month,
+            'end' => $month2,
             'rRMLs' => $rRMLs, 
             'RL' => $RL,
         ]);
     }
 
-    public function actionView62()
-    {
-        // if(empty($m)){
-        //     $m = date("Y-m-d H:i:s");
-        // }
-        $m = "2018-09-01";
-        $m2 = "2019-09-30";
-
-        $month = date('Y-m', strtotime($m));
-        $month2 = date('Y-m', strtotime($m2));
-
-        $ModelRPM = ReportM::findOne(['month'=> '2562']);        
-        if(empty($ModelRPM->month)){
-            $ModelRPM = new ReportM();
-            $ModelRPM->month = $month;
-            $ModelRPM->save();
-        }
-
-        ReportML::DeleteAll(['month' => '2562']);
-
-        $MP = Product::find()->where(['status'=>'1'])->all();
-        foreach ($MP as $modelP):
-
-            $RL = LogSt::find()
-                // ->select(['unit_price','product_code','unit_price',])
-                ->where(['product_code' => $modelP->code])
-                // ->andWhere(['<','quantity',0])
-                ->andWhere(['between','ym',$month,$month2])
-                ->groupBy(['unit_price']) 
-                ->all();
-            
-            foreach ($RL as $model):
-                $ModelRPM = new ReportML();
-                $ModelRPM->month = '2562';
-                $ModelRPM->product_code = $modelP->code;
-                $ModelRPM->product_unit = $modelP->unit;
-
-                $kb = null;
-                // $kb = 1;
-                $o= null;
-                $r= null;
-                $modelKB = LogSt::find()
-                    ->where(['between','ym',$month,$month2])
-                    ->andWhere([
-                        'unit_price'=>$model->unit_price,
-                        'product_code'=> $model->product_code
-                        ])
-                    ->all();
-
-                foreach ($modelKB as $modelK):
-                    if($modelK->ym < $month2){
-                        $kb = $kb + $modelK->quantity;
-                    }
-                    if($modelK->ym == $month2 && $modelK->quantity > 0 ){
-                        $r = $r + $modelK->quantity;
-                    }
-                    if($modelK->ym == $month2  && $modelK->quantity < 0){
-                        $o = $o + $modelK->quantity;
-                    }
-                endforeach;
-
-                $ModelRPM->kb = $kb; 
-                $ModelRPM->r = $r;
-                $ModelRPM->o = $o;
-                $ModelRPM->k = $ModelRPM->kb + $ModelRPM->r + $ModelRPM->o;               
-                $ModelRPM->unit_price = $model->unit_price;
-                $ModelRPM->save();   
-    
-            endforeach;
-        // }
-        
-    endforeach;
-
-    $rRMLs = ReportML::find()->where(['month' => '2562'])->all(); 
-        return $this->render('view',[
-            'month' => ReportML::DateThai_full($month),
-            'start' => 1,
-            'end' => 1,
-            'rRMLs' => $rRMLs, 
-            'RL' => $RL,
-        ]);
-    }
 }

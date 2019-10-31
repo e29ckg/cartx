@@ -11,7 +11,7 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'ตารางสรุปการรับ-จ่ายวัสดุ ประจำ'. $month;
+$this->title = 'ตารางสรุปการรับ-จ่ายวัสดุ ประจำ'. $month ;
 $this->params['breadcrumbs'][] = $month;
 // var_dump();
 
@@ -82,7 +82,7 @@ $this->params['breadcrumbs'][] = $month;
 				</tbody>
                 <tfoot>
                  <tr>
-                  <th colspan="5">ประจำ<?=$month?></th>
+                  <th colspan="5"><?=$start ? $start : '' ?> <?=$end ? 'ถึง '.$end : '' ?></th>
                   
                   <!-- <th></th> -->
                   <th colspan="2" class="text-right">รวม : </th>

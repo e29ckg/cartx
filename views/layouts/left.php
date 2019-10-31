@@ -60,7 +60,7 @@
                         'items' => [
                             ['label' => 'Report', 'icon' => 'file-code-o', 'url' => ['report/index'],],
                             ['label' => 'Report/view', 'icon' => 'file-code-o', 'url' => ['report/view2'],],
-                            ['label' => 'ประจำปี 2562', 'icon' => 'file-code-o', 'url' => ['report/v62'],],
+                            ['label' => 'ประจำปี 2562', 'icon' => 'file-code-o', 'url' => ['report/v','y'=>'2562'],],
                         ]
                     ],
                     [

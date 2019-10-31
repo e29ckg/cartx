@@ -32,7 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <!-- /.box-header -->
             <div class="box-body">
 
-
             <table id="product-index" class="table table-bordered table-hover">
                 <thead>
                 	<tr>
@@ -47,8 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   <td><?=$model->month?></td>
                   <td><a href="<?=Url::to(['report/view2','m' =>$model->month])?>"><?=$model->DateThai_full($model->month)?></a></td>
                   <td><a href="<?=Url::to(['report/del','id' =>$model->id])?>" class="btn btn-danger btn-xs" data-confirm="ต้องการ ลบ ?">ลบ</a></td>
-                </tr>
-              
+                </tr>              
               <?php endforeach; ?>
 				
 				</tbody>
