@@ -9,7 +9,7 @@ $config = [
     'name' => 'E - sTock',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-    'defaultRoute' => 'cart/index',
+    // 'defaultRoute' => 'cart/index',
     'language' => 'th',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -50,7 +50,7 @@ $config = [
             'useCookies' => true,
        ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            // 'errorAction' => 'site/error',
             // 'errorAction' => 'cart/index',
         ],
         'mailer' => [
@@ -71,8 +71,7 @@ $config = [
         ],
         'db' => $db,
         'db2'=> $db2,
-        
-    
+            
         'urlManager' => [    
             'class' => 'yii\web\UrlManager',    
             'showScriptName' => false,

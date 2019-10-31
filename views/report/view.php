@@ -56,8 +56,8 @@ $this->params['breadcrumbs'][] = $month;
                 $K_price = 0 ;
                 $K_price_sum = 0;
               foreach ($rRMLs as $modelRMLs): 
-              if($modelRMLs->kb <> 0 || $modelRMLs->r <> 0 || $modelRMLs->o <> 0){?>
-
+              // if($modelRMLs->kb <> 0 || $modelRMLs->r <> 0 || $modelRMLs->o <> 0){
+              ?>
 						      <tr>    
 										<td style="text-align:center"><?=$i?></td>
 										<!-- <td><?=$modelRMLs->month?></td> -->
@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $month;
                     <td><?=$modelRMLs->detail?></td>
 									</tr>
               <?php  
-              }
+              // }
               $K_price_sum = $K_price_sum + $K_price;
                 $i++;
                 endforeach; ?>

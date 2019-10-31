@@ -115,7 +115,7 @@ class ReportController extends Controller
                 // ->select(['unit_price','product_code','unit_price',])
                 ->where(['product_code' => $modelP->code])
                 // ->andWhere(['<','quantity',0])
-                // ->andWhere(['<','ym',$month])
+                ->andWhere(['<','ym',$month])
                 ->groupBy(['unit_price']) 
                 ->all();
             
@@ -161,6 +161,89 @@ class ReportController extends Controller
     endforeach;
 
     $rRMLs = ReportML::find()->where(['month' => $month])->all(); 
+        return $this->render('view',[
+            'month' => ReportML::DateThai_full($month),
+            'start' => 1,
+            'end' => 1,
+            'rRMLs' => $rRMLs, 
+            'RL' => $RL,
+        ]);
+    }
+
+    public function actionView62()
+    {
+        // if(empty($m)){
+        //     $m = date("Y-m-d H:i:s");
+        // }
+        $m = "2018-09-01";
+        $m2 = "2019-09-30";
+
+        $month = date('Y-m', strtotime($m));
+        $month2 = date('Y-m', strtotime($m2));
+
+        $ModelRPM = ReportM::findOne(['month'=> '2562']);        
+        if(empty($ModelRPM->month)){
+            $ModelRPM = new ReportM();
+            $ModelRPM->month = $month;
+            $ModelRPM->save();
+        }
+
+        ReportML::DeleteAll(['month' => '2562']);
+
+        $MP = Product::find()->where(['status'=>'1'])->all();
+        foreach ($MP as $modelP):
+
+            $RL = LogSt::find()
+                // ->select(['unit_price','product_code','unit_price',])
+                ->where(['product_code' => $modelP->code])
+                // ->andWhere(['<','quantity',0])
+                ->andWhere(['between','ym',$month,$month2])
+                ->groupBy(['unit_price']) 
+                ->all();
+            
+            foreach ($RL as $model):
+                $ModelRPM = new ReportML();
+                $ModelRPM->month = '2562';
+                $ModelRPM->product_code = $modelP->code;
+                $ModelRPM->product_unit = $modelP->unit;
+
+                $kb = null;
+                // $kb = 1;
+                $o= null;
+                $r= null;
+                $modelKB = LogSt::find()
+                    ->where(['between','ym',$month,$month2])
+                    ->andWhere([
+                        'unit_price'=>$model->unit_price,
+                        'product_code'=> $model->product_code
+                        ])
+                    ->all();
+
+                foreach ($modelKB as $modelK):
+                    if($modelK->ym < $month2){
+                        $kb = $kb + $modelK->quantity;
+                    }
+                    if($modelK->ym == $month2 && $modelK->quantity > 0 ){
+                        $r = $r + $modelK->quantity;
+                    }
+                    if($modelK->ym == $month2  && $modelK->quantity < 0){
+                        $o = $o + $modelK->quantity;
+                    }
+                endforeach;
+
+                $ModelRPM->kb = $kb; 
+                $ModelRPM->r = $r;
+                $ModelRPM->o = $o;
+                $ModelRPM->k = $ModelRPM->kb + $ModelRPM->r + $ModelRPM->o;               
+                $ModelRPM->unit_price = $model->unit_price;
+                $ModelRPM->save();   
+    
+            endforeach;
+        // }
+        
+    endforeach;
+
+    $rRMLs = ReportML::find()->where(['month' => '2562'])->all(); 
         return $this->render('view',[
             'month' => ReportML::DateThai_full($month),
             'start' => 1,
